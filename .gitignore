@@ -1,0 +1,14 @@
+# HyperFrames & Generated Build Artifacts
+.hyperframes/
+.thumbnails/
+.agents/
+
+# Raw audio masters (MP3 versions are committed)
+assets/*.wav
+
+# OS metadata
+Thumbs.db
+.DS_Store
+
+# Logs & temp
+*.log
