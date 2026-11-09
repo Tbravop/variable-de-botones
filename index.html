@@ -1115,7 +1115,7 @@
     tl.to(counter, { val: 24, duration: 0.45, onUpdate: () => updateCounter(counter.val) }, 9.35);
     tl.fromTo(counterEl, 
       { scale: 1.32, textShadow: "6px 6px 0px #1c1b1b" }, 
-      { scale: 1.16, textShadow: "4px 4px 0px #9a9ce4", duration: 0.45, ease: "back.out(1.5)" }, 
+      { scale: 1.16, textShadow: "4px 4px 0px #9a9ce4", duration: 0.45, ease: "back.out(1.5)", immediateRender: false }, 
       9.45
     );
 
@@ -1141,7 +1141,7 @@
     tl.to(counter, { val: 32, duration: 0.45, onUpdate: () => updateCounter(counter.val) }, 10.35);
     tl.fromTo(counterEl, 
       { scale: 1.40, textShadow: "6px 6px 0px #1c1b1b" }, 
-      { scale: 1.22, textShadow: "4px 4px 0px #ba1a1a", duration: 0.45, ease: "back.out(1.5)" }, 
+      { scale: 1.22, textShadow: "4px 4px 0px #ba1a1a", duration: 0.45, ease: "back.out(1.5)", immediateRender: false }, 
       10.45
     );
 
@@ -1241,14 +1241,14 @@
     // Pulse intermedio a 64 variantes
     tl.fromTo(counterEl, 
       { scale: 1.48, textShadow: "6px 6px 0px #1c1b1b" }, 
-      { scale: 1.30, textShadow: "4px 4px 0px #9a9ce4", duration: 0.45, ease: "power2.out" }, 
+      { scale: 1.30, textShadow: "4px 4px 0px #9a9ce4", duration: 0.45, ease: "power2.out", immediateRender: false }, 
       14.8
     );
 
     // Gran pulso al alcanzar 96
     tl.fromTo(counterEl, 
       { scale: 1.60, textShadow: "8px 8px 0px #1c1b1b" }, 
-      { scale: 1.38, textShadow: "5px 5px 0px #9a9ce4", duration: 0.55, ease: "back.out(1.7)" }, 
+      { scale: 1.38, textShadow: "5px 5px 0px #9a9ce4", duration: 0.55, ease: "back.out(1.7)", immediateRender: false }, 
       15.4
     );
 
@@ -1270,7 +1270,7 @@
     // Pulso brutalista en "96 VARIANTES"
     tl.fromTo(".closing-box-wrap", 
       { scale: 0.95 }, 
-      { scale: 1.05, duration: 0.45, yoyo: true, repeat: 1, ease: "power2.out" }, 
+      { scale: 1.05, duration: 0.45, yoyo: true, repeat: 1, ease: "power2.out", immediateRender: false }, 
       17.7
     );
 
