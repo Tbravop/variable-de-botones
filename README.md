@@ -1,63 +1,76 @@
-# Variable de Botones — Matriz Atómica de Diseño
+# Hyperframe Motion Suite — Arquitectura Guiada por Especificaciones (SDD)
 
-> **"¿Qué tan complejo es un simple botón?"**  
-> Demostración visual y animada de arquitectura de Design Systems: cómo un único botón semilla escala atómicamente hasta generar **96 variantes funcionales**.
-
----
-
-## 📐 Estructura de la Matriz (96 Variantes)
-
-El componente botón se organiza en una matriz multidimensional:
-
-$$\text{Total Variantes} = 8\text{ estados funcionales} \times 4\text{ intenciones} \times 3\text{ tamaños} = 96$$
-
-### 1. Estados Funcionales (8)
-- **Default** (Continuar)
-- **Hover**
-- **Active / Pressed**
-- **Focus Visible**
-- **Disabled**
-- **Leading Icon** (Con icono auxiliar)
-- **Icon-Only** (Modo solo icono)
-- **Loading** (Spinner animado)
-
-### 2. Intenciones de Jerarquía (4)
-- **Primary**: Acción principal en azul sólido.
-- **Secondary**: Acción secundaria con borde neutral y fondo translúcido.
-- **Ghost**: Acción ligera sin borde (borderless) en cyan.
-- **Danger**: Acción destructiva en rojo sólido.
-
-### 3. Escalas de Componente (3)
-- **Small (32px)**
-- **Medium (48px)** — Tamaño base
-- **Large (56px)**
+Sistema modular y desacoplado para diseñar, especificar y renderizar animaciones web de alta fidelidad (16:9 editorial UI graphics a 30 FPS) mediante el motor determinista de **Hyperframe**.
 
 ---
 
-## 🎬 Especificaciones Técnicas
+## 🏛️ Filosofía de Arquitectura: Separación de Responsabilidades
 
-- **Framework**: [HyperFrames](https://hyperframes.dev) / HTML5 Canvas & GSAP 3
-- **Formato**: Vertical 9:16 (`1080 x 1920 px`)
-- **Framerate**: 30 FPS
-- **Duración**: 20 segundos
+Este repositorio desacopla completamente tres dimensiones clave para permitir que cualquier persona o agente de IA genere nuevas piezas sin fricción:
+
+```text
+       ┌────────────────────────┐
+       │   SPEC_TEMPLATE.md     │  ◄── 1. EL QUÉ (Objetivo funcional, datos y guion)
+       └───────────┬────────────┘
+                   │
+         ┌─────────┴─────────┐
+         ▼                   ▼
+┌──────────────────┐ ┌─────────────────────────┐
+│    design.md     │ │   SKILL_HYPERFRAME.md   │  ◄── 2. LAS REGLAS (Estética visual + Técnica)
+└────────┬─────────┘ └───────────┬─────────────┘
+         │                       │
+         └─────────┬─────────────┘
+                   ▼
+       ┌────────────────────────┐
+       │      pieza_*.html      │  ◄── 3. EL CÓDIGO (Animación final determinista)
+       └────────────────────────┘
+```
+
+1. **`SPEC_TEMPLATE.md` (El QUÉ):** Define el propósito, contenido de las tarjetas y flujo cronológico de la escena.
+2. **`design.md` (La ESTÉTICA):** Define los tokens visuales, paleta pastel, tipografía `#0F172A`, sombras y regla de síntesis (Notion / Apple Keynote light UI).
+3. **`SKILL_HYPERFRAME.md` (El CÓMO TÉCNICO):** Define el contrato del motor (estructura `.clip`, determinismo temporal, registro de `window.__timelines` y manejo de SVG con GSAP).
 
 ---
 
-## 🚀 Previsualización y Ejecución
+## ⚡ Flujo de Trabajo en 3 Pasos Rápidos
 
-Para correr el proyecto localmente con HyperFrames:
+Para crear una nueva animación en este repositorio:
+
+### Paso 1: Definir la Especificación (`SPEC_TEMPLATE.md`)
+Duplica o rellena [`SPEC_TEMPLATE.md`](SPEC_TEMPLATE.md) con los datos de tu nueva pieza:
+- Asigna un `composition_id` único.
+- Elige el layout que mejor exprese la lógica del tema (3 Columnas, Stepped 2+3, Center Hero, etc.).
+- Detalla los títulos de las tarjetas, íconos sugeridos y desglose de tiempos en segundos.
+
+### Paso 2: Consultar las Reglas del Sistema
+Antes de escribir una sola línea de código, verifica:
+- [`design.md`](design.md): Tokens cromáticos (`#F8FAFC`, badges pasteles Cobalt `#0284C7`, Indigo `#7C3AED`, Emerald `#059669`), sombras y regla de no incluir párrafos ni cajas secundarias.
+- [`SKILL_HYPERFRAME.md`](SKILL_HYPERFRAME.md): Reglas estrictas para que el motor no falle (timeline en pausa, registro en `window.__timelines`, cero `Date.now()`, cero transiciones CSS desincronizadas).
+
+### Paso 3: Generar y Previsualizar el HTML Animado
+Genera el archivo HTML (ej. `mi_animacion.html`) aplicando la especificación y ejecuta los comandos de comprobación y renderizado:
 
 ```bash
-# Iniciar servidor de preview interactivo
-npx hyperframes preview
-
-# Comprobar integridad y compatibilidad
+# 1. Comprobar cumplimiento del contrato técnico
 npx hyperframes check
 
-# Exportar captura de frames
-npx hyperframes snapshot
+# 2. Previsualizar localmente en navegador
+npx serve . -p 3000
+# Abre: http://localhost:3000/mi_animacion.html
+
+# 3. Renderizar a video MP4 Full HD (1920x1080 @ 30 FPS)
+npx hyperframes render -c mi_animacion.html -o renders/mi_animacion.mp4 --fps 30 --format mp4
 ```
 
 ---
 
-Diseñado por [Tomás Bravo (Tbravop)](https://github.com/Tbravop).
+## 📂 Directorio del Repositorio
+
+- [`SKILL_HYPERFRAME.md`](SKILL_HYPERFRAME.md) — Contrato técnico y patrones de ingeniería de Hyperframe.
+- [`SPEC_TEMPLATE.md`](SPEC_TEMPLATE.md) — Plantilla vacía para especificar nuevas animaciones.
+- [`design.md`](design.md) — Sistema de diseño visual y tokens estéticos.
+- `infografia_1_writing_process.html` — Ejemplo de referencia: Layout Stepped 2+3.
+- `infografia_2_agentic_flow.html` — Ejemplo de referencia: Layout 3 Columnas Lineales.
+- `infografia_3_rl_vs_imitation.html` — Ejemplo de referencia: Layout Convergent Center Hero.
+- `infografia_4_funnel_marketing.html` — Ejemplo de referencia: Layout Secuencial 4 Etapas.
+- `renders/` — Videos MP4 Full HD compilados.

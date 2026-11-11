@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>03. Aprendizaje por Refuerzo vs. Imitación // Minimalist Bento Grid</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;800&family=Montserrat:wght@800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <style>
+    :root {
+      --bg-midnight: #0B0F19;
+      --card-bg: #131A2A;
+      
+      --cyan: #38BDF8;
+      --cyan-glow: rgba(56, 189, 248, 0.45);
+      
+      --purple: #A855F7;
+      --purple-glow: rgba(168, 85, 247, 0.55);
+      
+      --emerald: #10B981;
+      --emerald-glow: rgba(16, 185, 129, 0.45);
+      
+      --text-white: #FFFFFF;
+      --text-muted: #64748B;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg-midnight);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    #stage-scaler {
+      position: absolute;
+      width: 1920px;
+      height: 1080px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      transform-origin: center center;
+      background: radial-gradient(circle at 50% 30%, #111828 0%, #0B0F19 70%, #070A12 100%);
+      overflow: hidden;
+    }
+
+    /* Ambient atmospheric glow spots */
+    .ambient-glow {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(120px);
+    }
+
+    .ambient-cyan {
+      top: 240px;
+      left: 120px;
+      width: 480px;
+      height: 480px;
+      background: var(--cyan);
+      opacity: 0.16;
+    }
+
+    .ambient-purple {
+      top: 180px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 680px;
+      height: 680px;
+      background: var(--purple);
+      opacity: 0.22;
+    }
+
+    .ambient-emerald {
+      top: 240px;
+      right: 120px;
+      width: 480px;
+      height: 480px;
+      background: var(--emerald);
+      opacity: 0.16;
+    }
+
+    /* Technical grid background */
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none;
+    }
+
+    /* Broadcast Header */
+    .broadcast-header {
+      position: absolute;
+      top: 75px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--purple);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .header-badge .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--purple);
+      box-shadow: 0 0 10px var(--purple);
+    }
+
+    .header-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      color: var(--text-white);
+      text-transform: uppercase;
+      line-height: 1.1;
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Bento Grid Convergent Row */
+    .bento-row {
+      position: absolute;
+      top: 220px;
+      left: 70px;
+      width: 1780px;
+      height: 560px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    /* 3 Rounded Cards (#131A2A) */
+    .bento-card {
+      background: #131A2A;
+      border-radius: 28px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px;
+    }
+
+    /* Left Medium Card: AI AGENT (Cyan #38BDF8) */
+    .card-left {
+      width: 440px;
+      height: 460px;
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      box-shadow: 0 0 35px -5px rgba(56, 189, 248, 0.28), 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 25px rgba(56, 189, 248, 0.06);
+    }
+
+    /* Center LARGE Dominant Hero Card: ENVIRONMENT (Purple #A855F7) */
+    .card-center {
+      width: 620px;
+      height: 560px;
+      border: 1px solid rgba(168, 85, 247, 0.7);
+      box-shadow: 0 0 60px -5px rgba(168, 85, 247, 0.45), 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 35px rgba(168, 85, 247, 0.1);
+      z-index: 15;
+    }
+
+    /* Right Medium Card: HUMAN EXPERT (Emerald #10B981) */
+    .card-right {
+      width: 440px;
+      height: 460px;
+      border: 1px solid rgba(16, 185, 129, 0.45);
+      box-shadow: 0 0 35px -5px rgba(16, 185, 129, 0.28), 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 25px rgba(16, 185, 129, 0.06);
+    }
+
+    /* Card Icon Area */
+    .card-icon-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 34px;
+    }
+
+    .icon-cyan {
+      color: var(--cyan);
+      filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.6));
+    }
+
+    .icon-purple {
+      color: var(--purple);
+      filter: drop-shadow(0 0 24px rgba(168, 85, 247, 0.75));
+    }
+
+    .icon-emerald {
+      color: var(--emerald);
+      filter: drop-shadow(0 0 16px rgba(16, 185, 129, 0.6));
+    }
+
+    /* Card Titles */
+    .card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      color: var(--text-white);
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+
+    .hero-title {
+      font-size: 50px;
+      letter-spacing: 0.06em;
+    }
+
+    /* Subtle Glowing Horizontal Connector Lines */
+    #connector-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1920px;
+      height: 1080px;
+      pointer-events: none;
+      z-index: 12;
+    }
+
+    .connector-wire {
+      stroke: rgba(255, 255, 255, 0.12);
+      stroke-width: 2px;
+      stroke-linecap: round;
+      stroke-dasharray: 6 6;
+      fill: none;
+    }
+
+    .connector-laser {
+      stroke-width: 2.5px;
+      stroke-linecap: round;
+      fill: none;
+    }
+
+    .connector-packet {
+      fill: #FFFFFF;
+      opacity: 0;
+    }
+
+    /* TV Progress Bar */
+    .tv-progress-track {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      z-index: 50;
+    }
+
+    .tv-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--cyan), var(--purple), var(--emerald));
+      box-shadow: 0 0 15px var(--purple);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="stage-scaler" class="clip" data-composition-id="rl_vs_imitation" data-start="0" data-duration="10" data-width="1920" data-height="1080">
+    <div class="bg-grid"></div>
+
+    <div class="ambient-glow ambient-cyan"></div>
+    <div class="ambient-glow ambient-purple"></div>
+    <div class="ambient-glow ambient-emerald"></div>
+
+    <!-- BROADCAST HEADER -->
+    <header class="broadcast-header" id="broadcast-header">
+      <div class="header-badge">
+        <div class="badge-dot"></div>
+        03 &bull; PARADIGMAS DE APRENDIZAJE IA
+      </div>
+      <h1 class="header-title">APRENDIZAJE POR REFUERZO VS. IMITACIÓN</h1>
+    </header>
+
+    <!-- HORIZONTAL CONNECTOR SVG -->
+    <svg id="connector-svg" viewBox="0 0 1920 1080">
+      <!-- Wire 1: Left Card (AI AGENT) to Center Card (ENVIRONMENT) -->
+      <path class="connector-wire" d="M 510 500 L 650 500" />
+      <path id="laser-left" class="connector-laser" stroke="var(--cyan)" filter="drop-shadow(0 0 8px var(--cyan))" d="M 510 500 L 650 500" />
+      <circle id="pkt-left" class="connector-packet" r="6" filter="drop-shadow(0 0 10px var(--cyan))" />
+
+      <!-- Wire 2: Right Card (HUMAN EXPERT) to Center Card (ENVIRONMENT) -->
+      <path class="connector-wire" d="M 1410 500 L 1270 500" />
+      <path id="laser-right" class="connector-laser" stroke="var(--emerald)" filter="drop-shadow(0 0 8px var(--emerald))" d="M 1410 500 L 1270 500" />
+      <circle id="pkt-right" class="connector-packet" r="6" filter="drop-shadow(0 0 10px var(--emerald))" />
+    </svg>
+
+    <!-- CONVERGENT ASYMMETRIC BENTO GRID (3 ROUNDED CARDS) -->
+    <div class="bento-row">
+
+      <!-- LEFT MEDIUM CARD: CYAN GLOW // AI AGENT -->
+      <div class="bento-card card-left" id="card-left">
+        <div class="card-icon-wrap" id="icon-left">
+          <!-- Crisp Lucide-style Robot Head Icon -->
+          <svg width="88" height="88" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-cyan">
+            <path d="M12 8V4H8" />
+            <rect width="16" height="12" x="4" y="8" rx="2" />
+            <path d="M2 14h2" />
+            <path d="M20 14h2" />
+            <path d="M15 13v2" />
+            <path d="M9 13v2" />
+          </svg>
+        </div>
+        <h2 class="card-title">AI AGENT</h2>
+      </div>
+
+      <!-- CENTER LARGE DOMINANT HERO CARD: BRIGHT PURPLE GLOW // ENVIRONMENT -->
+      <div class="bento-card card-center" id="card-center">
+        <div class="card-icon-wrap" id="icon-center">
+          <!-- Crisp Lucide-style Wireframe Globe Icon -->
+          <svg width="116" height="116" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-purple">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <path d="M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z" />
+          </svg>
+        </div>
+        <h2 class="card-title hero-title">ENVIRONMENT</h2>
+      </div>
+
+      <!-- RIGHT MEDIUM CARD: EMERALD GLOW // HUMAN EXPERT -->
+      <div class="bento-card card-right" id="card-right">
+        <div class="card-icon-wrap" id="icon-right">
+          <!-- Crisp Lucide-style User Profile Icon -->
+          <svg width="88" height="88" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-emerald">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+        </div>
+        <h2 class="card-title">HUMAN EXPERT</h2>
+      </div>
+
+    </div>
+
+    <!-- TV PROGRESS BAR -->
+    <div class="tv-progress-track">
+      <div class="tv-progress-fill" id="progress-bar"></div>
+    </div>
+  </div>
+
+  <script>
+    function updateScale() {
+      const scaler = document.getElementById('stage-scaler');
+      if (!scaler) return;
+      const scaleX = window.innerWidth / 1920;
+      const scaleY = window.innerHeight / 1080;
+      const scale = Math.min(scaleX, scaleY);
+      scaler.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    }
+    window.addEventListener('resize', updateScale);
+    updateScale();
+
+    // GSAP Paused Timeline for HyperFrames deterministic seeking
+    const tl = gsap.timeline({ paused: true });
+
+    // Progress bar across the 10s composition
+    tl.to("#progress-bar", { width: "100%", duration: 10, ease: "none" }, 0);
+
+    const pLeft = document.getElementById("laser-left");
+    const lenLeft = pLeft.getTotalLength();
+    gsap.set(pLeft, { strokeDasharray: lenLeft, strokeDashoffset: lenLeft });
+
+    const pRight = document.getElementById("laser-right");
+    const lenRight = pRight.getTotalLength();
+    gsap.set(pRight, { strokeDasharray: lenRight, strokeDashoffset: lenRight });
+
+    // Initial state setup
+    gsap.set("#broadcast-header", { opacity: 0, y: -24 });
+    gsap.set("#card-center", { opacity: 0, scale: 0.88, y: 35 });
+    gsap.set("#card-left", { opacity: 0, x: -50, scale: 0.94 });
+    gsap.set("#card-right", { opacity: 0, x: 50, scale: 0.94 });
+    gsap.set(["#pkt-left", "#pkt-right"], { opacity: 0 });
+
+    // 1. Broadcast Header entrance (0.2s - 0.8s)
+    tl.to("#broadcast-header", { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 0.2);
+
+    // 2. Center Hero Card (ENVIRONMENT) entrance (0.6s - 1.6s)
+    tl.to("#card-center", {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      duration: 1.0,
+      ease: "back.out(1.4)"
+    }, 0.6);
+    tl.fromTo("#icon-center", 
+      { scale: 0.75, opacity: 0.4 }, 
+      { scale: 1, opacity: 1, duration: 0.8, ease: "back.out(1.6)" }, 
+      0.8
+    );
+
+    // 3. Left Card (AI AGENT) entrance (1.8s - 2.8s)
+    tl.to("#card-left", {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      duration: 0.9,
+      ease: "back.out(1.3)"
+    }, 1.8);
+    tl.fromTo("#icon-left", 
+      { scale: 0.8, opacity: 0.5 }, 
+      { scale: 1, opacity: 1, duration: 0.7, ease: "power2.out" }, 
+      2.0
+    );
+
+    // 4. Cyan Connector Laser: AI AGENT -> ENVIRONMENT (3.0s - 3.9s)
+    tl.to(pLeft, { strokeDashoffset: 0, duration: 0.6, ease: "power2.inOut" }, 3.0);
+    tl.set("#pkt-left", { opacity: 1 }, 3.0);
+    tl.to("#pkt-left", {
+      duration: 0.6,
+      ease: "power2.inOut",
+      onUpdate: function() {
+        const pt = pLeft.getPointAtLength(this.progress() * lenLeft);
+        const el = document.getElementById("pkt-left");
+        el.setAttribute("cx", pt.x);
+        el.setAttribute("cy", pt.y);
+      }
+    }, 3.0);
+    tl.set("#pkt-left", { opacity: 0 }, 3.6);
+
+    // Center Hero Card subtle pulse upon receiving AI Agent signal
+    tl.to("#card-center", {
+      boxShadow: "0 0 85px 5px rgba(168, 85, 247, 0.7)",
+      duration: 0.25,
+      yoyo: true,
+      repeat: 1,
+      ease: "power2.out"
+    }, 3.6);
+
+    // 5. Right Card (HUMAN EXPERT) entrance (4.2s - 5.2s)
+    tl.to("#card-right", {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      duration: 0.9,
+      ease: "back.out(1.3)"
+    }, 4.2);
+    tl.fromTo("#icon-right", 
+      { scale: 0.8, opacity: 0.5 }, 
+      { scale: 1, opacity: 1, duration: 0.7, ease: "power2.out" }, 
+      4.4
+    );
+
+    // 6. Emerald Connector Laser: HUMAN EXPERT -> ENVIRONMENT (5.4s - 6.3s)
+    tl.to(pRight, { strokeDashoffset: 0, duration: 0.6, ease: "power2.inOut" }, 5.4);
+    tl.set("#pkt-right", { opacity: 1 }, 5.4);
+    tl.to("#pkt-right", {
+      duration: 0.6,
+      ease: "power2.inOut",
+      onUpdate: function() {
+        const pt = pRight.getPointAtLength(this.progress() * lenRight);
+        const el = document.getElementById("pkt-right");
+        el.setAttribute("cx", pt.x);
+        el.setAttribute("cy", pt.y);
+      }
+    }, 5.4);
+    tl.set("#pkt-right", { opacity: 0 }, 6.0);
+
+    // Center Hero Card subtle pulse upon receiving Human Expert demonstration
+    tl.to("#card-center", {
+      boxShadow: "0 0 85px 5px rgba(168, 85, 247, 0.7)",
+      duration: 0.25,
+      yoyo: true,
+      repeat: 1,
+      ease: "power2.out"
+    }, 6.0);
+
+    // 7. Simultaneous Convergent Laser Pulse (6.8s - 7.8s)
+    tl.set(["#pkt-left", "#pkt-right"], { opacity: 1 }, 6.8);
+    tl.to("#pkt-left", {
+      duration: 0.7,
+      ease: "power2.inOut",
+      onUpdate: function() {
+        const pt = pLeft.getPointAtLength(this.progress() * lenLeft);
+        const el = document.getElementById("pkt-left");
+        el.setAttribute("cx", pt.x);
+        el.setAttribute("cy", pt.y);
+      }
+    }, 6.8);
+    tl.to("#pkt-right", {
+      duration: 0.7,
+      ease: "power2.inOut",
+      onUpdate: function() {
+        const pt = pRight.getPointAtLength(this.progress() * lenRight);
+        const el = document.getElementById("pkt-right");
+        el.setAttribute("cx", pt.x);
+        el.setAttribute("cy", pt.y);
+      }
+    }, 6.8);
+    tl.set(["#pkt-left", "#pkt-right"], { opacity: 0 }, 7.5);
+
+    // 8. Full Convergent Harmony Hold (8.0s - 10.0s)
+    tl.to("#card-center", {
+      boxShadow: "0 0 75px 0px rgba(168, 85, 247, 0.55), 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 40px rgba(168, 85, 247, 0.15)",
+      duration: 1.0,
+      ease: "power2.out"
+    }, 8.0);
+
+    // Register paused timeline with HyperFrames
+    window.__timelines = window.__timelines || {};
+    window.__timelines["rl_vs_imitation"] = tl;
+
+    // Autoplay for browser preview or OBS when not under headless seek control
+    if (!window.__HYPERFRAMES__ && !window.__producer_headless__) {
+      tl.play();
+    }
+
+    // Keyboard shortcuts for live inspection
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        tl.paused(!tl.paused());
+      }
+      if (e.code === 'KeyR') {
+        tl.restart();
+      }
+    });
+  </script>
+</body>
+</html>

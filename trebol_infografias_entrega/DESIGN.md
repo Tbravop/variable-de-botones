@@ -1,90 +1,66 @@
 ---
-version: 3.0.0
-system: "Broadcast TV Motion Graphics Design System"
+version: 4.0.0
+system: "Ultra-Clean 2026 Bento Grid Motion Design System"
 lastUpdated: 2026-11-11
-context: "Animaciones de 10s Full HD (1920×1080 @ 30 FPS) para Pantallas de Televisión, Móviles y Streaming"
+context: "Animaciones de 10s Full HD (1920×1080 @ 30 FPS) en Bright Light Mode para Pantallas de Televisión, Móviles y UI Editorial"
 ---
 
-# TV Broadcast Motion Graphics — Especificación de Diseño & Animación (v3.0)
+# Ultra-Clean 2026 Bento Grid Motion Suite — Design System (v4.0)
 
-Este documento define las reglas de diseño visual, arquitectura tipográfica y estándares de animación para piezas audiovisuales de **10 segundos exactos** reproducidas en pantallas de televisión (TV distance), transmisiones y smartphones.
-
----
-
-## 1. Principio Fundamental: Síntesis Total & TV / Mobile Readability
-
-A diferencia de un diagrama técnico o un manual de lectura estático:
-1. **Regla de Oro: SOLO ÍCONO + TÍTULO GIGANTE.** En una pieza de 10 segundos, el espectador no alcanza a procesar párrafos explicativos ni tablas de telemetría. Debe comunicarse un modelo mental inmediato: **Ícono Vectorial SVG + Título en negrita de 1 a 3 palabras**.
-2. **Prohibido el Texto de Relleno:** Eliminar micro-subtítulos, descripciones extensas, tablas de entrada/salida y etiquetas innecesarias (ej: "5 etapas críticas", "Metodología", "Listo ✓").
-3. **Zona Segura para Subtítulos (Subtitle Safe Area):** Toda la zona inferior de la pantalla (desde $Y \ge 750px$ hasta $1080px$, es decir más de 300px libres) debe reservarse exclusivamente para subtítulos (closed captions), banners informativos o controles de video. Ninguna tarjeta o nodo debe ocupar esta área.
-4. **Íconos Vectoriales Propios (Prohibido Emojis):** Se prohíbe el uso de emojis del sistema (🤖, 👤, 🛡️, 🌐, etc.). Todos los íconos deben ser vectores SVG limpios, profesionales, con trazos geométricos y resplandores neon acordes a la paleta.
+Este documento define las especificaciones del sistema de diseño para la nueva suite de infografías **Ultra-clean 2026 Bento Grid en Bright Light Mode** (16:9 editorial UI graphic, estética Apple Keynote y Notion Light UI).
 
 ---
 
-## 2. Paleta Cromática de Emisión (Broadcast Palette)
+## 1. Principio Fundamental: Síntesis Total & Editorial UI
+
+1. **Estructura Bento Adaptada Dinámicamente:**
+   - **Stepped 2+3 Grid:** Flujo escalonado de 5 etapas editoriales con conducto ortogonal.
+   - **3 Linear Columns:** Flujo secuencial horizontal de 3 estaciones de desarrollo agéntico.
+   - **Convergent Center Hero:** Arquitectura de aprendizaje donde 2 nodos convergentes alimentan un nodo central heroico dominante.
+   - **Sequential 4 Stages:** Embudo de conversión en 4 columnas equilibradas.
+
+2. **Regla de Oro: Solo Ícono en Badge Pastel + Título Dark Slate:**
+   - **NO bottom boxes**
+   - **NO secondary icons**
+   - **NO small labels**
+   - **NO paragraphs**
+   - Cada tarjeta contiene estrictamente:
+     1. **UN SOLO ícono minimalista estilo Lucide de 2px de trazo** centrado en un badge suavemente redondeado de color pastel.
+     2. **UN SOLO título en negrita contundente** en color Dark Slate (`#0F172A`) debajo del ícono.
+
+3. **Espacio Negativo Generoso:**
+   - Amplitud visual, composición despejada, balance armónico y cero artefactos visuales.
+   - Área inferior ($Y \ge 780px$) despejada para máxima legibilidad televisiva y subtítulos.
+
+---
+
+## 2. Paleta Cromática 2026 Light Mode
 
 | Token | Código HEX | Rol Semántico en Pantalla |
 |---|---|---|
-| `colors.cyan` | `#00F0FF` | **Luz Primaria & Señal Activa**: Cables láser, trazadores de datos, pulsos de foco y badges. |
-| `colors.emerald` | `#10B981` | **Éxito & Validación**: Estados completados, métricas óptimas y meta final de conversión. |
-| `colors.amber` | `#F59E0B` | **Atención & Automatización**: Flujos secundarios, secuencias de email y demostraciones. |
-| `colors.bg-dark` | `#070B14` | Fondo cinemático con degradado radial hacia `#020408`. |
-| `colors.bg-card` | `rgba(13, 21, 38, 0.94)` | Tarjetas traslúcidas con desenfoque de cristal (`backdrop-filter: blur(16px)`). |
-| `colors.border` | `rgba(255, 255, 255, 0.14)` | Bordes técnicos sutiles que ganan resplandor al activarse. |
-| `colors.text-white`| `#FFFFFF` | Titulares con máxima legibilidad y nitidez a distancia. |
-| `colors.text-muted`| `#94A3B8` | Etiquetas de etapa y números de fase. |
+| `bg-canvas` | `#F8FAFC` | Fondo editorial suave off-white con patrón micro-grid sutil. |
+| `card-bg` | `#FFFFFF` | Tarjetas blancas puras con bordes redondeados (`border-radius: 28px - 32px`). |
+| `card-border` | `#E2E8F0` | Borde sutil de 1px. |
+| `title-dark` | `#0F172A` | Títulos en Dark Slate de alta legibilidad móvil y televisiva. |
+| **Cobalt Blue** | `#0284C7` | Acento primario técnico (Investigación / Especificación / Agente / Atracción). Badge pastel: `#E0F2FE`. |
+| **Indigo Violet** | `#7C3AED` | Acento de inteligencia y síntesis (Redacción / Orquestación / Núcleo Hero / Interés). Badge pastel: `#EDE9FE`. |
+| **Emerald** | `#059669` | Acento de verificación y cierre (Publicación / Despliegue / Experto / Conversión). Badge pastel: `#D1FAE5`. |
 
 ---
 
-## 3. Escala Tipográfica para TV & Pantallas Móviles
+## 3. Escala Tipográfica & Legibilidad
 
-Se emplean fuentes de alta legibilidad geométrica (`Montserrat` y `JetBrains Mono`):
-- **Titular Principal (Header Broadcast):** `24px` a `28px` (ExtraBold, Tracking +0.05em).
-- **Títulos de Tarjeta / Fase / Estación:** `34px` a `44px` (Black 900, Mayúsculas).
-- **Números de Etapa:** `40px` a `48px` (Black 900).
-- **Pills de Estado (Mono):** `13px` a `15px` (JetBrains Mono 800, Mayúsculas).
-
-> **Restricción Estricta:** No emplear fuentes menores a `20px` para elementos de lectura esenciales.
+- **Fuente Principal:** `Inter` y `Outfit` con soporte para `JetBrains Mono` en badges técnicos.
+- **Títulos de Tarjeta:** `34px` a `42px` (ExtraBold / Black 800-900, Mayúsculas, color `#0F172A`).
+- **Hero Dominante Central:** `42px` a `48px` (Black 900).
+- **Cabecera Editorial:** `34px` (Bold 800) con badge en pastilla `13px` mayúscula.
 
 ---
 
-## 4. Motion Guidelines: Animación Cinematográfica Avanzada
+## 4. Motion Guidelines (HyperFrames & GSAP)
 
-Para evitar el aspecto rígido o plano de diapositivas estáticas tipo Canva:
-
-### 4.1. Paquetes de Energía y Fotones Trazadores
-- Las conexiones entre nodos son líneas activas por donde viaja un fotón de luz (`<circle r="7-8">`) que recorre dinámicamente la curva SVG mediante `getPointAtLength()` sincronizado con GSAP.
-- Tienen resplandor neon (`filter: drop-shadow(0 0 12px var(--cyan))`).
-
-### 4.2. Ondas de Choque (Sonar Shockwaves)
-- Cada activación de tarjeta emite una onda sonar circular expansiva:
-  ```javascript
-  tl.fromTo(sonarRing, 
-    { scale: 0.8, opacity: 1 }, 
-    { scale: 2.2, opacity: 0, duration: 0.7, ease: "power2.out" }
-  );
-  ```
-
-### 4.3. Easing Orgánico y Enérgico
-- Se utiliza `ease: "back.out(1.5)"` para entradas que entran a pantalla con firmeza y presencia.
-- Sincronización escalonada precisa para distribuir los 10 segundos sin aceleraciones caóticas.
-- Los últimos 1.5 segundos (8.5s a 10s) unifican todas las estaciones iluminadas en armonía visual.
-
-### 4.4. Barra de Progreso Global
-- En el borde inferior exacto (Y=1074) corre una línea milimétrica de 0% a 100% durante los 10.0 segundos exactos.
-
----
-
-## 5. Do's & Don'ts para Broadcast TV
-
-### ✅ Do
-- Mantener la regla: **SOLO ÍCONO VECTORIAL + TÍTULO GIGANTE**.
-- Dejar el tercio inferior ($Y \ge 750px$) completamente despejado para subtítulos de TV / video players.
-- Utilizar íconos vectoriales SVG limpios con trazo `2` o `2.2px`.
-- Verificar que el contenedor `#stage-scaler` mantenga la resolución base 1920×1080 con escalado responsive automático.
-
-### ❌ Don't
-- **No usar emojis** del sistema operativo (🤖, 👤, 🛡️, etc.).
-- **No colocar párrafos ni descripciones en texto pequeño** que no puedan leerse en 10 segundos.
-- **No invadir la zona inferior de la pantalla**, reservada para subtítulos.
-- **No incluir referencias o marcas comerciales (Trébol)** para preservar neutralidad técnica.
+- **Duración Estricta:** 10.0 segundos exactos a 30 FPS (`data-duration="10"`, `data-fps="30"`).
+- **Haces Vectoriales Láser:** Conexiones geométricas limpias (`stroke-width: 2.5px`) con paquetes de datos circulares trazados dinámicamente mediante `getPointAtLength()`.
+- **Ondas Sonar de Badge:** Expansión suave de onda de choque elástica al activarse cada estación.
+- **Transición de Estado:** Entradas con `ease: "back.out(1.4)"`.
+- **Hold Final de Armonía:** Entre los segundos 8.0s y 10.0s todas las tarjetas permanecen activas en iluminación equilibrada.

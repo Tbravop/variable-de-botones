@@ -3,31 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
-  <title>Infografía 04: Funnel de Marketing & Ventas // Minimalist Bento Grid</title>
+  <title>Funnel de Conversión // 2026 Bento Grid (Sequential 4-Flow)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;800;900&family=Montserrat:wght@800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=JetBrains+Mono:wght@700;800&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <style>
     :root {
-      --bg-midnight: #0B0F19;
-      --card-bg: rgba(19, 26, 42, 0.94);
-      --card-border: #232E47;
+      --bg-canvas: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --card-border: #E2E8F0;
+      --card-border-active: #CBD5E1;
       
-      --cyan: #38BDF8;
-      --cyan-glow: rgba(56, 189, 248, 0.45);
+      --title-dark: #0F172A;
+      --text-muted: #64748B;
       
-      --purple: #A855F7;
-      --purple-glow: rgba(168, 85, 247, 0.45);
+      /* 2026 Soft Pastel Badges & Primary Accents */
+      --cobalt: #0284C7;
+      --cobalt-pastel: #E0F2FE;
+      --cobalt-border: rgba(2, 132, 199, 0.22);
       
-      --amber: #F59E0B;
-      --amber-glow: rgba(245, 158, 11, 0.45);
+      --violet: #7C3AED;
+      --violet-pastel: #EDE9FE;
+      --violet-border: rgba(124, 58, 237, 0.22);
       
-      --emerald: #10B981;
-      --emerald-glow: rgba(16, 185, 129, 0.5);
+      --emerald: #059669;
+      --emerald-pastel: #D1FAE5;
+      --emerald-border: rgba(5, 150, 105, 0.22);
       
-      --text-white: #F8FAFC;
-      --text-muted: #94A3B8;
+      --shadow-ambient: 0 10px 30px -4px rgba(15, 23, 42, 0.04), 0 4px 12px -2px rgba(15, 23, 42, 0.02);
+      --shadow-active: 0 24px 48px -12px rgba(15, 23, 42, 0.09), 0 8px 16px -4px rgba(15, 23, 42, 0.04);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -36,11 +41,12 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      background: var(--bg-midnight);
+      background: var(--bg-canvas);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
 
     #stage-scaler {
@@ -51,528 +57,469 @@
       left: 50%;
       transform: translate(-50%, -50%) scale(1);
       transform-origin: center center;
-      background: radial-gradient(circle at 50% 25%, #151F38 0%, #0B0F19 65%, #060911 100%);
+      background: #F8FAFC;
       overflow: hidden;
-      box-shadow: 0 0 120px rgba(0, 0, 0, 0.95);
     }
 
+    /* Subtle architectural grid pattern - Apple Keynote & Notion UI aesthetic */
     .bg-grid {
       position: absolute;
       inset: 0;
-      background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 60px 60px;
+      background-image: radial-gradient(#CBD5E1 1px, transparent 1px);
+      background-size: 36px 36px;
+      opacity: 0.5;
       pointer-events: none;
     }
 
+    /* TOP EDITORIAL HEADER */
+    .header-bar {
+      position: absolute;
+      top: 65px;
+      left: 120px;
+      right: 120px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 20;
+    }
+
+    .header-bar h1 {
+      font-family: 'Outfit', 'Inter', sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--title-dark);
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: var(--emerald-pastel);
+      border: 1px solid var(--emerald-border);
+      border-radius: 9999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--emerald);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .header-badge .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--emerald);
+    }
+
+    /* BENTO GRID CANVAS: 4 STAGES ROW */
     .bento-container {
       position: absolute;
-      top: 60px;
-      left: 90px;
-      right: 90px;
-      height: 720px;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
+      top: 185px;
+      left: 120px;
+      width: 1680px;
+      height: 600px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 36px;
       z-index: 10;
     }
 
+    /* PURE WHITE ROUNDED VERTICAL CARD */
     .bento-card {
       background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border: 1.5px solid var(--card-border);
-      border-radius: 24px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow-ambient);
       position: relative;
       overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    /* TOP WIDE BANNER CARD */
-    .banner-card {
-      width: 100%;
-      height: 120px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 50px;
-      border-top: 2px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .banner-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 38px;
-      font-weight: 900;
-      letter-spacing: 0.02em;
-      color: var(--text-white);
-      text-transform: uppercase;
-      line-height: 1;
-    }
-
-    .banner-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 22px;
-      background: rgba(16, 185, 129, 0.12);
-      border: 1.5px solid var(--emerald);
-      border-radius: 9999px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--emerald);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      box-shadow: 0 0 20px var(--emerald-glow);
-    }
-
-    .banner-badge .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--emerald);
-      box-shadow: 0 0 10px var(--emerald);
-    }
-
-    /* 4 EQUAL VERTICAL BENTO CARDS */
-    .cards-row-4 {
-      width: 100%;
-      height: 568px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 28px;
-      position: relative;
-    }
-
-    .vertical-card {
-      height: 100%;
-      padding: 42px 28px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      text-align: center;
+      justify-content: center;
+      gap: 32px;
+      padding: 50px 30px;
       opacity: 0;
-      transform: translateY(35px);
+      transform: translateY(28px);
+      transition: box-shadow 0.4s ease, border-color 0.4s ease;
     }
 
-    .card-accent-pill {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 14px;
-      font-weight: 900;
-      padding: 8px 18px;
-      border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+    .bento-card.active {
+      border-color: var(--card-border-active);
+      box-shadow: var(--shadow-active);
     }
 
-    .icon-hero-box {
-      width: 116px;
-      height: 116px;
+    /* SOFT PASTEL ROUNDED BADGE */
+    .badge-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-badge {
+      width: 104px;
+      height: 104px;
       border-radius: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
-      margin: 18px 0;
-      transition: all 0.4s ease;
+      z-index: 2;
     }
 
-    .icon-hero-box svg {
-      width: 60px;
-      height: 60px;
-      stroke-width: 2.2;
+    .icon-badge svg {
+      width: 50px;
+      height: 50px;
+      stroke-width: 2px;
       stroke-linecap: round;
       stroke-linejoin: round;
       fill: none;
     }
 
-    .sonar-ring {
+    /* BADGE COLOR ACCENTS */
+    .badge-cobalt {
+      background: var(--cobalt-pastel);
+      border: 1px solid var(--cobalt-border);
+      color: var(--cobalt);
+    }
+    .badge-cobalt svg { stroke: var(--cobalt); }
+
+    .badge-violet {
+      background: var(--violet-pastel);
+      border: 1px solid var(--violet-border);
+      color: var(--violet);
+    }
+    .badge-violet svg { stroke: var(--violet); }
+
+    .badge-emerald {
+      background: var(--emerald-pastel);
+      border: 1px solid var(--emerald-border);
+      color: var(--emerald);
+    }
+    .badge-emerald svg { stroke: var(--emerald); }
+
+    /* SOFT PASTEL PULSE SHOCKWAVE */
+    .pulse-ring {
       position: absolute;
-      inset: -10px;
-      border-radius: 36px;
+      inset: -15px;
+      border-radius: 40px;
       opacity: 0;
       pointer-events: none;
+      z-index: 1;
     }
+    .ring-cobalt { border: 2px solid var(--cobalt); }
+    .ring-violet { border: 2px solid var(--violet); }
+    .ring-emerald { border: 2px solid var(--emerald); }
 
-    .card-hero-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 32px;
-      font-weight: 900;
-      letter-spacing: 0.02em;
-      color: var(--text-white);
+    /* BIG BOLD DARK SLATE TITLE */
+    .card-title {
+      font-family: 'Outfit', 'Inter', sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--title-dark);
       text-transform: uppercase;
-      line-height: 1.15;
+      line-height: 1.1;
+      text-align: center;
     }
 
-    .card-visual-plate {
-      width: 100%;
-      height: 110px;
-      border-radius: 14px;
-      background: rgba(11, 15, 25, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .card-visual-plate svg {
-      width: 62px;
-      height: 62px;
-      fill: none;
-      stroke-width: 1.8;
-    }
-
-    /* CARD COLORS */
-    /* Card 1: Cyan #38BDF8 // CAPTACIÓN */
-    .card-f1 { border-top: 3px solid var(--cyan); }
-    .card-f1 .card-accent-pill { color: var(--cyan); border-color: rgba(56,189,248,0.35); background: rgba(56,189,248,0.1); }
-    .card-f1 .icon-hero-box { background: rgba(56,189,248,0.1); border: 2px solid var(--cyan); color: var(--cyan); box-shadow: 0 0 30px var(--cyan-glow); }
-    .card-f1 .card-visual-plate svg { stroke: var(--cyan); filter: drop-shadow(0 0 8px var(--cyan-glow)); }
-    .card-f1.active { border-color: var(--cyan); box-shadow: 0 20px 50px rgba(56,189,248,0.25); transform: translateY(-8px); }
-
-    /* Card 2: Purple #A855F7 // LEAD MAGNET */
-    .card-f2 { border-top: 3px solid var(--purple); }
-    .card-f2 .card-accent-pill { color: var(--purple); border-color: rgba(168,85,247,0.35); background: rgba(168,85,247,0.1); }
-    .card-f2 .icon-hero-box { background: rgba(168,85,247,0.1); border: 2px solid var(--purple); color: var(--purple); box-shadow: 0 0 30px var(--purple-glow); }
-    .card-f2 .card-visual-plate svg { stroke: var(--purple); filter: drop-shadow(0 0 8px var(--purple-glow)); }
-    .card-f2.active { border-color: var(--purple); box-shadow: 0 20px 50px rgba(168,85,247,0.25); transform: translateY(-8px); }
-
-    /* Card 3: Amber #F59E0B // EMAIL FLOW */
-    .card-f3 { border-top: 3px solid var(--amber); }
-    .card-f3 .card-accent-pill { color: var(--amber); border-color: rgba(245,158,11,0.35); background: rgba(245,158,11,0.1); }
-    .card-f3 .icon-hero-box { background: rgba(245,158,11,0.1); border: 2px solid var(--amber); color: var(--amber); box-shadow: 0 0 30px var(--amber-glow); }
-    .card-f3 .card-visual-plate svg { stroke: var(--amber); filter: drop-shadow(0 0 8px var(--amber-glow)); }
-    .card-f3.active { border-color: var(--amber); box-shadow: 0 20px 50px rgba(245,158,11,0.25); transform: translateY(-8px); }
-
-    /* Card 4: Emerald #10B981 // HERO GOAL VENTA FINAL */
-    .card-f4 { border: 2.5px solid var(--emerald); box-shadow: 0 16px 50px rgba(16,185,129,0.25); }
-    .card-f4 .card-accent-pill { background: var(--emerald); color: #000; font-weight: 900; border-color: var(--emerald); }
-    .card-f4 .icon-hero-box { background: linear-gradient(135deg, rgba(16,185,129,0.35), rgba(11,15,25,0.9)); border: 2px solid var(--emerald); color: var(--emerald); box-shadow: 0 0 40px var(--emerald-glow); }
-    .card-f4 .card-hero-title { color: var(--emerald); text-shadow: 0 0 20px var(--emerald-glow); }
-    .card-f4 .card-visual-plate svg { stroke: var(--emerald); filter: drop-shadow(0 0 10px var(--emerald-glow)); }
-    .card-f4.active { box-shadow: 0 25px 70px rgba(16,185,129,0.4); transform: translateY(-8px) scale(1.02); }
-
-    /* CONNECTING LASER BEAMS */
+    /* SHARP GEOMETRIC VECTOR CONDUITS */
     #connecting-svg {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 25;
+      z-index: 5;
     }
 
-    .laser-wire {
+    .vector-track {
       fill: none;
-      stroke: rgba(255, 255, 255, 0.1);
-      stroke-width: 4px;
+      stroke: #E2E8F0;
+      stroke-width: 2px;
       stroke-linecap: round;
+      stroke-linejoin: round;
       stroke-dasharray: 6 6;
     }
 
-    .laser-active {
+    .vector-active {
       fill: none;
-      stroke-width: 4px;
+      stroke-width: 3px;
       stroke-linecap: round;
-      stroke-dashoffset: 450;
+      stroke-linejoin: round;
     }
 
-    .laser-packet {
-      fill: #FFFFFF;
+    .vector-packet {
       opacity: 0;
     }
 
-    .tv-progress-track {
+    /* MINIMALIST EDITORIAL PROGRESS BAR */
+    .editorial-progress {
       position: absolute;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.05);
+      height: 4px;
+      background: #E2E8F0;
       z-index: 50;
     }
 
-    .tv-progress-fill {
+    .editorial-fill {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, var(--cyan), var(--purple), var(--amber), var(--emerald));
-      box-shadow: 0 0 15px var(--emerald);
+      background: linear-gradient(90deg, var(--cobalt), var(--violet), var(--cobalt), var(--emerald));
     }
   </style>
 </head>
 <body>
 
-  <div id="stage-scaler" data-composition-id="marketing_funnel" data-width="1920" data-height="1080" data-duration="10">
+  <div id="stage-scaler" class="clip" data-composition-id="funnel_marketing" data-width="1920" data-height="1080" data-duration="10" data-start="0">
+    <!-- Subtle Architectural Grid -->
     <div class="bg-grid"></div>
 
+    <!-- Editorial Header -->
+    <header class="header-bar" id="header-bar">
+      <h1>Funnel de Conversión</h1>
+      <div class="header-badge">
+        <div class="badge-dot"></div>
+        2026 Sequential Bento Grid (4 Stages)
+      </div>
+    </header>
+
+    <!-- Bento Grid Container (4 Stages) -->
     <div class="bento-container">
 
-      <!-- TOP WIDE BANNER CARD -->
-      <div class="bento-card banner-card" id="banner-card">
-        <h1 class="banner-title">EMBUDO DE CONVERSIÓN &amp; VENTAS</h1>
-        <div class="banner-badge">
-          <div class="dot"></div>
-          2026 GROWTH PIPELINE
+      <!-- Sharp Geometric Vector Lines (Horizontal Flow: 1 -> 2 -> 3 -> 4) -->
+      <svg id="connecting-svg" viewBox="0 0 1680 600">
+        <!-- 1 to 2 (Horizontal: X=393 to X=429 at Y=300) -->
+        <path class="vector-track" d="M 393 300 L 429 300" />
+        <path id="vector-1" class="vector-active" stroke="var(--cobalt)" d="M 393 300 L 429 300" />
+        <circle id="pkt-1" class="vector-packet" r="5" fill="var(--cobalt)" />
+
+        <!-- 2 to 3 (Horizontal: X=822 to X=858 at Y=300) -->
+        <path class="vector-track" d="M 822 300 L 858 300" />
+        <path id="vector-2" class="vector-active" stroke="var(--violet)" d="M 822 300 L 858 300" />
+        <circle id="pkt-2" class="vector-packet" r="5" fill="var(--violet)" />
+
+        <!-- 3 to 4 (Horizontal: X=1251 to X=1287 at Y=300) -->
+        <path class="vector-track" d="M 1251 300 L 1287 300" />
+        <path id="vector-3" class="vector-active" stroke="var(--emerald)" d="M 1251 300 L 1287 300" />
+        <circle id="pkt-3" class="vector-packet" r="5" fill="var(--emerald)" />
+      </svg>
+
+      <!-- STAGE 1: ATRACCIÓN (Cobalt Blue Accent) -->
+      <div class="bento-card" id="card-1">
+        <div class="badge-wrap">
+          <div class="pulse-ring ring-cobalt" id="pulse-1"></div>
+          <div class="icon-badge badge-cobalt">
+            <!-- Lucide: Users / Audience Attraction -->
+            <svg viewBox="0 0 24 24">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
         </div>
+        <h2 class="card-title">ATRACCIÓN</h2>
       </div>
 
-      <!-- 4 EQUAL VERTICAL BENTO CARDS -->
-      <div class="cards-row-4">
-
-        <!-- Laser Beams SVG between cards -->
-        <svg id="connecting-svg" viewBox="0 0 1740 568">
-          <!-- 1 to 2 -->
-          <path class="laser-wire" d="M 414 284 L 442 284" />
-          <path id="laser-1" class="laser-active" stroke="var(--cyan)" d="M 414 284 L 442 284" filter="drop-shadow(0 0 8px var(--cyan))" />
-          <circle id="pkt-1" class="laser-packet" r="6" filter="drop-shadow(0 0 10px var(--cyan))" />
-
-          <!-- 2 to 3 -->
-          <path class="laser-wire" d="M 856 284 L 884 284" />
-          <path id="laser-2" class="laser-active" stroke="var(--purple)" d="M 856 284 L 884 284" filter="drop-shadow(0 0 8px var(--purple))" />
-          <circle id="pkt-2" class="laser-packet" r="6" filter="drop-shadow(0 0 10px var(--purple))" />
-
-          <!-- 3 to 4 -->
-          <path class="laser-wire" d="M 1298 284 L 1326 284" />
-          <path id="laser-3" class="laser-active" stroke="var(--amber)" d="M 1298 284 L 1326 284" filter="drop-shadow(0 0 8px var(--amber))" />
-          <circle id="pkt-3" class="laser-packet" r="6" filter="drop-shadow(0 0 10px var(--amber))" />
-        </svg>
-
-        <!-- CARD 1: 01 CAPTACIÓN -->
-        <div class="bento-card vertical-card card-f1" id="card-1">
-          <div class="card-accent-pill">ETAPA 01</div>
-          
-          <div class="icon-hero-box">
-            <!-- Target / Magnet SVG -->
-            <svg viewBox="0 0 24 24" stroke="currentColor">
-              <circle cx="12" cy="12" r="10"/>
-              <circle cx="12" cy="12" r="6"/>
-              <circle cx="12" cy="12" r="2"/>
-            </svg>
-            <div class="sonar-ring" id="sonar-1" style="border: 2px solid var(--cyan);"></div>
-          </div>
-
-          <h2 class="card-hero-title">01 CAPTACIÓN</h2>
-
-          <!-- Clean Browser Landing Plate -->
-          <div class="card-visual-plate">
+      <!-- STAGE 2: INTERÉS (Indigo Violet Accent) -->
+      <div class="bento-card" id="card-2">
+        <div class="badge-wrap">
+          <div class="pulse-ring ring-violet" id="pulse-2"></div>
+          <div class="icon-badge badge-violet">
+            <!-- Lucide: Filter / Engagement Qualification -->
             <svg viewBox="0 0 24 24">
-              <rect x="2" y="3" width="20" height="14" rx="2"/>
-              <line x1="8" y1="21" x2="16" y2="21"/>
-              <line x1="12" y1="17" x2="12" y2="21"/>
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
             </svg>
           </div>
         </div>
+        <h2 class="card-title">INTERÉS</h2>
+      </div>
 
-        <!-- CARD 2: 02 LEAD MAGNET -->
-        <div class="bento-card vertical-card card-f2" id="card-2">
-          <div class="card-accent-pill">ETAPA 02</div>
-
-          <div class="icon-hero-box">
-            <!-- Gift / Value SVG -->
-            <svg viewBox="0 0 24 24" stroke="currentColor">
-              <polyline points="20 12 20 22 4 22 4 12"/>
-              <rect x="2" y="7" width="20" height="5"/>
-              <line x1="12" y1="22" x2="12" y2="7"/>
-              <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
-              <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
-            </svg>
-            <div class="sonar-ring" id="sonar-2" style="border: 2px solid var(--purple);"></div>
-          </div>
-
-          <h2 class="card-hero-title">02 LEAD MAGNET</h2>
-
-          <!-- Clean Delivery Check Plate -->
-          <div class="card-visual-plate">
+      <!-- STAGE 3: DECISIÓN (Cobalt Blue Accent) -->
+      <div class="bento-card" id="card-3">
+        <div class="badge-wrap">
+          <div class="pulse-ring ring-cobalt" id="pulse-3"></div>
+          <div class="icon-badge badge-cobalt">
+            <!-- Lucide: Target / Decision Making -->
             <svg viewBox="0 0 24 24">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-              <polyline points="22 4 12 14.01 9 11.01"/>
+              <circle cx="12" cy="12" r="10"></circle>
+              <circle cx="12" cy="12" r="6"></circle>
+              <circle cx="12" cy="12" r="2"></circle>
             </svg>
           </div>
         </div>
+        <h2 class="card-title">DECISIÓN</h2>
+      </div>
 
-        <!-- CARD 3: 03 EMAIL FLOW -->
-        <div class="bento-card vertical-card card-f3" id="card-3">
-          <div class="card-accent-pill">ETAPA 03</div>
-
-          <div class="icon-hero-box">
-            <!-- Automated Email Nurture SVG -->
-            <svg viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-              <polyline points="22,6 12,13 2,6"/>
-            </svg>
-            <div class="sonar-ring" id="sonar-3" style="border: 2px solid var(--amber);"></div>
-          </div>
-
-          <h2 class="card-hero-title">03 EMAIL FLOW</h2>
-
-          <!-- Clean Loop Trajectory Plate -->
-          <div class="card-visual-plate">
+      <!-- STAGE 4: CONVERSIÓN (Emerald Accent) -->
+      <div class="bento-card" id="card-4">
+        <div class="badge-wrap">
+          <div class="pulse-ring ring-emerald" id="pulse-4"></div>
+          <div class="icon-badge badge-emerald">
+            <!-- Lucide: Trophy / Conversion & Value Realization -->
             <svg viewBox="0 0 24 24">
-              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+              <path d="M4 22h16"></path>
+              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
             </svg>
           </div>
         </div>
-
-        <!-- CARD 4: 04 VENTA FINAL -->
-        <div class="bento-card vertical-card card-f4" id="card-4">
-          <div class="card-accent-pill">OBJETIVO FINAL</div>
-
-          <div class="icon-hero-box">
-            <!-- Calendar Consult / Direct Call SVG -->
-            <svg viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-            </svg>
-            <div class="sonar-ring" id="sonar-4" style="border: 2px solid var(--emerald);"></div>
-          </div>
-
-          <h2 class="card-hero-title">04 VENTA FINAL</h2>
-
-          <!-- Clean Verified Deal Plate -->
-          <div class="card-visual-plate">
-            <svg viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="10"/>
-              <polyline points="12 6 12 12 16 14"/>
-            </svg>
-          </div>
-        </div>
-
+        <h2 class="card-title">CONVERSIÓN</h2>
       </div>
 
     </div>
 
-    <!-- TV PROGRESS BAR -->
-    <div class="tv-progress-track">
-      <div class="tv-progress-fill" id="progress-bar"></div>
+    <!-- Editorial Bottom Progress Bar -->
+    <div class="editorial-progress">
+      <div class="editorial-fill" id="progress-fill"></div>
     </div>
   </div>
 
   <script>
-    function updateScale() {
-      const scaler = document.getElementById('stage-scaler');
-      const scaleX = window.innerWidth / 1920;
-      const scaleY = window.innerHeight / 1080;
-      const scale = Math.min(scaleX, scaleY);
-      scaler.style.transform = `translate(-50%, -50%) scale(${scale})`;
-    }
-    window.addEventListener('resize', updateScale);
-    updateScale();
+    document.addEventListener("DOMContentLoaded", () => {
+      // Scale stage to fit viewport
+      function handleResize() {
+        const stage = document.getElementById("stage-scaler");
+        const scaleX = window.innerWidth / 1920;
+        const scaleY = window.innerHeight / 1080;
+        const scale = Math.min(scaleX, scaleY);
+        stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+      }
+      window.addEventListener('resize', handleResize);
+      handleResize();
 
-    window.addEventListener('DOMContentLoaded', () => {
-      const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.5 });
+      // Master HyperFrames GSAP Timeline (10.0s strict)
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["funnel_marketing"] = tl;
 
+      // Bottom progress bar
+      tl.to("#progress-fill", { width: "100%", duration: 10, ease: "none" }, 0);
+
+      // Setup vector path dashes
+      const setupVector = (id) => {
+        const p = document.getElementById(id);
+        if (!p) return { path: null, len: 0 };
+        const len = p.getTotalLength() + 4;
+        gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+        return { path: p, len };
+      };
+
+      const v1 = setupVector("vector-1");
+      const v2 = setupVector("vector-2");
+      const v3 = setupVector("vector-3");
+
+      // Initial visual states
+      gsap.set("#header-bar", { opacity: 0, y: -16 });
+      gsap.set(".bento-card", { opacity: 0, y: 30 });
+
+      // 1. Header Reveal (0.2s)
+      tl.to("#header-bar", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.2);
+
+      // 2. Stage 1 (Atracción) Activation (0.6s)
+      tl.to("#card-1", {
+        opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.4)",
+        onStart: () => document.getElementById("card-1").classList.add("active")
+      }, 0.6);
+      tl.fromTo("#pulse-1", { scale: 0.85, opacity: 0.9 }, { scale: 1.8, opacity: 0, duration: 0.6, ease: "power2.out" }, 0.8);
+
+      // Vector 1 -> 2 Stream (2.2s)
+      tl.to(v1.path, { strokeDashoffset: 0, duration: 0.5, ease: "power2.inOut" }, 2.2);
+      tl.set("#pkt-1", { opacity: 1 }, 2.2);
+      tl.to("#pkt-1", {
+        duration: 0.5, ease: "power2.inOut",
+        onUpdate: function() {
+          const pt = v1.path.getPointAtLength(this.progress() * v1.len);
+          const el = document.getElementById("pkt-1");
+          el.setAttribute("cx", pt.x); el.setAttribute("cy", pt.y);
+        }
+      }, 2.2);
+      tl.set("#pkt-1", { opacity: 0 }, 2.7);
+
+      // 3. Stage 2 (Interés) Activation (2.7s)
+      tl.to("#card-2", {
+        opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.4)",
+        onStart: () => {
+          document.getElementById("card-1").classList.remove("active");
+          document.getElementById("card-2").classList.add("active");
+        }
+      }, 2.7);
+      tl.fromTo("#pulse-2", { scale: 0.85, opacity: 0.9 }, { scale: 1.8, opacity: 0, duration: 0.6, ease: "power2.out" }, 2.9);
+
+      // Vector 2 -> 3 Stream (4.4s)
+      tl.to(v2.path, { strokeDashoffset: 0, duration: 0.5, ease: "power2.inOut" }, 4.4);
+      tl.set("#pkt-2", { opacity: 1 }, 4.4);
+      tl.to("#pkt-2", {
+        duration: 0.5, ease: "power2.inOut",
+        onUpdate: function() {
+          const pt = v2.path.getPointAtLength(this.progress() * v2.len);
+          const el = document.getElementById("pkt-2");
+          el.setAttribute("cx", pt.x); el.setAttribute("cy", pt.y);
+        }
+      }, 4.4);
+      tl.set("#pkt-2", { opacity: 0 }, 4.9);
+
+      // 4. Stage 3 (Decisión) Activation (4.9s)
+      tl.to("#card-3", {
+        opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.4)",
+        onStart: () => {
+          document.getElementById("card-2").classList.remove("active");
+          document.getElementById("card-3").classList.add("active");
+        }
+      }, 4.9);
+      tl.fromTo("#pulse-3", { scale: 0.85, opacity: 0.9 }, { scale: 1.8, opacity: 0, duration: 0.6, ease: "power2.out" }, 5.1);
+
+      // Vector 3 -> 4 Stream (6.5s)
+      tl.to(v3.path, { strokeDashoffset: 0, duration: 0.5, ease: "power2.inOut" }, 6.5);
+      tl.set("#pkt-3", { opacity: 1 }, 6.5);
+      tl.to("#pkt-3", {
+        duration: 0.5, ease: "power2.inOut",
+        onUpdate: function() {
+          const pt = v3.path.getPointAtLength(this.progress() * v3.len);
+          const el = document.getElementById("pkt-3");
+          el.setAttribute("cx", pt.x); el.setAttribute("cy", pt.y);
+        }
+      }, 6.5);
+      tl.set("#pkt-3", { opacity: 0 }, 7.0);
+
+      // 5. Stage 4 (Conversión) Activation (7.0s)
+      tl.to("#card-4", {
+        opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.4)",
+        onStart: () => {
+          document.getElementById("card-3").classList.remove("active");
+          document.getElementById("card-4").classList.add("active");
+        }
+      }, 7.0);
+      tl.fromTo("#pulse-4", { scale: 0.85, opacity: 0.9 }, { scale: 1.8, opacity: 0, duration: 0.6, ease: "power2.out" }, 7.2);
+
+      // 6. Full Illumination Final State Hold (8.4s - 10.0s)
+      tl.to(".bento-card", {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        onStart: () => {
+          document.querySelectorAll(".bento-card").forEach(c => c.classList.add("active"));
+        }
+      }, 8.4);
+
+      // Keyboard shortcuts
       window.addEventListener('keydown', (e) => {
         if (e.code === 'Space') tl.paused(!tl.paused());
         if (e.code === 'KeyR') tl.restart();
       });
 
-      tl.to("#progress-bar", { width: "100%", duration: 10, ease: "none" }, 0);
-
-      const p1 = document.getElementById("laser-1");
-      const len1 = p1.getTotalLength() + 5;
-      gsap.set(p1, { strokeDasharray: len1, strokeDashoffset: len1 });
-
-      const p2 = document.getElementById("laser-2");
-      const len2 = p2.getTotalLength() + 5;
-      gsap.set(p2, { strokeDasharray: len2, strokeDashoffset: len2 });
-
-      const p3 = document.getElementById("laser-3");
-      const len3 = p3.getTotalLength() + 5;
-      gsap.set(p3, { strokeDasharray: len3, strokeDashoffset: len3 });
-
-      gsap.set("#banner-card", { opacity: 0, y: -20 });
-      gsap.set([".vertical-card"], { opacity: 0, y: 35 });
-
-      // 1. Banner (0.2s)
-      tl.to("#banner-card", { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 0.2);
-
-      // 2. Card 1 (0.8s)
-      tl.to("#card-1", {
-        opacity: 1, y: 0, duration: 0.8, ease: "back.out(1.5)",
-        onStart: () => document.getElementById("card-1").classList.add("active")
-      }, 0.8);
-      tl.fromTo("#sonar-1", { scale: 0.8, opacity: 1 }, { scale: 2.2, opacity: 0, duration: 0.7, ease: "power2.out" }, 1.0);
-
-      // Stream 1 to 2 (2.2s)
-      tl.to(p1, { strokeDashoffset: 0, duration: 0.6, ease: "power2.inOut" }, 2.2);
-      tl.set("#pkt-1", { opacity: 1 }, 2.2);
-      tl.to("#pkt-1", {
-        duration: 0.6, ease: "power2.inOut",
-        onUpdate: function() {
-          const pt = p1.getPointAtLength(this.progress() * len1);
-          const el = document.getElementById("pkt-1");
-          el.setAttribute("cx", pt.x); el.setAttribute("cy", pt.y);
-        }
-      }, 2.2);
-      tl.set("#pkt-1", { opacity: 0 }, 2.8);
-
-      // 3. Card 2 (2.8s)
-      tl.to("#card-2", {
-        opacity: 1, y: 0, duration: 0.8, ease: "back.out(1.5)",
-        onStart: () => {
-          document.getElementById("card-1").classList.remove("active");
-          document.getElementById("card-2").classList.add("active");
-        }
-      }, 2.8);
-      tl.fromTo("#sonar-2", { scale: 0.8, opacity: 1 }, { scale: 2.2, opacity: 0, duration: 0.7, ease: "power2.out" }, 3.0);
-
-      // Stream 2 to 3 (4.4s)
-      tl.to(p2, { strokeDashoffset: 0, duration: 0.6, ease: "power2.inOut" }, 4.4);
-      tl.set("#pkt-2", { opacity: 1 }, 4.4);
-      tl.to("#pkt-2", {
-        duration: 0.6, ease: "power2.inOut",
-        onUpdate: function() {
-          const pt = p2.getPointAtLength(this.progress() * len2);
-          const el = document.getElementById("pkt-2");
-          el.setAttribute("cx", pt.x); el.setAttribute("cy", pt.y);
-        }
-      }, 4.4);
-      tl.set("#pkt-2", { opacity: 0 }, 5.0);
-
-      // 4. Card 3 (5.0s)
-      tl.to("#card-3", {
-        opacity: 1, y: 0, duration: 0.8, ease: "back.out(1.5)",
-        onStart: () => {
-          document.getElementById("card-2").classList.remove("active");
-          document.getElementById("card-3").classList.add("active");
-        }
-      }, 5.0);
-      tl.fromTo("#sonar-3", { scale: 0.8, opacity: 1 }, { scale: 2.2, opacity: 0, duration: 0.7, ease: "power2.out" }, 5.2);
-
-      // Stream 3 to 4 (6.6s)
-      tl.to(p3, { strokeDashoffset: 0, duration: 0.6, ease: "power2.inOut" }, 6.6);
-      tl.set("#pkt-3", { opacity: 1 }, 6.6);
-      tl.to("#pkt-3", {
-        duration: 0.6, ease: "power2.inOut",
-        onUpdate: function() {
-          const pt = p3.getPointAtLength(this.progress() * len3);
-          const el = document.getElementById("pkt-3");
-          el.setAttribute("cx", pt.x); el.setAttribute("cy", pt.y);
-        }
-      }, 6.6);
-      tl.set("#pkt-3", { opacity: 0 }, 7.2);
-
-      // 5. Card 4 (7.2s)
-      tl.to("#card-4", {
-        opacity: 1, y: 0, duration: 0.8, ease: "back.out(1.5)",
-        onStart: () => {
-          document.getElementById("card-3").classList.remove("active");
-          document.getElementById("card-4").classList.add("active");
-        }
-      }, 7.2);
-      tl.fromTo("#sonar-4", { scale: 0.8, opacity: 1 }, { scale: 2.3, opacity: 0, duration: 0.7, ease: "power2.out" }, 7.4);
-
-      // 6. Full Illumination Harmony (8.6s - 10s)
-      tl.to([".vertical-card"], {
-        opacity: 1,
-        duration: 0.5,
-        onComplete: () => {
-          document.querySelectorAll(".vertical-card").forEach(c => c.classList.add("active"));
-        }
-      }, 8.6);
+      // Play
+      tl.play();
     });
   </script>
 </body>

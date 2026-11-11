@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>Ciclo de Desarrollo Agéntico // 2026 Minimalist Bento Grid</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <style>
+    :root {
+      --bg-midnight: #0B0F19;
+      --card-bg: #131A2A;
+      
+      --cyan: #38BDF8;
+      --cyan-glow: rgba(56, 189, 248, 0.4);
+      --cyan-border: rgba(56, 189, 248, 0.7);
+      
+      --purple: #A855F7;
+      --purple-glow: rgba(168, 85, 247, 0.45);
+      --purple-border: rgba(168, 85, 247, 0.7);
+      
+      --emerald: #10B981;
+      --emerald-glow: rgba(16, 185, 129, 0.4);
+      --emerald-border: rgba(16, 185, 129, 0.7);
+      
+      --text-white: #FFFFFF;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg-midnight);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    #stage-scaler {
+      position: absolute;
+      width: 1920px;
+      height: 1080px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      transform-origin: center center;
+      background: radial-gradient(circle at 50% 25%, #151F38 0%, #0B0F19 65%, #060911 100%);
+      overflow: hidden;
+      box-shadow: 0 0 120px rgba(0, 0, 0, 0.95);
+    }
+
+    /* Subtle Architectural Tech Grid */
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    /* Ambient Glow Spots Behind Each Card */
+    .glow-spot {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(110px);
+      pointer-events: none;
+      opacity: 0.16;
+    }
+
+    /* TOP BROADCAST HEADER (Minimalist typography) */
+    .broadcast-header {
+      position: absolute;
+      top: 90px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      z-index: 20;
+    }
+
+    .broadcast-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      color: var(--text-white);
+      text-transform: uppercase;
+      line-height: 1;
+      text-shadow: 0 2px 20px rgba(255, 255, 255, 0.12);
+    }
+
+    /* BENTO GRID CANVAS: EXACTLY 3 VERTICAL CARDS SIDE BY SIDE */
+    .bento-container {
+      position: absolute;
+      top: 180px;
+      left: 160px;
+      width: 1600px;
+      height: 640px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 50px;
+      z-index: 10;
+    }
+
+    /* VERTICAL ROUNDED CARD */
+    .bento-card {
+      background: var(--card-bg);
+      border-radius: 28px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px;
+    }
+
+    /* CARD 1: CYAN GLOW */
+    .card-1 {
+      border: 1px solid var(--cyan-border);
+      box-shadow: 0 0 35px var(--cyan-glow), inset 0 0 30px rgba(56, 189, 248, 0.06);
+    }
+
+    /* CARD 2: PURPLE GLOW */
+    .card-2 {
+      border: 1px solid var(--purple-border);
+      box-shadow: 0 0 40px var(--purple-glow), inset 0 0 30px rgba(168, 85, 247, 0.08);
+    }
+
+    /* CARD 3: EMERALD GLOW */
+    .card-3 {
+      border: 1px solid var(--emerald-border);
+      box-shadow: 0 0 35px var(--emerald-glow), inset 0 0 30px rgba(16, 185, 129, 0.06);
+    }
+
+    /* CENTERED GLOWING ICON BADGE */
+    .icon-badge {
+      width: 140px;
+      height: 140px;
+      border-radius: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .card-1 .icon-badge {
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid var(--cyan);
+      box-shadow: 0 0 45px var(--cyan-glow), inset 0 0 25px rgba(56, 189, 248, 0.15);
+      color: var(--cyan);
+    }
+
+    .card-2 .icon-badge {
+      background: rgba(168, 85, 247, 0.08);
+      border: 1px solid var(--purple);
+      box-shadow: 0 0 50px var(--purple-glow), inset 0 0 25px rgba(168, 85, 247, 0.18);
+      color: var(--purple);
+    }
+
+    .card-3 .icon-badge {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid var(--emerald);
+      box-shadow: 0 0 45px var(--emerald-glow), inset 0 0 25px rgba(16, 185, 129, 0.15);
+      color: var(--emerald);
+    }
+
+    /* CRISP LUCIDE-STYLE VECTOR ICONS */
+    .icon-badge svg {
+      width: 70px;
+      height: 70px;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    /* SONAR SHOCKWAVE RING */
+    .sonar-ring {
+      position: absolute;
+      inset: -14px;
+      border-radius: 46px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* BIG BOLD WHITE TITLE BELOW ICON */
+    .card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      color: var(--text-white);
+      text-transform: uppercase;
+      line-height: 1.1;
+      text-align: center;
+      margin-top: 48px;
+      text-shadow: 0 2px 24px rgba(255, 255, 255, 0.18);
+    }
+
+    /* TV BROADCAST PROGRESS TRACK (Bottom edge) */
+    .tv-progress-track {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.05);
+      z-index: 50;
+    }
+
+    .tv-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--cyan), var(--purple), var(--emerald));
+      box-shadow: 0 0 16px var(--purple);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="stage-scaler" class="clip" data-composition-id="agentic_workflow" data-fps="30" data-duration="10" data-width="1920" data-height="1080" data-start="0">
+    <div class="bg-grid"></div>
+
+    <!-- Ambient Glow Spots Behind Each Card -->
+    <div class="glow-spot" style="top: 25%; left: 16%; width: 450px; height: 450px; background: var(--cyan);"></div>
+    <div class="glow-spot" style="top: 25%; left: 50%; transform: translateX(-50%); width: 550px; height: 550px; background: var(--purple);"></div>
+    <div class="glow-spot" style="top: 25%; right: 16%; width: 450px; height: 450px; background: var(--emerald);"></div>
+
+    <!-- MINIMALIST BROADCAST HEADER -->
+    <header class="broadcast-header clip" data-start="0" data-duration="10" id="broadcast-header">
+      <h1 class="broadcast-title">CICLO DE DESARROLLO AGÉNTICO</h1>
+    </header>
+
+    <!-- BENTO GRID CANVAS: ONLY 3 LARGE VERTICAL ROUNDED CARDS -->
+    <main class="bento-container" id="bento-container">
+
+      <!-- CARD 1: CYAN GLOW // 01 INCEPTION -->
+      <section class="bento-card card-1 clip" data-start="0" data-duration="10" id="card-1">
+        <div class="icon-badge" id="badge-1">
+          <!-- Crisp Lucide-style User Profile Icon -->
+          <svg viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <div class="sonar-ring" id="sonar-1" style="border: 2px solid var(--cyan);"></div>
+        </div>
+        <h2 class="card-title">01 INCEPTION</h2>
+      </section>
+
+      <!-- CARD 2: PURPLE GLOW // 02 AI CODE -->
+      <section class="bento-card card-2 clip" data-start="0" data-duration="10" id="card-2">
+        <div class="icon-badge" id="badge-2">
+          <!-- Crisp Lucide-style Microchip Icon -->
+          <svg viewBox="0 0 24 24" stroke="currentColor">
+            <rect width="16" height="16" x="4" y="4" rx="2"/>
+            <rect width="6" height="6" x="9" y="9" rx="1"/>
+            <path d="M9 1v3"/>
+            <path d="M15 1v3"/>
+            <path d="M9 20v3"/>
+            <path d="M15 20v3"/>
+            <path d="M20 9h3"/>
+            <path d="M20 15h3"/>
+            <path d="M1 9h3"/>
+            <path d="M1 15h3"/>
+          </svg>
+          <div class="sonar-ring" id="sonar-2" style="border: 2px solid var(--purple);"></div>
+        </div>
+        <h2 class="card-title">02 AI CODE</h2>
+      </section>
+
+      <!-- CARD 3: EMERALD GLOW // 03 REVIEW -->
+      <section class="bento-card card-3 clip" data-start="0" data-duration="10" id="card-3">
+        <div class="icon-badge" id="badge-3">
+          <!-- Crisp Lucide-style Checkmark Shield Icon -->
+          <svg viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+          <div class="sonar-ring" id="sonar-3" style="border: 2px solid var(--emerald);"></div>
+        </div>
+        <h2 class="card-title">03 REVIEW</h2>
+      </section>
+
+    </main>
+
+    <!-- TV BROADCAST PROGRESS BAR -->
+    <div class="tv-progress-track">
+      <div class="tv-progress-fill" id="progress-bar"></div>
+    </div>
+  </div>
+
+  <script>
+    function updateScale() {
+      const scaler = document.getElementById('stage-scaler');
+      const scaleX = window.innerWidth / 1920;
+      const scaleY = window.innerHeight / 1080;
+      const scale = Math.min(scaleX, scaleY);
+      scaler.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    }
+    window.addEventListener('resize', updateScale);
+    updateScale();
+
+    // HyperFrames Paused Deterministic GSAP Timeline
+    const tl = gsap.timeline({ paused: true });
+
+    // Register timeline for HyperFrames deterministic seeking and export
+    window.__timelines = window.__timelines || {};
+    window.__timelines["agentic_workflow"] = tl;
+
+    // Optional Studio preview playback controls
+    window.addEventListener('DOMContentLoaded', () => {
+      // Auto-play in standalone browser preview if not controlled by HyperFrames engine
+      if (!window.__HYPERFRAMES_CAPTURE__) {
+        tl.play();
+      }
+
+      window.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') {
+          tl.paused() ? tl.play() : tl.pause();
+        }
+        if (e.code === 'KeyR') {
+          tl.restart();
+        }
+      });
+    });
+
+    // --- TIMELINE CHOREOGRAPHY (10.0 SECONDS TOTAL) ---
+
+    // Initial state
+    gsap.set("#broadcast-header", { opacity: 0, y: -20 });
+    gsap.set(["#card-1", "#card-2", "#card-3"], { opacity: 0, y: 40 });
+    gsap.set(["#badge-1", "#badge-2", "#badge-3"], { scale: 0.8 });
+
+    // 0. TV Progress bar runs across whole 10.0s duration
+    tl.to("#progress-bar", { width: "100%", duration: 10, ease: "none" }, 0);
+
+    // 1. Broadcast Header entrance (0.2s - 0.8s)
+    tl.to("#broadcast-header", { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 0.2);
+
+    // 2. Card 1 (01 INCEPTION - Cyan) entrance (0.6s - 1.8s)
+    tl.to("#card-1", { opacity: 1, y: 0, duration: 0.9, ease: "back.out(1.4)" }, 0.6);
+    tl.to("#badge-1", { scale: 1, duration: 0.8, ease: "back.out(1.6)" }, 0.7);
+    tl.fromTo("#sonar-1",
+      { scale: 0.8, opacity: 1 },
+      { scale: 2.3, opacity: 0, duration: 0.8, ease: "power2.out" },
+      0.9
+    );
+
+    // 3. Card 2 (02 AI CODE - Purple) entrance (2.4s - 3.6s)
+    tl.to("#card-2", { opacity: 1, y: 0, duration: 0.9, ease: "back.out(1.4)" }, 2.4);
+    tl.to("#badge-2", { scale: 1, duration: 0.8, ease: "back.out(1.6)" }, 2.5);
+    tl.fromTo("#sonar-2",
+      { scale: 0.8, opacity: 1 },
+      { scale: 2.3, opacity: 0, duration: 0.8, ease: "power2.out" },
+      2.7
+    );
+
+    // 4. Card 3 (03 REVIEW - Emerald) entrance (4.2s - 5.4s)
+    tl.to("#card-3", { opacity: 1, y: 0, duration: 0.9, ease: "back.out(1.4)" }, 4.2);
+    tl.to("#badge-3", { scale: 1, duration: 0.8, ease: "back.out(1.6)" }, 4.3);
+    tl.fromTo("#sonar-3",
+      { scale: 0.8, opacity: 1 },
+      { scale: 2.3, opacity: 0, duration: 0.8, ease: "power2.out" },
+      4.5
+    );
+
+    // 5. Harmonic Pulse: Sequential glow breath across all 3 cards (5.8s - 8.2s)
+    tl.to("#card-1", { boxShadow: "0 0 55px rgba(56, 189, 248, 0.65), inset 0 0 35px rgba(56, 189, 248, 0.15)", duration: 0.6, yoyo: true, repeat: 1, ease: "power1.inOut" }, 5.8);
+    tl.to("#card-2", { boxShadow: "0 0 60px rgba(168, 85, 247, 0.7), inset 0 0 35px rgba(168, 85, 247, 0.18)", duration: 0.6, yoyo: true, repeat: 1, ease: "power1.inOut" }, 6.6);
+    tl.to("#card-3", { boxShadow: "0 0 55px rgba(16, 185, 129, 0.65), inset 0 0 35px rgba(16, 185, 129, 0.15)", duration: 0.6, yoyo: true, repeat: 1, ease: "power1.inOut" }, 7.4);
+
+    // 6. Final unified broadcast hold (8.2s - 10.0s)
+    tl.to(["#card-1", "#card-2", "#card-3"], {
+      opacity: 1,
+      y: 0,
+      duration: 0.4
+    }, 8.2);
+  </script>
+</body>
+</html>

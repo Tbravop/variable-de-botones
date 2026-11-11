@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es" data-fps="30" data-duration="10" data-width="1920" data-height="1080">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>El Proceso Editorial // Bento Grid 2+3 Escalera</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;800;900&family=Montserrat:wght@800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <style>
+    :root {
+      --bg-midnight: #0B0F19;
+      --card-bg: #131A2A;
+      --card-border: rgba(255, 255, 255, 0.08);
+
+      --cyan: #38BDF8;
+      --cyan-glow: rgba(56, 189, 248, 0.4);
+      --cyan-bg: rgba(56, 189, 248, 0.08);
+
+      --purple: #A855F7;
+      --purple-glow: rgba(168, 85, 247, 0.4);
+      --purple-bg: rgba(168, 85, 247, 0.08);
+
+      --emerald: #10B981;
+      --emerald-glow: rgba(16, 185, 129, 0.4);
+      --emerald-bg: rgba(16, 185, 129, 0.08);
+
+      --text-white: #F8FAFC;
+      --text-muted: #94A3B8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg-midnight);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    #stage-scaler {
+      position: absolute;
+      width: 1920px;
+      height: 1080px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      transform-origin: center center;
+      background: radial-gradient(circle at 50% 25%, #151F35 0%, #0B0F19 65%, #050811 100%);
+      overflow: hidden;
+      box-shadow: 0 0 120px rgba(0, 0, 0, 0.95);
+    }
+
+    /* Ambient Technical Background */
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .ambient-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(140px);
+      pointer-events: none;
+      opacity: 0.12;
+    }
+
+    .glow-cyan {
+      top: 15%;
+      left: 30%;
+      width: 500px;
+      height: 400px;
+      background: var(--cyan);
+    }
+
+    .glow-purple {
+      bottom: 20%;
+      left: 20%;
+      width: 450px;
+      height: 350px;
+      background: var(--purple);
+    }
+
+    .glow-emerald {
+      bottom: 20%;
+      right: 15%;
+      width: 450px;
+      height: 350px;
+      background: var(--emerald);
+    }
+
+    /* HEADER BANNER */
+    .header-bar {
+      position: absolute;
+      top: 60px;
+      left: 100px;
+      right: 100px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 20;
+    }
+
+    .header-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-bar h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      color: var(--text-white);
+      text-transform: uppercase;
+    }
+
+    .header-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 20px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 9999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--cyan);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+    }
+
+    .header-tag .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
+    }
+
+    /* BENTO GRID CONTAINER (2 + 3 ESCALERA) */
+    .bento-container {
+      position: absolute;
+      top: 170px;
+      left: 100px;
+      right: 100px;
+      height: 672px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      z-index: 10;
+    }
+
+    /* TOP ROW: 2 WIDE EQUAL CARDS */
+    .row-top {
+      width: 100%;
+      height: 320px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      position: relative;
+    }
+
+    /* BOTTOM ROW: 3 EQUAL CARDS */
+    .row-bottom {
+      width: 100%;
+      height: 320px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+      position: relative;
+    }
+
+    /* BASE BENTO CARD STYLING */
+    .bento-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      padding: 40px 30px;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    /* ICON CONTAINER */
+    .icon-box {
+      width: 96px;
+      height: 96px;
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .icon-box svg {
+      width: 50px;
+      height: 50px;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    .sonar-ring {
+      position: absolute;
+      inset: -12px;
+      border-radius: 30px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* CARD TITLE */
+    .card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      color: var(--text-white);
+      text-transform: uppercase;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .row-top .card-title {
+      font-size: 36px;
+    }
+
+    .card-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 900;
+    }
+
+    /* COLOR ACCENT VARIANTS */
+    /* Cyan Cards (1 & 2) */
+    .card-cyan {
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+    .card-cyan .icon-box {
+      background: var(--cyan-bg);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: var(--cyan);
+    }
+    .card-cyan .icon-box svg {
+      stroke: var(--cyan);
+      filter: drop-shadow(0 0 10px var(--cyan-glow));
+    }
+    .card-cyan .card-num {
+      color: var(--cyan);
+    }
+    .card-cyan.active {
+      border: 1px solid var(--cyan);
+      box-shadow: 0 0 35px var(--cyan-glow), 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 25px rgba(56, 189, 248, 0.08);
+    }
+
+    /* Purple Cards (3 & 4) */
+    .card-purple {
+      border: 1px solid rgba(168, 85, 247, 0.2);
+    }
+    .card-purple .icon-box {
+      background: var(--purple-bg);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      color: var(--purple);
+    }
+    .card-purple .icon-box svg {
+      stroke: var(--purple);
+      filter: drop-shadow(0 0 10px var(--purple-glow));
+    }
+    .card-purple .card-num {
+      color: var(--purple);
+    }
+    .card-purple.active {
+      border: 1px solid var(--purple);
+      box-shadow: 0 0 35px var(--purple-glow), 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 25px rgba(168, 85, 247, 0.08);
+    }
+
+    /* Emerald Card (5) */
+    .card-emerald {
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+    .card-emerald .icon-box {
+      background: var(--emerald-bg);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--emerald);
+    }
+    .card-emerald .icon-box svg {
+      stroke: var(--emerald);
+      filter: drop-shadow(0 0 10px var(--emerald-glow));
+    }
+    .card-emerald .card-num {
+      color: var(--emerald);
+    }
+    .card-emerald.active {
+      border: 1px solid var(--emerald);
+      box-shadow: 0 0 35px var(--emerald-glow), 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 25px rgba(16, 185, 129, 0.08);
+    }
+
+    /* CONNECTING LASER CONDUITS (SVG) */
+    #connecting-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .laser-track {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.08);
+      stroke-width: 2px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 4 4;
+    }
+
+    .laser-active {
+      fill: none;
+      stroke-width: 3px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .laser-packet {
+      fill: #FFFFFF;
+      opacity: 0;
+    }
+
+    /* TV PROGRESS BAR (BROADCAST SPEC) */
+    .tv-progress-track {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      z-index: 50;
+    }
+
+    .tv-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--cyan), var(--cyan), var(--purple), var(--purple), var(--emerald));
+      box-shadow: 0 0 15px var(--cyan);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="stage-scaler" class="clip" data-composition-id="writing_process" data-width="1920" data-height="1080" data-duration="10" data-start="0">
+    <!-- Ambient Backdrop -->
+    <div class="bg-grid"></div>
+    <div class="ambient-glow glow-cyan"></div>
+    <div class="ambient-glow glow-purple"></div>
+    <div class="ambient-glow glow-emerald"></div>
+
+    <!-- Header Broadcast -->
+    <header class="header-bar" id="header-bar">
+      <div class="header-title-wrap">
+        <h1>El Proceso Editorial</h1>
+      </div>
+      <div class="header-tag">
+        <div class="dot"></div>
+        Formato Escalera 2 + 3 Bento Grid
+      </div>
+    </header>
+
+    <!-- Bento Grid Container -->
+    <div class="bento-container">
+
+      <!-- Laser Connector Beams (Escalera Flow) -->
+      <svg id="connecting-svg" viewBox="0 0 1720 672">
+        <!-- 1 to 2 (Horizontal in Row 1) -->
+        <path class="laser-track" d="M 844 160 L 876 160" />
+        <path id="laser-1" class="laser-active" stroke="var(--cyan)" d="M 844 160 L 876 160" filter="drop-shadow(0 0 8px var(--cyan))" />
+        <circle id="pkt-1" class="laser-packet" r="5" filter="drop-shadow(0 0 10px var(--cyan))" />
+
+        <!-- 2 to 3 (Escalera transition: Row 1 Card 2 -> Row 2 Card 3) -->
+        <path class="laser-track" d="M 1298 320 L 1298 336 L 276 336 L 276 352" />
+        <path id="laser-2" class="laser-active" stroke="var(--purple)" d="M 1298 320 L 1298 336 L 276 336 L 276 352" filter="drop-shadow(0 0 8px var(--purple))" />
+        <circle id="pkt-2" class="laser-packet" r="5" filter="drop-shadow(0 0 10px var(--purple))" />
+
+        <!-- 3 to 4 (Horizontal in Row 2) -->
+        <path class="laser-track" d="M 552 512 L 584 512" />
+        <path id="laser-3" class="laser-active" stroke="var(--purple)" d="M 552 512 L 584 512" filter="drop-shadow(0 0 8px var(--purple))" />
+        <circle id="pkt-3" class="laser-packet" r="5" filter="drop-shadow(0 0 10px var(--purple))" />
+
+        <!-- 4 to 5 (Horizontal in Row 2) -->
+        <path class="laser-track" d="M 1136 512 L 1168 512" />
+        <path id="laser-4" class="laser-active" stroke="var(--emerald)" d="M 1136 512 L 1168 512" filter="drop-shadow(0 0 8px var(--emerald))" />
+        <circle id="pkt-4" class="laser-packet" r="5" filter="drop-shadow(0 0 10px var(--emerald))" />
+      </svg>
+
+      <!-- TOP ROW: 2 Wide Equal Cards -->
+      <div class="row-top">
+
+        <!-- CARD 1: 01 PREWRITING -->
+        <div class="bento-card card-cyan" id="card-1">
+          <div class="icon-box">
+            <!-- Lucide Lightbulb -->
+            <svg viewBox="0 0 24 24">
+              <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+              <path d="M9 18h6"/>
+              <path d="M10 22h4"/>
+            </svg>
+            <div class="sonar-ring" id="sonar-1" style="border: 2px solid var(--cyan);"></div>
+          </div>
+          <h2 class="card-title">
+            <span class="card-num">01</span> PREWRITING
+          </h2>
+        </div>
+
+        <!-- CARD 2: 02 DRAFTING -->
+        <div class="bento-card card-cyan" id="card-2">
+          <div class="icon-box">
+            <!-- Lucide Pen Nib / Tool -->
+            <svg viewBox="0 0 24 24">
+              <path d="m12 19 7-7 3 3-7 7-3-3z"/>
+              <path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+              <circle cx="11" cy="11" r="2"/>
+            </svg>
+            <div class="sonar-ring" id="sonar-2" style="border: 2px solid var(--cyan);"></div>
+          </div>
+          <h2 class="card-title">
+            <span class="card-num">02</span> DRAFTING
+          </h2>
+        </div>
+
+      </div>
+
+      <!-- BOTTOM ROW: 3 Equal Cards -->
+      <div class="row-bottom">
+
+        <!-- CARD 3: 03 REWRITING -->
+        <div class="bento-card card-purple" id="card-3">
+          <div class="icon-box">
+            <!-- Lucide Refresh Arrows (rotate-cw) -->
+            <svg viewBox="0 0 24 24">
+              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+              <path d="M3 3v5h5"/>
+              <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
+              <path d="M16 16h5v5"/>
+            </svg>
+            <div class="sonar-ring" id="sonar-3" style="border: 2px solid var(--purple);"></div>
+          </div>
+          <h2 class="card-title">
+            <span class="card-num">03</span> REWRITING
+          </h2>
+        </div>
+
+        <!-- CARD 4: 04 EDITING -->
+        <div class="bento-card card-purple" id="card-4">
+          <div class="icon-box">
+            <!-- Lucide Sliders -->
+            <svg viewBox="0 0 24 24">
+              <line x1="4" x2="4" y1="21" y2="14"/>
+              <line x1="4" x2="4" y1="10" y2="3"/>
+              <line x1="12" x2="12" y1="21" y2="12"/>
+              <line x1="12" x2="12" y1="8" y2="3"/>
+              <line x1="20" x2="20" y1="21" y2="16"/>
+              <line x1="20" x2="20" y1="12" y2="3"/>
+              <line x1="1" x2="7" y1="14" y2="14"/>
+              <line x1="9" x2="15" y1="8" y2="8"/>
+              <line x1="17" x2="23" y1="16" y2="16"/>
+            </svg>
+            <div class="sonar-ring" id="sonar-4" style="border: 2px solid var(--purple);"></div>
+          </div>
+          <h2 class="card-title">
+            <span class="card-num">04</span> EDITING
+          </h2>
+        </div>
+
+        <!-- CARD 5: 05 PUBLISHING -->
+        <div class="bento-card card-emerald" id="card-5">
+          <div class="icon-box">
+            <!-- Lucide Check Circle -->
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+            <div class="sonar-ring" id="sonar-5" style="border: 2px solid var(--emerald);"></div>
+          </div>
+          <h2 class="card-title">
+            <span class="card-num">05</span> PUBLISHING
+          </h2>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- TV Progress Bar -->
+    <div class="tv-progress-track">
+      <div class="tv-progress-fill" id="progress-bar"></div>
+    </div>
+  </div>
+
+  <script>
+    // Responsive stage scaling keeping 1920x1080 canvas
+    function updateScale() {
+      const scaler = document.getElementById('stage-scaler');
+      if (!scaler) return;
+      const scaleX = window.innerWidth / 1920;
+      const scaleY = window.innerHeight / 1080;
+      const scale = Math.min(scaleX, scaleY);
+      scaler.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    }
+    window.addEventListener('resize', updateScale);
+    updateScale();
+
+    // GSAP Animation Timeline for HyperFrames
+    window.addEventListener('DOMContentLoaded', () => {
+      const tl = gsap.timeline({ paused: true });
+
+      // Expose timeline to HyperFrames render engine
+      window.__timelines = window.__timelines || {};
+      window.__timelines["writing_process"] = tl;
+
+      // TV Progress Bar (0s to 10s exact)
+      tl.to("#progress-bar", { width: "100%", duration: 10, ease: "none" }, 0);
+
+      // Prep laser path dashes
+      const setupLaser = (id) => {
+        const p = document.getElementById(id);
+        if (!p) return { path: null, len: 0 };
+        const len = p.getTotalLength() + 4;
+        gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+        return { path: p, len };
+      };
+
+      const l1 = setupLaser("laser-1");
+      const l2 = setupLaser("laser-2");
+      const l3 = setupLaser("laser-3");
+      const l4 = setupLaser("laser-4");
+
+      // Initial visual states
+      gsap.set("#header-bar", { opacity: 0, y: -20 });
+      gsap.set(".bento-card", { opacity: 0, y: 35 });
+
+      // 1. Header Reveal (0.2s)
+      tl.to("#header-bar", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.2);
+
+      // 2. Card 1 Activation (0.6s)
+      tl.to("#card-1", {
+        opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.5)",
+        onStart: () => document.getElementById("card-1").classList.add("active")
+      }, 0.6);
+      tl.fromTo("#sonar-1", { scale: 0.8, opacity: 1 }, { scale: 2.2, opacity: 0, duration: 0.6, ease: "power2.out" }, 0.8);
+
+      // Stream 1 -> 2 (1.8s)
+      tl.to(l1.path, { strokeDashoffset: 0, duration: 0.45, ease: "power2.inOut" }, 1.8);
+      tl.set("#pkt-1", { opacity: 1 }, 1.8);
+      tl.to("#pkt-1", {
+        duration: 0.45, ease: "power2.inOut",
+        onUpdate: function() {
+          const pt = l1.path.getPointAtLength(this.progress() * l1.len);
+          const el = document.getElementById("pkt-1");
+          el.setAttribute("cx", pt.x); el.setAttribute("cy", pt.y);
+        }
+      }, 1.8);
+      tl.set("#pkt-1", { opacity: 0 }, 2.25);
+
+      // 3. Card 2 Activation (2.2s)
+      tl.to("#card-2", {
+        opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.5)",
+        onStart: () => {
+          document.getElementById("card-1").classList.remove("active");
+          document.getElementById("card-2").classList.add("active");
+        }
+      }, 2.2);
+      tl.fromTo("#sonar-2", { scale: 0.8, opacity: 1 }, { scale: 2.2, opacity: 0, duration: 0.6, ease: "power2.out" }, 2.4);
+
+      // Stream 2 -> 3 (3.4s Escalera conduit from Row 1 to Row 2)
+      tl.to(l2.path, { strokeDashoffset: 0, duration: 0.55, ease: "power2.inOut" }, 3.4);
+      tl.set("#pkt-2", { opacity: 1 }, 3.4);
+      tl.to("#pkt-2", {
+        duration: 0.55, ease: "power2.inOut",
+        onUpdate: function() {
+          const pt = l2.path.getPointAtLength(this.progress() * l2.len);
+          const el = document.getElementById("pkt-2");
+          el.setAttribute("cx", pt.x); el.setAttribute("cy", pt.y);
+        }
+      }, 3.4);
+      tl.set("#pkt-2", { opacity: 0 }, 3.95);
+
+      // 4. Card 3 Activation (3.8s)
+      tl.to("#card-3", {
+        opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.5)",
+        onStart: () => {
+          document.getElementById("card-2").classList.remove("active");
+          document.getElementById("card-3").classList.add("active");
+        }
+      }, 3.8);
+      tl.fromTo("#sonar-3", { scale: 0.8, opacity: 1 }, { scale: 2.2, opacity: 0, duration: 0.6, ease: "power2.out" }, 4.0);
+
+      // Stream 3 -> 4 (5.0s)
+      tl.to(l3.path, { strokeDashoffset: 0, duration: 0.45, ease: "power2.inOut" }, 5.0);
+      tl.set("#pkt-3", { opacity: 1 }, 5.0);
+      tl.to("#pkt-3", {
+        duration: 0.45, ease: "power2.inOut",
+        onUpdate: function() {
+          const pt = l3.path.getPointAtLength(this.progress() * l3.len);
+          const el = document.getElementById("pkt-3");
+          el.setAttribute("cx", pt.x); el.setAttribute("cy", pt.y);
+        }
+      }, 5.0);
+      tl.set("#pkt-3", { opacity: 0 }, 5.45);
+
+      // 5. Card 4 Activation (5.4s)
+      tl.to("#card-4", {
+        opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.5)",
+        onStart: () => {
+          document.getElementById("card-3").classList.remove("active");
+          document.getElementById("card-4").classList.add("active");
+        }
+      }, 5.4);
+      tl.fromTo("#sonar-4", { scale: 0.8, opacity: 1 }, { scale: 2.2, opacity: 0, duration: 0.6, ease: "power2.out" }, 5.6);
+
+      // Stream 4 -> 5 (6.6s)
+      tl.to(l4.path, { strokeDashoffset: 0, duration: 0.45, ease: "power2.inOut" }, 6.6);
+      tl.set("#pkt-4", { opacity: 1 }, 6.6);
+      tl.to("#pkt-4", {
+        duration: 0.45, ease: "power2.inOut",
+        onUpdate: function() {
+          const pt = l4.path.getPointAtLength(this.progress() * l4.len);
+          const el = document.getElementById("pkt-4");
+          el.setAttribute("cx", pt.x); el.setAttribute("cy", pt.y);
+        }
+      }, 6.6);
+      tl.set("#pkt-4", { opacity: 0 }, 7.05);
+
+      // 6. Card 5 Activation (7.0s)
+      tl.to("#card-5", {
+        opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.5)",
+        onStart: () => {
+          document.getElementById("card-4").classList.remove("active");
+          document.getElementById("card-5").classList.add("active");
+        }
+      }, 7.0);
+      tl.fromTo("#sonar-5", { scale: 0.8, opacity: 1 }, { scale: 2.3, opacity: 0, duration: 0.6, ease: "power2.out" }, 7.2);
+
+      // 7. Full Illumination Final Hold (8.4s - 10.0s)
+      tl.to(".bento-card", {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        onStart: () => {
+          document.querySelectorAll(".bento-card").forEach(c => c.classList.add("active"));
+        }
+      }, 8.4);
+
+      // Keyboard shortcuts for manual presentation / playback
+      window.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') tl.paused(!tl.paused());
+        if (e.code === 'KeyR') tl.restart();
+      });
+
+      // Auto-play when opened standalone in a browser
+      tl.play();
+    });
+  </script>
+</body>
+</html>

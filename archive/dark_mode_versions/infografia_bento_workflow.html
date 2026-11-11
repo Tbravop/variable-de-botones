@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="es" data-fps="30" data-duration="10" data-width="1920" data-height="1080">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>Bento Grid AI Workflow // 2026 Neofuturistic Edition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700;800&family=Montserrat:wght@700;800;900&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <style>
+    :root {
+      --bg-midnight: #0B0F19;
+      --card-bg: rgba(19, 26, 42, 0.92);
+      --card-border: #232E47;
+      --card-border-hover: rgba(255, 255, 255, 0.25);
+      
+      --cyan-electric: #38BDF8;
+      --cyan-glow: rgba(56, 189, 248, 0.4);
+      
+      --purple-neon: #A855F7;
+      --purple-glow: rgba(168, 85, 247, 0.45);
+      
+      --emerald-accent: #10B981;
+      --emerald-glow: rgba(16, 185, 129, 0.4);
+      
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --text-dark: #070B14;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #050811;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    #stage-scaler {
+      position: absolute;
+      width: 1920px;
+      height: 1080px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      transform-origin: center center;
+      background: radial-gradient(circle at 50% 15%, #151F38 0%, #0B0F19 65%, #050811 100%);
+      overflow: hidden;
+      box-shadow: 0 0 120px rgba(0, 0, 0, 0.95);
+    }
+
+    /* Subtle Architectural Grid */
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    /* Ambient Glow Halos (Neofuturistic Depth) */
+    .halo-purple {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .halo-cyan {
+      position: absolute;
+      top: 35%;
+      left: 20%;
+      width: 500px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
+      filter: blur(70px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .halo-emerald {
+      position: absolute;
+      top: 35%;
+      right: 20%;
+      width: 500px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 70%);
+      filter: blur(70px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* MAIN BENTO CONTAINER (1920x1080 Layout with Subtitle Safety) */
+    .bento-wrapper {
+      position: absolute;
+      top: 48px;
+      left: 72px;
+      right: 72px;
+      bottom: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      z-index: 10;
+    }
+
+    /* COMMON BENTO CARD STYLING */
+    .bento-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Subtle Glass Glare Accent */
+    .bento-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+    }
+
+    /* TOP FULL-WIDTH HEADER CARD (Height: 120px) */
+    .bento-header {
+      width: 100%;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .header-logo-icon {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(168, 85, 247, 0.2));
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .header-logo-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+    }
+
+    .header-title-box h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      color: var(--text-main);
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+
+    .header-title-box p {
+      font-size: 14px;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: rgba(168, 85, 247, 0.12);
+      border: 1px solid var(--purple-neon);
+      border-radius: 9999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--purple-neon);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      box-shadow: 0 0 16px var(--purple-glow);
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--purple-neon);
+      box-shadow: 0 0 8px var(--purple-neon);
+      animation: pulse-dot 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.5; }
+    }
+
+    .spec-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+    }
+
+    /* MIDDLE SECTION: 3 CONNECTED MODULAR BENTO CARDS */
+    .bento-middle {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr 1fr;
+      gap: 24px;
+      height: 520px;
+      position: relative;
+    }
+
+    /* SVG DATA FLOW CONNECTORS BETWEEN CARDS */
+    #bento-flow-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .flow-wire {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.1);
+      stroke-width: 4px;
+      stroke-linecap: round;
+      stroke-dasharray: 6 6;
+    }
+
+    .flow-laser {
+      fill: none;
+      stroke-width: 4px;
+      stroke-linecap: round;
+      stroke-dashoffset: 1000;
+    }
+
+    .laser-cyan {
+      stroke: var(--cyan-electric);
+      filter: drop-shadow(0 0 10px var(--cyan-electric));
+    }
+
+    .laser-purple {
+      stroke: var(--purple-neon);
+      filter: drop-shadow(0 0 12px var(--purple-neon));
+    }
+
+    .data-packet {
+      fill: #FFFFFF;
+      opacity: 0;
+    }
+
+    /* CARD 1: LEFT CARD (ELECTRIC CYAN: HUMAN INCEPTION) */
+    .card-inception {
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-top: 3px solid var(--cyan-electric);
+    }
+
+    .card-top-tag {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .phase-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .card-icon-box {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1.5px solid var(--cyan-electric);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cyan-electric);
+      box-shadow: 0 0 25px var(--cyan-glow);
+      margin: 16px 0;
+      position: relative;
+    }
+
+    .card-icon-box svg {
+      width: 38px;
+      height: 38px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+    }
+
+    .sonar-ring {
+      position: absolute;
+      inset: -8px;
+      border-radius: 20px;
+      border: 2px solid var(--cyan-electric);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .card-heading {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      color: var(--text-main);
+      text-transform: uppercase;
+      line-height: 1.15;
+    }
+
+    .card-subtext {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-top: 8px;
+    }
+
+    /* Minimalist Schematic Window inside cards */
+    .schematic-box {
+      width: 100%;
+      height: 160px;
+      background: rgba(7, 11, 20, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .schematic-box svg {
+      width: 90px;
+      height: 90px;
+      stroke: var(--cyan-electric);
+      fill: none;
+      stroke-width: 1.8;
+      filter: drop-shadow(0 0 10px var(--cyan-glow));
+    }
+
+    /* CARD 2: CENTER HERO CARD (NEON PURPLE: AGENTIC GENERATION) */
+    .card-hero-agentic {
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1.5px solid var(--purple-neon);
+      box-shadow: 0 20px 60px -15px var(--purple-glow), inset 0 0 40px rgba(168, 85, 247, 0.12);
+      background: linear-gradient(180deg, rgba(168, 85, 247, 0.12) 0%, rgba(19, 26, 42, 0.95) 100%);
+      transform: scale(1.02);
+      z-index: 5;
+    }
+
+    .card-hero-agentic .phase-badge {
+      background: rgba(168, 85, 247, 0.18);
+      border-color: var(--purple-neon);
+      color: var(--purple-neon);
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.35);
+    }
+
+    .hero-icon-3d {
+      width: 88px;
+      height: 88px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(11, 15, 25, 0.9));
+      border: 2px solid var(--purple-neon);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      box-shadow: 0 0 35px var(--purple-glow);
+      position: relative;
+    }
+
+    .hero-icon-3d svg {
+      width: 48px;
+      height: 48px;
+      stroke: var(--purple-neon);
+      fill: none;
+      stroke-width: 2;
+      filter: drop-shadow(0 0 10px var(--purple-neon));
+    }
+
+    .card-hero-agentic .card-heading {
+      font-size: 34px;
+      color: #FFFFFF;
+      text-shadow: 0 0 24px var(--purple-glow);
+    }
+
+    /* 3D Isometric AI Chip Graphic */
+    .hero-chip-graphic {
+      width: 100%;
+      height: 170px;
+      background: rgba(11, 15, 25, 0.85);
+      border: 1.5px solid rgba(168, 85, 247, 0.3);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: inset 0 0 30px rgba(168, 85, 247, 0.15);
+    }
+
+    .chip-svg {
+      width: 120px;
+      height: 120px;
+      stroke: var(--purple-neon);
+      fill: none;
+      stroke-width: 1.8;
+      filter: drop-shadow(0 0 16px var(--purple-glow));
+    }
+
+    /* CARD 3: RIGHT CARD (EMERALD ACCENT: HUMAN REVIEW) */
+    .card-review {
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-top: 3px solid var(--emerald-accent);
+    }
+
+    .card-review .card-icon-box {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: var(--emerald-accent);
+      color: var(--emerald-accent);
+      box-shadow: 0 0 25px var(--emerald-glow);
+    }
+
+    .card-review .schematic-box svg {
+      stroke: var(--emerald-accent);
+      filter: drop-shadow(0 0 10px var(--emerald-glow));
+    }
+
+    /* BOTTOM ROW: 2 COMPACT HORIZONTAL CARDS (DELIVERABLES & METRICS) */
+    .bento-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      height: 180px;
+    }
+
+    .bottom-card {
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .deliverable-left {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .deliv-header-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--cyan-electric);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .deliv-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-main);
+      text-transform: uppercase;
+    }
+
+    .deliv-tags-cluster {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tech-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tag-cyan {
+      border-color: rgba(56, 189, 248, 0.35);
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--cyan-electric);
+    }
+
+    .tag-emerald {
+      border-color: rgba(16, 185, 129, 0.35);
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--emerald-accent);
+    }
+
+    .tag-purple {
+      border-color: rgba(168, 85, 247, 0.35);
+      background: rgba(168, 85, 247, 0.1);
+      color: var(--purple-neon);
+    }
+
+    /* BOTTOM PROGRESS TRACK */
+    .tv-progress-track {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      z-index: 50;
+    }
+
+    .tv-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--cyan-electric), var(--purple-neon), var(--emerald-accent));
+      box-shadow: 0 0 16px var(--purple-neon);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="stage-scaler" data-composition-id="bento_ai_workflow" data-width="1920" data-height="1080" data-duration="10">
+    <div class="bg-grid"></div>
+
+    <!-- Ambient Glow Halos -->
+    <div class="halo-purple"></div>
+    <div class="halo-cyan"></div>
+    <div class="halo-emerald"></div>
+
+    <!-- MAIN BENTO GRID CONTAINER -->
+    <div class="bento-wrapper">
+
+      <!-- 1. TOP FULL-WIDTH HEADER CARD -->
+      <div class="bento-card bento-header" id="bento-hdr">
+        <div class="header-left">
+          <div class="header-logo-icon">
+            <svg viewBox="0 0 24 24">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+              <polyline points="2 17 12 22 22 17"/>
+              <polyline points="2 12 12 17 22 12"/>
+            </svg>
+          </div>
+          <div class="header-title-box">
+            <h1>WORKFLOW DE DESARROLLO AGÉNTICO</h1>
+            <p>ARQUITECTURA NEOFUTURISTA // INCEPTION &bull; GENERACIÓN AUTÓNOMA &bull; AUDITORÍA</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="pill-badge">
+            <div class="live-dot"></div>
+            PIPELINE 2026
+          </div>
+          <div class="spec-pill">MODULAR BENTO UI &bull; 10.0s</div>
+        </div>
+      </div>
+
+      <!-- 2. MIDDLE SECTION: 3 CONNECTED MODULAR CARDS -->
+      <div class="bento-middle" id="bento-mid">
+
+        <!-- SVG CONNECTING DATA WIRES -->
+        <svg id="bento-flow-svg" viewBox="0 0 1776 520">
+          <!-- Wire 1: Left Card to Center Hero (Right center of left to left center of middle) -->
+          <path class="flow-wire" d="M 470 260 L 536 260" />
+          <path id="laser-1" class="flow-laser laser-cyan" d="M 470 260 L 536 260" />
+          <circle id="pkt-1" class="data-packet" r="7" filter="drop-shadow(0 0 10px var(--cyan-electric))" />
+
+          <!-- Wire 2: Center Hero to Right Card (Right center of middle to left center of right) -->
+          <path class="flow-wire" d="M 1240 260 L 1306 260" />
+          <path id="laser-2" class="flow-laser laser-purple" d="M 1240 260 L 1306 260" />
+          <circle id="pkt-2" class="data-packet" r="7" filter="drop-shadow(0 0 10px var(--purple-neon))" />
+        </svg>
+
+        <!-- CARD 1: LEFT (ELECTRIC CYAN: HUMAN INCEPTION) -->
+        <div class="bento-card card-inception" id="card-1">
+          <div class="card-top-tag">
+            <div class="phase-badge" style="color: var(--cyan-electric); border-color: rgba(56,189,248,0.3);">BLOQUE 01</div>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-muted); font-weight: 700;">HUMAN-DRIVEN</span>
+          </div>
+
+          <div>
+            <div class="card-icon-box">
+              <svg viewBox="0 0 24 24">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              <div class="sonar-ring" id="sonar-1"></div>
+            </div>
+            <h2 class="card-heading">HUMAN<br>INCEPTION</h2>
+            <p class="card-subtext">Definición de visión arquitectónica, restricciones de negocio y especificaciones de contrato.</p>
+          </div>
+
+          <!-- Schematic Blueprint SVG -->
+          <div class="schematic-box">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="3" width="18" height="18" rx="2" stroke-dasharray="4 2"/>
+              <path d="M9 3v18"/>
+              <path d="M15 9h6"/>
+              <path d="M15 15h6"/>
+              <circle cx="6" cy="7" r="1.5" fill="currentColor"/>
+              <circle cx="6" cy="12" r="1.5" fill="currentColor"/>
+              <circle cx="6" cy="17" r="1.5" fill="currentColor"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- CARD 2: CENTER HERO (NEON PURPLE: AGENTIC GENERATION) -->
+        <div class="bento-card card-hero-agentic" id="card-2">
+          <div class="card-top-tag">
+            <div class="phase-badge">BLOQUE 02 // HERO CORE</div>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--purple-neon); font-weight: 800;">AUTONOMOUS AI</span>
+          </div>
+
+          <div>
+            <div class="hero-icon-3d">
+              <svg viewBox="0 0 24 24">
+                <rect x="4" y="4" width="16" height="16" rx="2"/>
+                <rect x="9" y="9" width="6" height="6"/>
+                <line x1="9" y1="1" x2="9" y2="4"/>
+                <line x1="15" y1="1" x2="15" y2="4"/>
+                <line x1="9" y1="20" x2="9" y2="23"/>
+                <line x1="15" y1="20" x2="15" y2="23"/>
+                <line x1="20" y1="9" x2="23" y2="9"/>
+                <line x1="20" y1="15" x2="23" y2="15"/>
+                <line x1="1" y1="9" x2="4" y2="9"/>
+                <line x1="1" y1="15" x2="4" y2="15"/>
+              </svg>
+              <div class="sonar-ring" id="sonar-2" style="border-color: var(--purple-neon);"></div>
+            </div>
+            <h2 class="card-heading">AGENTIC<br>GENERATION</h2>
+            <p class="card-subtext" style="color: #CBD5E1;">Síntesis neuronal autónoma, razonamiento paso a paso, codificación y suite de pruebas deterministas.</p>
+          </div>
+
+          <!-- 3D Isometric AI Chip Graphic -->
+          <div class="hero-chip-graphic">
+            <svg class="chip-svg" viewBox="0 0 100 100">
+              <!-- Isometric Chip Core -->
+              <polygon points="50,15 85,35 85,75 50,95 15,75 15,35" stroke="var(--purple-neon)" stroke-width="2.5" fill="rgba(168,85,247,0.15)"/>
+              <polygon points="50,30 72,42 72,66 50,78 28,66 28,42" stroke="#FFFFFF" stroke-width="2" fill="rgba(255,255,255,0.08)"/>
+              <!-- Radiant Bus Lines -->
+              <line x1="50" y1="15" x2="50" y2="5" stroke="var(--purple-neon)" stroke-width="2"/>
+              <line x1="85" y1="35" x2="95" y2="28" stroke="var(--purple-neon)" stroke-width="2"/>
+              <line x1="85" y1="75" x2="95" y2="82" stroke="var(--purple-neon)" stroke-width="2"/>
+              <line x1="50" y1="95" x2="50" y2="105" stroke="var(--purple-neon)" stroke-width="2"/>
+              <line x1="15" y1="75" x2="5" y2="82" stroke="var(--purple-neon)" stroke-width="2"/>
+              <line x1="15" y1="35" x2="5" y2="28" stroke="var(--purple-neon)" stroke-width="2"/>
+              <!-- Core Neural Spark -->
+              <circle cx="50" cy="54" r="6" fill="var(--purple-neon)"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- CARD 3: RIGHT (EMERALD ACCENT: HUMAN REVIEW) -->
+        <div class="bento-card card-review" id="card-3">
+          <div class="card-top-tag">
+            <div class="phase-badge" style="color: var(--emerald-accent); border-color: rgba(16,185,129,0.3);">BLOQUE 03</div>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-muted); font-weight: 700;">HUMAN VERIFIED</span>
+          </div>
+
+          <div>
+            <div class="card-icon-box">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <polyline points="9 12 11 14 15 10"/>
+              </svg>
+              <div class="sonar-ring" id="sonar-3" style="border-color: var(--emerald-accent);"></div>
+            </div>
+            <h2 class="card-heading">HUMAN<br>REVIEW</h2>
+            <p class="card-subtext">Validación técnica rigurosa: escaneo de vulnerabilidades, auditoría de pruebas y merge a producción.</p>
+          </div>
+
+          <!-- Schematic Shield & Merge -->
+          <div class="schematic-box">
+            <svg viewBox="0 0 24 24">
+              <circle cx="18" cy="18" r="3"/>
+              <circle cx="6" cy="6" r="3"/>
+              <circle cx="6" cy="18" r="3"/>
+              <path d="M6 9v6"/>
+              <path d="M9 6h5a4 4 0 0 1 4 4v5"/>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 3. BOTTOM ROW: 2 COMPACT HORIZONTAL CARDS (DELIVERABLES) -->
+      <div class="bento-bottom" id="bento-btm">
+
+        <!-- Deliverables 1: Inputs & Design Spec -->
+        <div class="bento-card bottom-card" id="card-deliv-1">
+          <div class="deliverable-left">
+            <span class="deliv-header-tag">[ENTREGABLES ENTRADA]</span>
+            <h3 class="deliv-title">ESPECIFICACIÓN &amp; PLAN DE ARQUITECTURA</h3>
+          </div>
+          <div class="deliv-tags-cluster">
+            <div class="tech-tag tag-cyan">
+              <span>●</span> REQS v2.4
+            </div>
+            <div class="tech-tag tag-purple">
+              <span>⚡</span> AST SPEC
+            </div>
+            <div class="tech-tag">
+              <span>📐</span> CONTRACT JSON
+            </div>
+          </div>
+        </div>
+
+        <!-- Deliverables 2: Audited Code & Production Deploy -->
+        <div class="bento-card bottom-card" id="card-deliv-2">
+          <div class="deliverable-left">
+            <span class="deliv-header-tag" style="color: var(--emerald-accent);">[RESULTADO VALIDADO]</span>
+            <h3 class="deliv-title">MÓDULOS VERIFICADOS &amp; DESPLIEGUE</h3>
+          </div>
+          <div class="deliv-tags-cluster">
+            <div class="tech-tag tag-emerald">
+              <span>✓</span> TESTS 100% PASS
+            </div>
+            <div class="tech-tag tag-emerald">
+              <span>🛡️</span> ZERO CVE AUDIT
+            </div>
+            <div class="tech-tag tag-emerald">
+              <span>🚀</span> PROD MERGE
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- SUBTITLE SAFE TV PROGRESS BAR -->
+    <div class="tv-progress-track">
+      <div class="tv-progress-fill" id="progress-bar"></div>
+    </div>
+  </div>
+
+  <script>
+    function updateScale() {
+      const scaler = document.getElementById('stage-scaler');
+      const scaleX = window.innerWidth / 1920;
+      const scaleY = window.innerHeight / 1080;
+      const scale = Math.min(scaleX, scaleY);
+      scaler.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    }
+    window.addEventListener('resize', updateScale);
+    updateScale();
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.5 });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') tl.paused(!tl.paused());
+        if (e.code === 'KeyR') tl.restart();
+      });
+
+      tl.to("#progress-bar", { width: "100%", duration: 10, ease: "none" }, 0);
+
+      const p1 = document.getElementById("laser-1");
+      const len1 = p1.getTotalLength() + 5;
+      gsap.set(p1, { strokeDasharray: len1, strokeDashoffset: len1 });
+
+      const p2 = document.getElementById("laser-2");
+      const len2 = p2.getTotalLength() + 5;
+      gsap.set(p2, { strokeDasharray: len2, strokeDashoffset: len2 });
+
+      // Initial state
+      gsap.set(["#bento-hdr", "#card-1", "#card-2", "#card-3", "#card-deliv-1", "#card-deliv-2"], {
+        opacity: 0,
+        y: 30
+      });
+
+      // 1. Header entrance (0.2s)
+      tl.to("#bento-hdr", { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, 0.2);
+
+      // 2. Card 1 (Human Inception) entrance (0.8s)
+      tl.to("#card-1", { opacity: 1, y: 0, duration: 0.8, ease: "back.out(1.4)" }, 0.8);
+      tl.fromTo("#sonar-1",
+        { scale: 0.8, opacity: 1 },
+        { scale: 2.2, opacity: 0, duration: 0.7, ease: "power2.out" },
+        1.1
+      );
+
+      // 3. Laser stream from Card 1 to Hero Card 2 (2.2s)
+      tl.to(p1, { strokeDashoffset: 0, duration: 0.7, ease: "power2.inOut" }, 2.2);
+      tl.set("#pkt-1", { opacity: 1 }, 2.2);
+      tl.to("#pkt-1", {
+        duration: 0.7,
+        ease: "power2.inOut",
+        onUpdate: function() {
+          const pt = p1.getPointAtLength(this.progress() * len1);
+          const el = document.getElementById("pkt-1");
+          el.setAttribute("cx", pt.x);
+          el.setAttribute("cy", pt.y);
+        }
+      }, 2.2);
+      tl.set("#pkt-1", { opacity: 0 }, 2.9);
+
+      // 4. Hero Card 2 (Agentic Generation) entrance (2.7s)
+      tl.to("#card-2", { opacity: 1, y: 0, duration: 0.9, ease: "back.out(1.5)" }, 2.7);
+      tl.fromTo("#sonar-2",
+        { scale: 0.8, opacity: 1 },
+        { scale: 2.4, opacity: 0, duration: 0.8, ease: "power2.out" },
+        3.1
+      );
+
+      // Chip breathing pulse
+      tl.to(".hero-chip-graphic", {
+        boxShadow: "0 0 45px rgba(168, 85, 247, 0.4), inset 0 0 35px rgba(168, 85, 247, 0.3)",
+        duration: 1,
+        yoyo: true,
+        repeat: 3,
+        ease: "sine.inOut"
+      }, 3.3);
+
+      // 5. Laser stream from Hero Card 2 to Card 3 (5.4s)
+      tl.to(p2, { strokeDashoffset: 0, duration: 0.7, ease: "power2.inOut" }, 5.4);
+      tl.set("#pkt-2", { opacity: 1 }, 5.4);
+      tl.to("#pkt-2", {
+        duration: 0.7,
+        ease: "power2.inOut",
+        onUpdate: function() {
+          const pt = p2.getPointAtLength(this.progress() * len2);
+          const el = document.getElementById("pkt-2");
+          el.setAttribute("cx", pt.x);
+          el.setAttribute("cy", pt.y);
+        }
+      }, 5.4);
+      tl.set("#pkt-2", { opacity: 0 }, 6.1);
+
+      // 6. Card 3 (Human Review) entrance (5.9s)
+      tl.to("#card-3", { opacity: 1, y: 0, duration: 0.8, ease: "back.out(1.4)" }, 5.9);
+      tl.fromTo("#sonar-3",
+        { scale: 0.8, opacity: 1 },
+        { scale: 2.2, opacity: 0, duration: 0.7, ease: "power2.out" },
+        6.2
+      );
+
+      // 7. Bottom deliverables reveal (7.2s)
+      tl.to(["#card-deliv-1", "#card-deliv-2"], {
+        opacity: 1,
+        y: 0,
+        stagger: 0.25,
+        duration: 0.7,
+        ease: "power2.out"
+      }, 7.2);
+
+      // 8. Final illumination harmony (8.8s - 10s)
+      tl.to([".bento-card"], {
+        boxShadow: "0 20px 50px rgba(0, 0, 0, 0.7)",
+        duration: 0.6
+      }, 8.8);
+    });
+  </script>
+</body>
+</html>
