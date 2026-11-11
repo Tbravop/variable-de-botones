@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="1280" height="800" fill="none">
+  <defs>
+    <!-- Cyan Neon Glow Filter -->
+    <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0.024   0 0 0 0 0.714   0 0 0 0 0.831  0 0 0 0.8 0" result="cyanGlow" />
+      <feMerge>
+        <feMergeNode in="cyanGlow" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="subtle-shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#020617" flood-opacity="0.65" />
+    </filter>
+
+    <!-- Metallic & Slate Gradients -->
+    <linearGradient id="chassisGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="50%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#0B1120" />
+    </linearGradient>
+
+    <linearGradient id="cyanLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06B6D4" stop-opacity="1" />
+      <stop offset="70%" stop-color="#06B6D4" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.2" />
+    </linearGradient>
+
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#64748B" />
+      <stop offset="100%" stop-color="#334155" />
+    </linearGradient>
+  </defs>
+
+  <style>
+    .mono-label { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 11px; letter-spacing: 0.12em; fill: #94A3B8; text-transform: uppercase; }
+    .host-name { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 20px; font-weight: 700; letter-spacing: 0.05em; fill: #F8FAFC; text-transform: uppercase; }
+    .host-role { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; fill: #38BDF8; text-transform: uppercase; }
+    .handle-text { font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: #94A3B8; }
+  </style>
+
+  <!-- ==================== MAIN CHASSIS FRAME ==================== -->
+  <!-- Outer Chassis Boundary (Holds the 16:9 Inner Camera Cutout: 1200x675) -->
+  <g id="FrameChassis" filter="url(#subtle-shadow)">
+    <!-- Chassis Background Contour with Chamfered Corners -->
+    <path d="
+      M 40 40 
+      L 1240 40 
+      L 1256 56 
+      L 1256 715 
+      L 1240 731 
+      L 580 731 
+      L 570 780 
+      L 40 780 
+      L 24 764 
+      L 24 56 
+      Z" 
+      fill="url(#chassisGrad)" 
+      stroke="url(#borderGrad)" 
+      stroke-width="1.5" />
+
+    <!-- 16:9 Camera Viewport Aperture Cutout Guide (1200 x 675) -->
+    <!-- Center window starts at X=40, Y=40, W=1200, H=675 -->
+    <rect x="40" y="40" width="1200" height="675" fill="none" stroke="#475569" stroke-width="2" />
+    
+    <!-- 1px Sharp Inner Neon Cyan Edge Highlight -->
+    <rect x="41" y="41" width="1198" height="673" fill="none" stroke="#06B6D4" stroke-width="1" stroke-opacity="0.9" filter="url(#glow-cyan)" />
+  </g>
+
+  <!-- ==================== BROADCAST CORNER BRACKETS & RETICLES ==================== -->
+  <g id="CornerAccents" stroke="#06B6D4" stroke-width="2" fill="none">
+    <!-- Top-Left Corner Bracket -->
+    <path d="M 40 70 L 40 40 L 70 40" />
+    <circle cx="40" cy="40" r="2.5" fill="#06B6D4" />
+
+    <!-- Top-Right Corner Bracket -->
+    <path d="M 1210 40 L 1240 40 L 1240 70" />
+    <circle cx="1240" cy="40" r="2.5" fill="#06B6D4" />
+
+    <!-- Bottom-Right Corner Bracket -->
+    <path d="M 1240 685 L 1240 715 L 1210 715" />
+    <circle cx="1240" cy="715" r="2.5" fill="#06B6D4" />
+
+    <!-- Bottom-Left Corner Bracket -->
+    <path d="M 70 715 L 40 715 L 40 685" />
+    <circle cx="40" cy="715" r="2.5" fill="#06B6D4" />
+  </g>
+
+  <!-- Precision Measurement Ticks / Crosshairs (Sides & Center) -->
+  <g id="TelemetryTicks" stroke="#475569" stroke-width="1">
+    <!-- Top Center Mark -->
+    <line x1="640" y1="34" x2="640" y2="40" stroke="#06B6D4" stroke-width="1.5" />
+    <line x1="630" y1="37" x2="650" y2="37" stroke="#06B6D4" stroke-width="1" />
+
+    <!-- Bottom Center Mark -->
+    <line x1="640" y1="715" x2="640" y2="721" stroke="#06B6D4" stroke-width="1.5" />
+
+    <!-- Left Center Tick -->
+    <line x1="34" y1="377.5" x2="40" y2="377.5" />
+
+    <!-- Right Center Tick -->
+    <line x1="1240" y1="377.5" x2="1246" y2="377.5" />
+  </g>
+
+  <!-- ==================== TOP BROADCAST STATUS BAR ==================== -->
+  <g id="TopHeaderBar">
+    <!-- Left Status Badge: ON AIR -->
+    <rect x="52" y="22" width="130" height="22" rx="3" fill="#0F172A" stroke="#334155" stroke-width="1" />
+    <!-- Glowing Status Beacon Dot -->
+    <circle cx="66" cy="33" r="4" fill="#06B6D4" filter="url(#glow-cyan)" />
+    <circle cx="66" cy="33" r="2" fill="#FFFFFF" />
+    <text x="78" y="37" class="mono-label" font-weight="700" fill="#06B6D4">CAM 01 // LIVE</text>
+
+    <!-- Right Broadcast Feed Info -->
+    <rect x="1080" y="22" width="148" height="22" rx="3" fill="#0F172A" stroke="#334155" stroke-width="1" />
+    <text x="1092" y="37" class="mono-label">1080P60 <tspan fill="#475569">|</tspan> REC</text>
+    <rect x="1205" y="29" width="8" height="8" rx="1.5" fill="#EF4444" />
+  </g>
+
+  <!-- ==================== INTEGRATED LOWER NAMEPLATE ==================== -->
+  <g id="HostNameplate">
+    <!-- Nameplate Container Base Docked on Bottom-Left -->
+    <path d="
+      M 40 715 
+      L 530 715 
+      L 550 735 
+      L 550 780 
+      L 40 780 
+      Z" 
+      fill="#0B132B" 
+      stroke="#334155" 
+      stroke-width="1" />
+
+    <!-- Cyan Accent Energy Bar along bottom of nameplate -->
+    <rect x="40" y="777" width="510" height="3" fill="url(#cyanLineGrad)" />
+
+    <!-- Vertical Accent Bar -->
+    <rect x="52" y="729" width="3" height="38" rx="1.5" fill="#06B6D4" filter="url(#glow-cyan)" />
+
+    <!-- Host Identity Text -->
+    <text x="68" y="746" class="host-name">HOST / GUEST NAME</text>
+    <text x="68" y="763" class="host-role">EXECUTIVE PRODUCER &amp; HOST</text>
+
+    <!-- Social Handle Badge Slot -->
+    <rect x="360" y="734" width="170" height="24" rx="4" fill="#1E293B" stroke="#475569" stroke-width="1" />
+    <!-- Social Icon Placeholder (Mic / Broadcast Node) -->
+    <circle cx="376" cy="746" r="4.5" fill="none" stroke="#06B6D4" stroke-width="1.2" />
+    <circle cx="376" cy="746" r="1.5" fill="#06B6D4" />
+    <text x="390" y="750" class="handle-text">@podcast_live</text>
+  </g>
+</svg>

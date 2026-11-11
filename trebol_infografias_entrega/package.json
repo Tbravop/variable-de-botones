@@ -1,0 +1,24 @@
+{
+  "name": "trebol-infographics-suite",
+  "version": "1.0.0",
+  "description": "Suite de infografías técnicas animadas de 10s con HyperFrames y Trebol Design System",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve . -p 3000",
+    "preview": "npx serve . -p 3000",
+    "render:all": "npm run render:1 && npm run render:2 && npm run render:3 && npm run render:4",
+    "render:1": "npx hyperframes render -c infografia_1_writing_process.html -o renders/infografia_01_writing_process.mp4 --fps 30 --format mp4",
+    "render:2": "npx hyperframes render -c infografia_2_agentic_flow.html -o renders/infografia_02_agentic_flow.mp4 --fps 30 --format mp4",
+    "render:3": "npx hyperframes render -c infografia_3_rl_vs_imitation.html -o renders/infografia_03_rl_vs_imitation.mp4 --fps 30 --format mp4",
+    "render:4": "npx hyperframes render -c infografia_4_funnel_marketing.html -o renders/infografia_04_funnel_marketing.mp4 --fps 30 --format mp4"
+  },
+  "keywords": [
+    "hyperframes",
+    "gsap",
+    "motion-graphics",
+    "infographics",
+    "trebol"
+  ],
+  "author": "Trebol Design & Engineering",
+  "license": "UNLICENSED"
+}

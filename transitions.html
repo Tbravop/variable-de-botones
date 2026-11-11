@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transiciones de Cámara — OBS Stinger Suite</title>
+  <style>
+    :root {
+      --memphis-surface: #FCF9F8;
+      --memphis-primary: #9A9CE4;
+      --memphis-border: #000000;
+      --cyber-dark: #0F172A;
+      --cyber-cyan: #06B6D4;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0B1120;
+      color: #F8FAFC;
+      font-family: system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+      user-select: none;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    p.subtitle {
+      color: #94A3B8;
+      font-size: 13px;
+    }
+
+    /* OBS Viewport Stage (16:9 simulated stream output) */
+    .viewport-stage {
+      position: relative;
+      width: 960px;
+      height: 540px; /* 16:9 scale of 1920x1080 */
+      background: #000;
+      border: 3px solid #334155;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.8);
+    }
+
+    /* Camera Feed Simulators */
+    .cam-feed {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.05s;
+    }
+    .cam-feed.active { opacity: 1; z-index: 1; }
+
+    .cam-1 { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+    .cam-2 { background: linear-gradient(135deg, #2e1065 0%, #0f172a 100%); }
+    .cam-3 { background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%); }
+
+    .cam-hud {
+      position: absolute;
+      top: 20px;
+      left: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(0,0,0,0.6);
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .dot-live { width: 8px; height: 8px; border-radius: 50%; background: #EF4444; }
+
+    .cam-subject {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .cam-avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: #334155;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      border: 3px solid rgba(255,255,255,0.2);
+    }
+    .cam-name {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .cam-role {
+      font-family: monospace;
+      font-size: 12px;
+      color: #94A3B8;
+      letter-spacing: 0.1em;
+    }
+
+    /* ==================== TRANSITION OVERLAY LAYERS ==================== */
+    .transition-container {
+      position: absolute;
+      inset: 0;
+      z-index: 50;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* Style 1: Neo-Memphis Multi-Slat Wipe */
+    .slat-container {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .memphis-slat {
+      flex: 1;
+      background: var(--memphis-surface);
+      border-top: 4px solid var(--memphis-border);
+      border-bottom: 4px solid var(--memphis-border);
+      transform: translateX(-105%);
+      transition: transform 0.35s cubic-bezier(0.77, 0, 0.175, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .memphis-slat:nth-child(even) {
+      background: var(--memphis-primary);
+    }
+    .slat-banner {
+      position: absolute;
+      font-family: monospace;
+      font-size: 28px;
+      font-weight: 900;
+      color: #000;
+      letter-spacing: 0.1em;
+      opacity: 0;
+    }
+
+    /* Style 2: Neo-Memphis Diagonal Slash */
+    .diagonal-layer {
+      position: absolute;
+      width: 160%;
+      height: 160%;
+      top: -30%;
+      left: -30%;
+      background: var(--memphis-surface);
+      border: 8px solid var(--memphis-border);
+      box-shadow: 12px 12px 0px 0px #000;
+      transform: rotate(-15deg) translateX(-140%);
+      transition: transform 0.5s cubic-bezier(0.85, 0, 0.15, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .diagonal-inner {
+      transform: rotate(15deg);
+      background: var(--memphis-primary);
+      border: 4px solid #000;
+      padding: 16px 36px;
+      box-shadow: 6px 6px 0px #000;
+      font-size: 32px;
+      font-weight: 900;
+      color: #000;
+      letter-spacing: 0.05em;
+    }
+
+    /* Style 3: Cyber Glitch / Shutter Aperture Wipe */
+    .cyber-shutter {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      pointer-events: none;
+    }
+    .shutter-panel {
+      flex: 1;
+      background: var(--cyber-dark);
+      border-left: 2px solid var(--cyber-cyan);
+      border-right: 2px solid var(--cyber-cyan);
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+      transform: scaleY(0);
+      transition: transform 0.3s cubic-bezier(0.8, 0, 0.2, 1);
+    }
+    .shutter-center-core {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: #0B1120;
+      border: 2px solid var(--cyber-cyan);
+      box-shadow: 0 0 24px var(--cyber-cyan);
+      padding: 14px 28px;
+      font-family: monospace;
+      font-size: 18px;
+      color: var(--cyber-cyan);
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      transition: transform 0.25s ease-out;
+      z-index: 60;
+    }
+
+    /* Interactive Control Board */
+    .control-dashboard {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 960px;
+      background: #0F172A;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .section-label {
+      font-family: monospace;
+      font-size: 11px;
+      color: #94A3B8;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      width: 140px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .obs-btn {
+      padding: 10px 18px;
+      background: #1E293B;
+      color: #F8FAFC;
+      border: 1.5px solid #475569;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .obs-btn:hover {
+      background: #334155;
+      border-color: #94A3B8;
+    }
+    .obs-btn.active {
+      background: var(--cyber-cyan);
+      color: #0F172A;
+      border-color: var(--cyber-cyan);
+      box-shadow: 0 0 12px rgba(6, 182, 212, 0.4);
+    }
+    .obs-btn.memphis-btn {
+      border: 3px solid #000;
+      border-radius: 0;
+      box-shadow: 3px 3px 0 #000;
+    }
+    .obs-btn.memphis-btn.active {
+      background: var(--memphis-primary);
+      color: #000;
+      box-shadow: 1px 1px 0 #000;
+      transform: translate(2px, 2px);
+    }
+
+    .trigger-btn {
+      background: #2563EB;
+      border-color: #3B82F6;
+      color: #fff;
+      font-size: 14px;
+      padding: 12px 24px;
+    }
+    .trigger-btn:hover {
+      background: #1D4ED8;
+    }
+
+    .info-box {
+      font-size: 12px;
+      color: #94A3B8;
+      line-height: 1.6;
+      background: #090F1D;
+      padding: 12px 16px;
+      border-radius: 6px;
+      border: 1px solid #1E293B;
+    }
+    .info-box code {
+      color: var(--cyber-cyan);
+      background: #1E293B;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🎬 Suite de Transiciones de Cámara (OBS Stinger)</h1>
+    <p class="subtitle">Prueba y dispara transiciones Stinger fluidas entre fuentes de cámara para transmisiones profesionales.</p>
+  </header>
+
+  <!-- OBS Output Stage (16:9 Viewport) -->
+  <div class="viewport-stage">
+    
+    <!-- Cam 1: Host -->
+    <div class="cam-feed cam-1 active" id="feed1">
+      <div class="cam-hud">
+        <div class="dot-live"></div>
+        <span>CAM 01 // HOST PRINCIPAL</span>
+      </div>
+      <div class="cam-subject">
+        <div class="cam-avatar">🎙️</div>
+        <div class="cam-name">Alex Rivera</div>
+        <div class="cam-role">Presentador Principal</div>
+      </div>
+    </div>
+
+    <!-- Cam 2: Guest -->
+    <div class="cam-feed cam-2" id="feed2">
+      <div class="cam-hud">
+        <div class="dot-live"></div>
+        <span>CAM 02 // INVITADO</span>
+      </div>
+      <div class="cam-subject">
+        <div class="cam-avatar">💻</div>
+        <div class="cam-name">Dra. Elena Ramos</div>
+        <div class="cam-role">Especialista en IA</div>
+      </div>
+    </div>
+
+    <!-- Cam 3: Wide Studio -->
+    <div class="cam-feed cam-3" id="feed3">
+      <div class="cam-hud">
+        <div class="dot-live"></div>
+        <span>CAM 03 // PLANO GENERAL</span>
+      </div>
+      <div class="cam-subject">
+        <div class="cam-avatar">🎥</div>
+        <div class="cam-name">Estudio General</div>
+        <div class="cam-role">Mesa Redonda &amp; Pantalla</div>
+      </div>
+    </div>
+
+    <!-- Transition Layer System -->
+    <div class="transition-container" id="transLayer">
+      
+      <!-- Slat Elements (Style: Neo-Memphis Slats) -->
+      <div class="slat-container" id="slatContainer" style="display:none;">
+        <div class="memphis-slat"><span class="slat-banner">PODCAST // LIVE</span></div>
+        <div class="memphis-slat"><span class="slat-banner">PODCAST // LIVE</span></div>
+        <div class="memphis-slat"><span class="slat-banner">PODCAST // LIVE</span></div>
+        <div class="memphis-slat"><span class="slat-banner">PODCAST // LIVE</span></div>
+      </div>
+
+      <!-- Diagonal Slash (Style: Memphis Slash) -->
+      <div class="diagonal-layer" id="diagonalLayer" style="display:none;">
+        <div class="diagonal-inner">✦ CAM TRANSITION ✦</div>
+      </div>
+
+      <!-- Cyber Shutter (Style: Cyber Aperture) -->
+      <div class="cyber-shutter" id="cyberShutter" style="display:none;">
+        <div class="shutter-panel"></div>
+        <div class="shutter-panel"></div>
+        <div class="shutter-panel"></div>
+        <div class="shutter-panel"></div>
+        <div class="shutter-panel"></div>
+        <div class="shutter-panel"></div>
+        <div class="shutter-center-core" id="shutterCore">SYSTEM // SWITCH</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Interactive Control Dashboard -->
+  <div class="control-dashboard">
+    
+    <!-- Select Transition Style -->
+    <div class="row">
+      <div class="section-label">Estilo de Stinger:</div>
+      <div class="btn-group">
+        <button class="obs-btn memphis-btn active" onclick="setStyle('memphis-slats', this)">
+          Ethical Neo-Memphis: Persianas Brutalistas
+        </button>
+        <button class="obs-btn memphis-btn" onclick="setStyle('memphis-diagonal', this)">
+          Ethical Neo-Memphis: Corte Diagonal (45°)
+        </button>
+        <button class="obs-btn" onclick="setStyle('cyber-shutter', this)">
+          Cyber-Slate: Obturador de Neón Cyan
+        </button>
+      </div>
+    </div>
+
+    <!-- Target Camera Selector -->
+    <div class="row">
+      <div class="section-label">Cambiar a Cámara:</div>
+      <div class="btn-group">
+        <button class="obs-btn active" id="btnCam1" onclick="switchCamera(1)">Cámara 1 (Host)</button>
+        <button class="obs-btn" id="btnCam2" onclick="switchCamera(2)">Cámara 2 (Invitado)</button>
+        <button class="obs-btn" id="btnCam3" onclick="switchCamera(3)">Cámara 3 (General)</button>
+      </div>
+    </div>
+
+    <!-- Quick Action -->
+    <div class="row">
+      <div class="section-label">Disparador Directo:</div>
+      <div class="btn-group">
+        <button class="obs-btn trigger-btn" onclick="cycleNextCamera()">
+          ⚡ Disparar Transición Siguiente (Tecla Space)
+        </button>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <b>💡 Configuración en OBS Studio (Stinger Transition):</b><br>
+      • Tipo de Transición: <code>Stinger</code><br>
+      • Tiempo del punto de transición (Transition Point / Cut Point): <code>350 ms</code> (justo cuando la cortina cubre el 100% de la pantalla).<br>
+      • Monitoreo de Audio: Monitoreo y Salida activados si usas sonido de corte (Whoosh).
+    </div>
+
+  </div>
+
+  <script>
+    let currentStyle = 'memphis-slats';
+    let currentCam = 1;
+    let isTransitioning = false;
+
+    function setStyle(style, btn) {
+      currentStyle = style;
+      document.querySelectorAll('.btn-group button').forEach(b => {
+        if (b.onclick && b.onclick.toString().includes('setStyle')) {
+          b.classList.remove('active');
+        }
+      });
+      btn.classList.add('active');
+    }
+
+    function switchCamera(targetCam) {
+      if (targetCam === currentCam || isTransitioning) return;
+      isTransitioning = true;
+
+      // Update button states
+      document.querySelectorAll('[id^="btnCam"]').forEach((btn, idx) => {
+        btn.classList.toggle('active', (idx + 1) === targetCam);
+      });
+
+      if (currentStyle === 'memphis-slats') {
+        playMemphisSlats(targetCam);
+      } else if (currentStyle === 'memphis-diagonal') {
+        playMemphisDiagonal(targetCam);
+      } else if (currentStyle === 'cyber-shutter') {
+        playCyberShutter(targetCam);
+      }
+    }
+
+    function cycleNextCamera() {
+      let next = currentCam + 1;
+      if (next > 3) next = 1;
+      switchCamera(next);
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        cycleNextCamera();
+      } else if (e.key === '1') switchCamera(1);
+      else if (e.key === '2') switchCamera(2);
+      else if (e.key === '3') switchCamera(3);
+    });
+
+    function swapFeed(targetCam) {
+      document.querySelectorAll('.cam-feed').forEach(feed => feed.classList.remove('active'));
+      document.getElementById('feed' + targetCam).classList.add('active');
+      currentCam = targetCam;
+    }
+
+    /* Transition Animation 1: Memphis Slats */
+    function playMemphisSlats(targetCam) {
+      const container = document.getElementById('slatContainer');
+      container.style.display = 'flex';
+      const slats = container.querySelectorAll('.memphis-slat');
+      const banners = container.querySelectorAll('.slat-banner');
+
+      // Phase 1: Wipe in staggered
+      slats.forEach((slat, i) => {
+        slat.style.transition = 'transform 0.28s cubic-bezier(0.77, 0, 0.175, 1) ' + (i * 0.04) + 's';
+        slat.style.transform = 'translateX(0%)';
+      });
+
+      // Mid-point: Exact Cut Point (300ms)
+      setTimeout(() => {
+        swapFeed(targetCam);
+        banners.forEach(b => b.style.opacity = '1');
+      }, 300);
+
+      // Phase 2: Wipe out
+      setTimeout(() => {
+        slats.forEach((slat, i) => {
+          slat.style.transition = 'transform 0.28s cubic-bezier(0.77, 0, 0.175, 1) ' + (i * 0.04) + 's';
+          slat.style.transform = 'translateX(105%)';
+        });
+      }, 480);
+
+      // Reset
+      setTimeout(() => {
+        slats.forEach(slat => {
+          slat.style.transition = 'none';
+          slat.style.transform = 'translateX(-105%)';
+        });
+        banners.forEach(b => b.style.opacity = '0');
+        container.style.display = 'none';
+        isTransitioning = false;
+      }, 820);
+    }
+
+    /* Transition Animation 2: Memphis Diagonal Slash */
+    function playMemphisDiagonal(targetCam) {
+      const layer = document.getElementById('diagonalLayer');
+      layer.style.display = 'flex';
+      layer.style.transition = 'transform 0.32s cubic-bezier(0.85, 0, 0.15, 1)';
+      layer.style.transform = 'rotate(-15deg) translateX(-15%)';
+
+      // Mid Cut Point
+      setTimeout(() => {
+        swapFeed(targetCam);
+      }, 320);
+
+      // Exit
+      setTimeout(() => {
+        layer.style.transition = 'transform 0.32s cubic-bezier(0.85, 0, 0.15, 1)';
+        layer.style.transform = 'rotate(-15deg) translateX(120%)';
+      }, 450);
+
+      // Reset
+      setTimeout(() => {
+        layer.style.transition = 'none';
+        layer.style.transform = 'rotate(-15deg) translateX(-140%)';
+        layer.style.display = 'none';
+        isTransitioning = false;
+      }, 820);
+    }
+
+    /* Transition Animation 3: Cyber Aperture Shutter */
+    function playCyberShutter(targetCam) {
+      const shutter = document.getElementById('cyberShutter');
+      const core = document.getElementById('shutterCore');
+      shutter.style.display = 'flex';
+      const panels = shutter.querySelectorAll('.shutter-panel');
+
+      panels.forEach((p, i) => {
+        p.style.transition = 'transform 0.24s cubic-bezier(0.8, 0, 0.2, 1) ' + (i * 0.02) + 's';
+        p.style.transform = 'scaleY(1)';
+      });
+      core.style.transform = 'translate(-50%, -50%) scale(1)';
+
+      // Cut Point
+      setTimeout(() => {
+        swapFeed(targetCam);
+      }, 280);
+
+      // Open Shutter
+      setTimeout(() => {
+        panels.forEach((p, i) => {
+          p.style.transition = 'transform 0.24s cubic-bezier(0.8, 0, 0.2, 1) ' + (i * 0.02) + 's';
+          p.style.transform = 'scaleY(0)';
+        });
+        core.style.transform = 'translate(-50%, -50%) scale(0)';
+      }, 460);
+
+      // Reset
+      setTimeout(() => {
+        shutter.style.display = 'none';
+        isTransitioning = false;
+      }, 760);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="1280" height="820" fill="none">
+  <defs>
+    <!-- Memphis Dot Matrix Pattern -->
+    <pattern id="memphis-dots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.5" fill="#000000" />
+    </pattern>
+
+    <!-- Memphis Diagonal Stripe Pattern -->
+    <pattern id="memphis-stripes" width="12" height="12" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="12" stroke="#000000" stroke-width="3" />
+    </pattern>
+  </defs>
+
+  <style>
+    .brutalist-mono { font-family: 'JetBrains Mono', Consolas, 'SF Mono', monospace; font-size: 13px; font-weight: 700; fill: #000000; letter-spacing: 0.08em; text-transform: uppercase; }
+    .brutalist-title { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 26px; font-weight: 900; fill: #000000; letter-spacing: -0.02em; text-transform: uppercase; }
+    .brutalist-sub { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; fill: #56589A; letter-spacing: 0.05em; text-transform: uppercase; }
+  </style>
+
+  <!-- ==================== SHADOW LAYER (Hard 6px 6px Black Offset) ==================== -->
+  <g id="HardShadows">
+    <!-- Camera Frame Hard Shadow -->
+    <rect x="46" y="46" width="1200" height="675" fill="#000000" />
+    <!-- Nameplate Hard Shadow -->
+    <rect x="46" y="731" width="560" height="74" fill="#000000" />
+    <!-- Top-Right Telemetry Hard Shadow -->
+    <rect x="1036" y="24" width="204" height="34" fill="#000000" />
+    <!-- Top-Left Badge Hard Shadow -->
+    <rect x="46" y="24" width="184" height="34" fill="#000000" />
+  </g>
+
+  <!-- ==================== CAMERA APERTURE & FRAME ==================== -->
+  <!-- 16:9 Inner Camera Cutout (1200 x 675) with 4px Pure Black Border -->
+  <rect x="40" y="40" width="1200" height="675" fill="none" stroke="#000000" stroke-width="4" />
+
+  <!-- Corner Structural Memphis L-Brackets (Outer Accents) -->
+  <g id="CornerBrackets" stroke="#000000" stroke-width="4" fill="none">
+    <path d="M 32 64 L 32 32 L 64 32" />
+    <path d="M 1216 32 L 1248 32 L 1248 64" />
+    <path d="M 1248 691 L 1248 723 L 1216 723" />
+    <path d="M 64 723 L 32 723 L 32 691" />
+  </g>
+
+  <!-- Memphis Corner Decorative Crosses (+) -->
+  <g id="MemphisCrosses" stroke="#000000" stroke-width="3">
+    <!-- Cross Top Left -->
+    <line x1="20" y1="20" x2="28" y2="20" />
+    <line x1="24" y1="16" x2="24" y2="24" />
+
+    <!-- Cross Top Right -->
+    <line x1="1252" y1="20" x2="1260" y2="20" />
+    <line x1="1256" y1="16" x2="1256" y2="24" />
+
+    <!-- Cross Bottom Right -->
+    <line x1="1252" y1="735" x2="1260" y2="735" />
+    <line x1="1256" y1="731" x2="1256" y2="739" />
+  </g>
+
+  <!-- ==================== TOP BROADCAST STATUS BADGES ==================== -->
+  <!-- Left Badge: LIVE STATUS -->
+  <g id="LiveBadge">
+    <rect x="40" y="18" width="184" height="34" fill="#9A9CE4" stroke="#000000" stroke-width="4" />
+    <!-- Live Solid Black Indicator Square (Neo-Brutalist) -->
+    <rect x="54" y="30" width="10" height="10" fill="#000000" />
+    <text x="74" y="41" class="brutalist-mono">ON AIR // LIVE</text>
+  </g>
+
+  <!-- Right Badge: 1080P / REC -->
+  <g id="StreamTelemetry">
+    <rect x="1030" y="18" width="204" height="34" fill="#FCF9F8" stroke="#000000" stroke-width="4" />
+    <rect x="1034" y="22" width="26" height="26" fill="url(#memphis-stripes)" />
+    <rect x="1194" y="30" width="10" height="10" fill="#BA1A1A" stroke="#000000" stroke-width="2" />
+    <text x="1070" y="41" class="brutalist-mono">1080P60 REC</text>
+  </g>
+
+  <!-- ==================== NEO-MEMPHIS NAMEPLATE ==================== -->
+  <g id="Nameplate">
+    <!-- Main Bone Container -->
+    <rect x="40" y="725" width="560" height="74" fill="#FCF9F8" stroke="#000000" stroke-width="4" />
+
+    <!-- Left Memphis Lavender Accent Block -->
+    <rect x="40" y="725" width="16" height="74" fill="#9A9CE4" stroke="#000000" stroke-width="4" />
+
+    <!-- Decorative Dot Pattern Strip -->
+    <rect x="56" y="729" width="36" height="66" fill="url(#memphis-dots)" opacity="0.35" />
+
+    <!-- Identity Text Block -->
+    <text x="106" y="756" class="brutalist-title">ALEX RIVERA</text>
+    <text x="106" y="781" class="brutalist-sub">EXECUTIVE PRODUCER &amp; HOST</text>
+
+    <!-- Social Handle Brutalist Pill Button -->
+    <g id="SocialPill">
+      <rect x="430" y="743" width="156" height="36" fill="#9A9CE4" stroke="#000000" stroke-width="3" />
+      <!-- Memphis Geometric Asterisk/Cross -->
+      <path d="M 444 756 L 452 764 M 452 756 L 444 764" stroke="#000000" stroke-width="2.5" />
+      <text x="460" y="766" class="brutalist-mono" font-size="12px">@ALEXLIVE</text>
+    </g>
+  </g>
+</svg>

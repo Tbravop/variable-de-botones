@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FRM_Cam_16x9 — Broadcast OBS Overlay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-slate: #0F172A;
+      --bg-slate-dark: #0B1120;
+      --slate-border: #475569;
+      --slate-subtle: #334155;
+      --cyan-accent: #06B6D4;
+      --cyan-bright: #38BDF8;
+      --cyan-glow: rgba(6, 182, 212, 0.45);
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Inter', -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      transition: background-color 0.2s ease;
+    }
+
+    /* Canvas Modes */
+    body.mode-transparent {
+      background: transparent;
+    }
+    body.mode-green {
+      background: #00FF00 !important;
+    }
+    body.mode-white {
+      background: #FFFFFF !important;
+    }
+
+    /* Main Container (1920x1080 broadcast canvas or scalable) */
+    .broadcast-viewport {
+      position: relative;
+      width: 1280px;
+      height: 800px;
+      user-select: none;
+    }
+
+    /* Outer Chassis Frame */
+    .cam-chassis {
+      position: relative;
+      width: 1240px;
+      height: 740px;
+      margin: 20px auto 0;
+      background: linear-gradient(145deg, #1E293B 0%, #0F172A 45%, #0B1120 100%);
+      border: 1.5px solid var(--slate-border);
+      clip-path: polygon(
+        16px 0%, calc(100% - 16px) 0%, 100% 16px,
+        100% calc(100% - 60px), calc(100% - 16px) calc(100% - 44px),
+        560px calc(100% - 44px), 540px 100%,
+        16px 100%, 0% calc(100% - 16px), 0% 16px
+      );
+      box-shadow: 0 12px 36px rgba(2, 6, 23, 0.7);
+    }
+
+    /* 16:9 Inner Camera Cutout (Transparent Aperture) */
+    .camera-aperture {
+      position: absolute;
+      top: 24px;
+      left: 20px;
+      width: 1200px;
+      height: 675px; /* 16:9 aspect */
+      background: transparent;
+      border: 2px solid var(--slate-border);
+      box-shadow: inset 0 0 12px rgba(6, 182, 212, 0.2);
+    }
+
+    /* 1px Sharp Neon Cyan Edge Highlight */
+    .camera-aperture::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border: 1px solid var(--cyan-accent);
+      pointer-events: none;
+      box-shadow: 0 0 8px var(--cyan-glow), inset 0 0 4px var(--cyan-glow);
+    }
+
+    /* Corner Bracket Accents */
+    .corner-bracket {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--cyan-accent);
+      pointer-events: none;
+      z-index: 5;
+    }
+    .corner-tl { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+    .corner-tr { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+    .corner-bl { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+    .corner-br { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+    .corner-dot {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--cyan-accent);
+      border-radius: 50%;
+      box-shadow: 0 0 6px var(--cyan-accent);
+    }
+    .corner-tl .corner-dot { top: 0; left: 0; }
+    .corner-tr .corner-dot { top: 0; right: 0; }
+    .corner-bl .corner-dot { bottom: 0; left: 0; }
+    .corner-br .corner-dot { bottom: 0; right: 0; }
+
+    /* Top Telemetry Header */
+    .top-telemetry {
+      position: absolute;
+      top: 6px;
+      left: 36px;
+      right: 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 3px 10px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--slate-subtle);
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--cyan-accent);
+    }
+
+    .live-pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan-accent);
+      box-shadow: 0 0 8px var(--cyan-accent);
+      animation: beaconPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes beaconPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.6; }
+    }
+
+    .feed-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 3px 12px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--slate-subtle);
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .rec-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #EF4444;
+      font-weight: 700;
+    }
+    .rec-dot {
+      width: 6px;
+      height: 6px;
+      background: #EF4444;
+      border-radius: 50%;
+      animation: recBlink 1s infinite alternate;
+    }
+    @keyframes recBlink {
+      from { opacity: 0.3; }
+      to { opacity: 1; }
+    }
+
+    /* Bottom Docked Nameplate */
+    .nameplate-dock {
+      position: absolute;
+      bottom: 0;
+      left: 20px;
+      width: 520px;
+      height: 68px;
+      background: #090F1D;
+      border: 1px solid var(--slate-subtle);
+      border-top: none;
+      clip-path: polygon(0% 0%, 100% 0%, calc(100% - 20px) 100%, 0% 100%);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 16px;
+      z-index: 10;
+    }
+
+    /* Cyan Energy Baseline */
+    .nameplate-dock::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--cyan-accent) 0%, var(--cyan-bright) 70%, transparent 100%);
+      box-shadow: 0 0 8px var(--cyan-glow);
+    }
+
+    .accent-pillar {
+      width: 3.5px;
+      height: 40px;
+      background: var(--cyan-accent);
+      border-radius: 2px;
+      box-shadow: 0 0 10px var(--cyan-accent);
+      flex-shrink: 0;
+    }
+
+    .identity-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex-grow: 1;
+    }
+
+    .host-name {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: var(--text-main);
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+
+    .host-role {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--cyan-bright);
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Audio Meter Simulation */
+    .audio-meter {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 18px;
+      padding-right: 12px;
+    }
+    .meter-bar {
+      width: 3px;
+      background: var(--slate-border);
+      border-radius: 1px;
+      transition: height 0.15s ease, background 0.15s ease;
+    }
+    .meter-bar.active {
+      background: var(--cyan-accent);
+      box-shadow: 0 0 4px var(--cyan-accent);
+    }
+
+    .social-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: #1E293B;
+      border: 1px solid var(--slate-border);
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .social-badge svg {
+      width: 12px;
+      height: 12px;
+      fill: var(--cyan-accent);
+    }
+
+    /* Floating Studio Toolbar (Control Panel) */
+    .studio-controls {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--slate-border);
+      backdrop-filter: blur(12px);
+      border-radius: 8px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      color: #fff;
+      font-size: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      z-index: 100;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .studio-controls.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+    }
+
+    .control-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-label {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      width: 80px;
+      font-size: 11px;
+    }
+
+    .control-input {
+      background: #0B1120;
+      border: 1px solid var(--slate-subtle);
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: inherit;
+      width: 180px;
+    }
+    .control-input:focus {
+      outline: none;
+      border-color: var(--cyan-accent);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 6px;
+    }
+
+    .canvas-btn {
+      padding: 4px 10px;
+      background: #1E293B;
+      border: 1px solid var(--slate-subtle);
+      color: var(--text-muted);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      transition: all 0.15s;
+    }
+    .canvas-btn.active, .canvas-btn:hover {
+      background: var(--cyan-accent);
+      color: #0F172A;
+      font-weight: 700;
+      border-color: var(--cyan-accent);
+    }
+    .hint-text {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      text-align: right;
+    }
+  </style>
+</head>
+<body class="mode-transparent">
+
+  <div class="broadcast-viewport">
+    <div class="cam-chassis">
+      
+      <!-- Top Telemetry Header -->
+      <div class="top-telemetry">
+        <div class="status-badge" id="badgeContainer">
+          <div class="live-pulse-dot"></div>
+          <span id="badgeText">CAM 01 // ON AIR</span>
+        </div>
+        <div class="feed-meta">
+          <span>1080P60 // SDI-1</span>
+          <div class="rec-indicator">
+            <div class="rec-dot"></div>
+            <span>REC</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 16:9 Inner Camera Cutout (Transparent Aperture) -->
+      <div class="camera-aperture">
+        <!-- Orthographic Corner Accents with 1px Neon Highlights -->
+        <div class="corner-bracket corner-tl"><div class="corner-dot"></div></div>
+        <div class="corner-bracket corner-tr"><div class="corner-dot"></div></div>
+        <div class="corner-bracket corner-bl"><div class="corner-dot"></div></div>
+        <div class="corner-bracket corner-br"><div class="corner-dot"></div></div>
+      </div>
+
+      <!-- Docked Nameplate Component -->
+      <div class="nameplate-dock">
+        <div class="accent-pillar"></div>
+        <div class="identity-info">
+          <div class="host-name" id="displayHostName">ALEX RIVERA</div>
+          <div class="host-role" id="displayHostRole">HOST &amp; LEAD PRODUCER</div>
+        </div>
+
+        <!-- Simulated Broadcast VU Audio Bars -->
+        <div class="audio-meter" id="audioMeter">
+          <div class="meter-bar" style="height: 6px;"></div>
+          <div class="meter-bar" style="height: 10px;"></div>
+          <div class="meter-bar" style="height: 14px;"></div>
+          <div class="meter-bar" style="height: 18px;"></div>
+          <div class="meter-bar" style="height: 12px;"></div>
+          <div class="meter-bar" style="height: 8px;"></div>
+        </div>
+
+        <!-- Social Handle Badge -->
+        <div class="social-badge">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+          <span id="displayHandle">@thepodcast_live</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Studio OBS Configuration Panel (Hide with 'H' or URL ?clean=true) -->
+  <div class="studio-controls" id="studioControls">
+    <div style="font-weight: 700; color: var(--cyan-accent); font-family: 'JetBrains Mono', monospace; font-size: 11px;">
+      ⚡ OBS OVERLAY CONTROLLER
+    </div>
+    <div class="control-row">
+      <span class="control-label">Canvas Bg:</span>
+      <div class="btn-group">
+        <button class="canvas-btn active" onclick="setCanvasMode('transparent')">Alpha</button>
+        <button class="canvas-btn" onclick="setCanvasMode('green')">#00FF00</button>
+        <button class="canvas-btn" onclick="setCanvasMode('white')">#FFFFFF</button>
+      </div>
+    </div>
+    <div class="control-row">
+      <span class="control-label">Host Name:</span>
+      <input type="text" class="control-input" id="inputName" value="ALEX RIVERA" oninput="updateContent()">
+    </div>
+    <div class="control-row">
+      <span class="control-label">Role/Title:</span>
+      <input type="text" class="control-input" id="inputRole" value="HOST & LEAD PRODUCER" oninput="updateContent()">
+    </div>
+    <div class="control-row">
+      <span class="control-label">Social:</span>
+      <input type="text" class="control-input" id="inputHandle" value="@thepodcast_live" oninput="updateContent()">
+    </div>
+    <div class="hint-text">Press <b>H</b> to hide controls for OBS capture</div>
+  </div>
+
+  <script>
+    function setCanvasMode(mode) {
+      document.body.className = 'mode-' + mode;
+      document.querySelectorAll('.canvas-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase().includes(mode.substring(0, 3)));
+      });
+    }
+
+    function updateContent() {
+      document.getElementById('displayHostName').textContent = document.getElementById('inputName').value || 'HOST NAME';
+      document.getElementById('displayHostRole').textContent = document.getElementById('inputRole').value || 'BROADCAST HOST';
+      document.getElementById('displayHandle').textContent = document.getElementById('inputHandle').value || '@handle';
+    }
+
+    // Toggle controls visibility on pressing 'H' key
+    window.addEventListener('keydown', (e) => {
+      if (e.key.toLowerCase() === 'h' && document.activeElement.tagName !== 'INPUT') {
+        document.getElementById('studioControls').classList.toggle('hidden');
+      }
+    });
+
+    // Check query params for clean mode: ?clean=true
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('clean') === 'true') {
+      document.getElementById('studioControls').classList.add('hidden');
+    }
+    if (urlParams.get('bg') === 'green') setCanvasMode('green');
+    if (urlParams.get('bg') === 'white') setCanvasMode('white');
+
+    // Subtle VU meter simulation
+    const bars = document.querySelectorAll('.meter-bar');
+    setInterval(() => {
+      bars.forEach(bar => {
+        const rand = Math.random();
+        bar.style.height = (4 + rand * 14) + 'px';
+        bar.classList.toggle('active', rand > 0.45);
+      });
+    }, 120);
+  </script>
+</body>
+</html>

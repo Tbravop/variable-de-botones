@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FRM_Cam_16x9 — Ethical Neo-Memphis OBS Overlay</title>
+  <style>
+    :root {
+      --surface: #FCF9F8;
+      --primary: #9A9CE4;
+      --primary-dark: #56589A;
+      --on-surface: #000000;
+      --border-color: #000000;
+      --border-width: 4px;
+      --shadow-offset: 6px;
+      --hard-shadow: 6px 6px 0px 0px #000000;
+      --hard-shadow-sm: 4px 4px 0px 0px #000000;
+      --error: #BA1A1A;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0px !important; /* Strict 0px brutalist sharp corners */
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      user-select: none;
+    }
+
+    body.mode-transparent { background: transparent; }
+    body.mode-green { background: #00FF00 !important; }
+    body.mode-white { background: #FFFFFF !important; }
+
+    /* Broadcast Container (1280x820 modular OBS viewport) */
+    .broadcast-viewport {
+      position: relative;
+      width: 1280px;
+      height: 820px;
+    }
+
+    /* 16:9 Inner Camera Cutout (Transparent for Webcam Feed) */
+    .camera-aperture {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      width: 1200px;
+      height: 675px; /* 16:9 ratio */
+      border: var(--border-width) solid var(--border-color);
+      box-shadow: var(--hard-shadow);
+      background: transparent;
+    }
+
+    /* Memphis Corner Geometric Ornaments (+) */
+    .memphis-cross {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      pointer-events: none;
+    }
+    .memphis-cross::before, .memphis-cross::after {
+      content: '';
+      position: absolute;
+      background: #000000;
+    }
+    .memphis-cross::before {
+      top: 5px; left: 0; width: 14px; height: 4px;
+    }
+    .memphis-cross::after {
+      top: 0; left: 5px; width: 4px; height: 14px;
+    }
+
+    .cross-tl { top: 18px; left: 18px; }
+    .cross-tr { top: 18px; right: 18px; }
+    .cross-bl { bottom: 82px; left: 18px; }
+    .cross-br { bottom: 82px; right: 18px; }
+
+    /* Top Telemetry Header */
+    .top-bar {
+      position: absolute;
+      top: 14px;
+      left: 40px;
+      right: 40px;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .brutalist-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 14px;
+      background: var(--primary);
+      border: var(--border-width) solid var(--border-color);
+      box-shadow: var(--hard-shadow-sm);
+      font-family: monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: #000000;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .badge-white {
+      background: var(--surface);
+    }
+
+    .rec-indicator {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: #000000;
+      animation: brutalBlink 1.2s infinite steps(1);
+    }
+
+    .rec-red {
+      background: var(--error);
+    }
+
+    @keyframes brutalBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Lower Docked Nameplate */
+    .nameplate-container {
+      position: absolute;
+      bottom: 22px;
+      left: 40px;
+      width: 580px;
+      height: 78px;
+      background: var(--surface);
+      border: var(--border-width) solid var(--border-color);
+      box-shadow: var(--hard-shadow);
+      display: flex;
+      align-items: center;
+      z-index: 10;
+    }
+
+    /* Memphis Left Accent Block */
+    .accent-block {
+      width: 18px;
+      height: 100%;
+      background: var(--primary);
+      border-right: var(--border-width) solid var(--border-color);
+      flex-shrink: 0;
+    }
+
+    /* Memphis Dot Matrix Strip */
+    .dot-pattern {
+      width: 36px;
+      height: 100%;
+      background-image: radial-gradient(#000000 1.5px, transparent 0);
+      background-size: 8px 8px;
+      border-right: var(--border-width) solid var(--border-color);
+      flex-shrink: 0;
+      opacity: 0.4;
+    }
+
+    .identity-block {
+      padding: 0 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex-grow: 1;
+    }
+
+    .host-name {
+      font-size: 24px;
+      font-weight: 900;
+      color: #000000;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .host-role {
+      font-family: monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Mechanical Stepped VU Meter */
+    .brutal-vu {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 20px;
+      padding-right: 14px;
+    }
+
+    .vu-step {
+      width: 4px;
+      background: #DCD9D9;
+      border: 1px solid #000000;
+      height: 4px;
+    }
+    .vu-step.on {
+      background: #000000;
+    }
+
+    /* Social Handle Tag */
+    .social-tag {
+      margin-right: 18px;
+      padding: 6px 12px;
+      background: var(--primary);
+      border: 3px solid var(--border-color);
+      box-shadow: 3px 3px 0px 0px #000000;
+      font-family: monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: #000000;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Interactive Studio Controller Panel */
+    .studio-panel {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--surface);
+      border: var(--border-width) solid var(--border-color);
+      box-shadow: var(--hard-shadow);
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 100;
+      font-size: 12px;
+    }
+    .studio-panel.hidden { display: none; }
+
+    .panel-title {
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .panel-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-label {
+      font-family: monospace;
+      font-weight: 700;
+      width: 80px;
+      color: #000;
+    }
+
+    .panel-input {
+      background: #FFFFFF;
+      border: 3px solid var(--border-color);
+      padding: 5px 8px;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 12px;
+      width: 180px;
+    }
+    .panel-input:focus {
+      outline: none;
+      background: #F0EDED;
+    }
+
+    .panel-btn-group {
+      display: flex;
+      gap: 6px;
+    }
+
+    .panel-btn {
+      padding: 6px 12px;
+      background: var(--surface);
+      border: 3px solid var(--border-color);
+      box-shadow: 3px 3px 0px 0px #000000;
+      font-family: monospace;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .panel-btn:active, .panel-btn.active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px 0px #000000;
+      background: var(--primary);
+    }
+
+    .panel-hint {
+      font-family: monospace;
+      font-size: 10px;
+      color: #666;
+      text-align: right;
+    }
+  </style>
+</head>
+<body class="mode-transparent">
+
+  <div class="broadcast-viewport">
+    
+    <!-- Memphis Corner Crosses (+) -->
+    <div class="memphis-cross cross-tl"></div>
+    <div class="memphis-cross cross-tr"></div>
+    <div class="memphis-cross cross-bl"></div>
+    <div class="memphis-cross cross-br"></div>
+
+    <!-- Top Telemetry Header -->
+    <div class="top-bar">
+      <div class="brutalist-badge">
+        <span class="rec-indicator"></span>
+        <span id="badgeLive">ON AIR // LIVE</span>
+      </div>
+      <div class="brutalist-badge badge-white">
+        <span>1080P60</span>
+        <span class="rec-indicator rec-red"></span>
+        <span>REC</span>
+      </div>
+    </div>
+
+    <!-- 16:9 Inner Camera Aperture (Transparent for OBS Video Device) -->
+    <div class="camera-aperture"></div>
+
+    <!-- Ethical Neo-Memphis Docked Nameplate -->
+    <div class="nameplate-container">
+      <div class="accent-block"></div>
+      <div class="dot-pattern"></div>
+      
+      <div class="identity-block">
+        <div class="host-name" id="displayHostName">ALEX RIVERA</div>
+        <div class="host-role" id="displayHostRole">ETHICAL BROADCAST &amp; DESIGN</div>
+      </div>
+
+      <!-- Mechanical Stepped VU Meter -->
+      <div class="brutal-vu" id="vuMeter">
+        <div class="vu-step on" style="height: 6px;"></div>
+        <div class="vu-step on" style="height: 10px;"></div>
+        <div class="vu-step on" style="height: 14px;"></div>
+        <div class="vu-step" style="height: 18px;"></div>
+        <div class="vu-step" style="height: 12px;"></div>
+        <div class="vu-step" style="height: 8px;"></div>
+      </div>
+
+      <!-- Social Tag -->
+      <div class="social-tag">
+        <span>✦</span>
+        <span id="displayHandle">@ALEX_DESIGN</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Studio OBS Configuration Panel -->
+  <div class="studio-panel" id="studioPanel">
+    <div class="panel-title">
+      <span style="display:inline-block; width:10px; height:10px; background:#000;"></span>
+      NEO-MEMPHIS CONTROLLER
+    </div>
+    <div class="panel-row">
+      <span class="panel-label">Canvas:</span>
+      <div class="panel-btn-group">
+        <button class="panel-btn active" onclick="setMode('transparent')">Alpha</button>
+        <button class="panel-btn" onclick="setMode('green')">#00FF00</button>
+        <button class="panel-btn" onclick="setMode('white')">#FFFFFF</button>
+      </div>
+    </div>
+    <div class="panel-row">
+      <span class="panel-label">Host:</span>
+      <input type="text" class="panel-input" id="inputName" value="ALEX RIVERA" oninput="syncText()">
+    </div>
+    <div class="panel-row">
+      <span class="panel-label">Role:</span>
+      <input type="text" class="panel-input" id="inputRole" value="ETHICAL BROADCAST & DESIGN" oninput="syncText()">
+    </div>
+    <div class="panel-row">
+      <span class="panel-label">Social:</span>
+      <input type="text" class="panel-input" id="inputHandle" value="@ALEX_DESIGN" oninput="syncText()">
+    </div>
+    <div class="panel-hint">Press <b>H</b> to hide for OBS broadcast</div>
+  </div>
+
+  <script>
+    function setMode(mode) {
+      document.body.className = 'mode-' + mode;
+      document.querySelectorAll('.panel-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase().includes(mode.substring(0, 3)));
+      });
+    }
+
+    function syncText() {
+      document.getElementById('displayHostName').textContent = document.getElementById('inputName').value || 'HOST NAME';
+      document.getElementById('displayHostRole').textContent = document.getElementById('inputRole').value || 'BROADCAST HOST';
+      document.getElementById('displayHandle').textContent = document.getElementById('inputHandle').value || '@HANDLE';
+    }
+
+    // Toggle controls visibility on pressing 'H' key
+    window.addEventListener('keydown', (e) => {
+      if (e.key.toLowerCase() === 'h' && document.activeElement.tagName !== 'INPUT') {
+        document.getElementById('studioPanel').classList.toggle('hidden');
+      }
+    });
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('clean') === 'true') {
+      document.getElementById('studioPanel').classList.add('hidden');
+    }
+    if (urlParams.get('bg') === 'green') setMode('green');
+    if (urlParams.get('bg') === 'white') setMode('white');
+
+    // Stepped VU meter animation
+    const steps = document.querySelectorAll('.vu-step');
+    setInterval(() => {
+      steps.forEach(step => {
+        const active = Math.random() > 0.4;
+        step.classList.toggle('on', active);
+      });
+    }, 140);
+  </script>
+</body>
+</html>
