@@ -75,7 +75,7 @@ Este documento define la capa estética (tokens, paleta cromática, espaciado, c
 
 Estas 15 reglas deben aplicarse estrictamente en cada componente, infografía o pantalla generada:
 
-1. **Delete filler badges:** Eliminar etiquetas y badges decorativos colocados solo para rellenar espacio (`01 // TOFU`, tags redundantes en esquinas, pills cosméticos sin función).
+1. **Delete filler badges:** Eliminar etiquetas y badges decorativos colocados solo para rellenar espacio (`01 // TOFU`, `01 // SOURCE`, números de esquina redundantes `01`, `02`). Si la caja o tarjeta ya explica su contenido mediante un titular específico, cualquier badge enumerador es redundante. Asimismo, no utilizar numeraciones artificiales ni porcentajes cosméticos con animaciones de contador en cabeceras o tarjetas.
 2. **Drop redundant labels:** Eliminar textos que repitan lo obvio. Si el titular es específico y claro, no duplicarlo con micro-subtítulos o categorías obvias.
 3. **Unitalicize random words:** Prohibir cursivas aleatorias o estilizadas en prosa, badges o etiquetas. La tipografía debe mantenerse upright/romana con pesos calibrados (400, 600, 800) para máxima solidez y legibilidad.
 4. **Mono only where needed:** Reservar tipografías monospace (`JetBrains Mono`) exclusivamente para datos técnicos reales, hashes, código o cifras numéricas en tablas. Todo texto editorial, botones y titulares deben usar la fuente principal (`Inter` / `OTSono`).

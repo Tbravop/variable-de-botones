@@ -80,10 +80,10 @@
     }
 
     .perk-nav-context {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--color-graphite);
-      letter-spacing: 0.02em;
+      letter-spacing: 0.01em;
     }
 
     /* Subheader Title */
@@ -100,32 +100,12 @@
     }
 
     .header-bar h1 {
-      font-size: 40px;
+      font-size: 42px;
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1;
       color: var(--color-off-black-ink);
       text-wrap: balance;
-    }
-
-    .header-stat {
-      display: inline-flex;
-      align-items: baseline;
-      gap: 6px;
-    }
-
-    .header-stat-val {
-      font-family: var(--font-mono);
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--color-accent-coral);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .header-stat-label {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--color-graphite);
     }
 
     /* CONVERGENT ROW: 460px + 680px (Enlarged Hero) + 460px */
@@ -185,7 +165,7 @@
       opacity: 0;
     }
 
-    /* CARD BASE: 28px radius, ZERO SHADOWS */
+    /* CARD BASE: 28px radius, ZERO SHADOWS, Concentric Inner Radii */
     .bento-card {
       background: var(--color-pure-white);
       border-radius: 28px;
@@ -196,7 +176,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      gap: 32px;
       text-align: center;
       padding: 44px 36px;
       opacity: 0;
@@ -217,21 +198,8 @@
       border: 1px solid var(--color-primary-purple);
       color: var(--color-off-black-ink);
       z-index: 15;
+      gap: 36px;
       padding: 56px 48px;
-    }
-
-    .step-seq-num {
-      font-family: var(--font-mono);
-      font-size: 15px;
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-      color: var(--color-graphite);
-      align-self: flex-start;
-    }
-
-    .card-hero-purple .step-seq-num {
-      color: var(--color-off-black-ink);
-      opacity: 0.8;
     }
 
     .icon-container {
@@ -272,7 +240,7 @@
     .headline-wrap {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .card-title {
@@ -294,16 +262,19 @@
     }
 
     .card-desc {
-      font-size: 14px;
+      font-size: 14.5px;
       font-weight: 500;
       color: var(--color-graphite);
-      line-height: 1.4;
+      line-height: 1.45;
       text-wrap: balance;
+      max-width: 380px;
+      margin: 0 auto;
     }
 
     .card-hero-purple .card-desc {
-      color: rgba(20, 20, 15, 0.85);
+      color: rgba(20, 20, 15, 0.88);
       font-size: 16px;
+      max-width: 520px;
     }
 
     /* Bottom Technical Ticker */
@@ -318,14 +289,9 @@
       align-items: center;
       justify-content: space-between;
       font-size: 12px;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--color-graphite);
       z-index: 20;
-    }
-
-    .ticker-numbers {
-      font-family: var(--font-mono);
-      font-variant-numeric: tabular-nums;
     }
 
     .editorial-progress {
@@ -354,13 +320,9 @@
       <span class="perk-nav-context">Matriz de Convergencia Neuronal</span>
     </header>
 
-    <!-- Subheader Title -->
+    <!-- Subheader Title: Clean without artificial metrics -->
     <div class="header-bar" id="header-bar">
       <h1>Aprendizaje por Refuerzo vs. Imitación</h1>
-      <div class="header-stat">
-        <span class="header-stat-val" id="stat-fidelity">99.4%</span>
-        <span class="header-stat-label">Convergencia de Política</span>
-      </div>
     </div>
 
     <!-- SVG Convergent Vectors (Left -> Center & Right -> Center) -->
@@ -376,12 +338,11 @@
       <circle id="pkt-right" class="vector-packet-coral" r="5" />
     </svg>
 
-    <!-- CONVERGENT ROW: Left Satellite + Center Hero + Right Satellite -->
+    <!-- CONVERGENT ROW: Left Satellite + Center Hero + Right Satellite (No filler badges, no redundant number tags) -->
     <main class="bento-row">
 
       <!-- SATELLITE 1: RL AUTÓNOMO -->
       <div class="bento-card card-satellite" id="card-left">
-        <span class="step-seq-num">01</span>
         <div class="icon-container">
           <svg viewBox="0 0 24 24">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
@@ -395,7 +356,6 @@
 
       <!-- DOMINANT CENTER HERO: NÚCLEO NEURONAL (ENLARGED MAIN FEATURE) -->
       <div class="bento-card card-hero-purple" id="card-center">
-        <span class="step-seq-num">NÚCLEO CENTRAL</span>
         <div class="icon-container">
           <svg viewBox="0 0 24 24">
             <rect x="4" y="4" width="16" height="16" rx="2"></rect>
@@ -418,7 +378,6 @@
 
       <!-- SATELLITE 2: EXPERTO HUMANO -->
       <div class="bento-card card-satellite" id="card-right">
-        <span class="step-seq-num">02</span>
         <div class="icon-container">
           <svg viewBox="0 0 24 24">
             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -439,8 +398,8 @@
       <div>
         <span>PALETTE: #A78BFA PURPLE // #FF5A36 SIGNAL CORAL // #F5F5EB CANVAS</span>
       </div>
-      <div class="ticker-numbers">
-        <span>TIMELINE: 10.0s @ 30FPS</span>
+      <div>
+        <span>HYPERFRAME DETERMINISTIC 10.0s @ 30FPS</span>
       </div>
     </footer>
 
@@ -493,8 +452,6 @@
       // Right Coral Conduit towards Center
       .fromTo('#vector-right', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power1.inOut' }, 4.0)
       .fromTo('#pkt-right', { cx: 1240, cy: 310, opacity: 1 }, { cx: 1200, cy: 310, opacity: 0, duration: 0.8, ease: 'power1.inOut' }, 4.0)
-
-      .to('#stat-fidelity', { innerText: "99.8%", duration: 2.0, ease: 'power1.inOut' }, 6.0)
 
       .to('#progress-fill', { width: '100%', duration: 10, ease: 'none' }, 0);
 

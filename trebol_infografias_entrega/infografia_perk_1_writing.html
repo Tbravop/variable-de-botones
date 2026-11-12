@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
-  <title>Infografía 1: El Proceso Editorial // Perk Refactorizado (Stepped 2+3)</title>
+  <title>El Proceso Editorial // Perk Editorial</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <style>
-    /* Perk Refactored Design Tokens */
+    /* Perk Refactored Design Tokens — Strictly Unembellished */
     :root {
       --color-primary-purple: #A78BFA;
       --color-primary-purple-soft: #EDE9FE;
       --color-primary-purple-deep: #7C3AED;
       
-      /* Intentional Accent Color: Signal Coral */
+      /* Intentional Focal Accent: Signal Coral */
       --color-accent-coral: #FF5A36;
       --color-accent-coral-soft: #FFEFEB;
       
@@ -23,11 +23,9 @@
       --color-off-white-canvas: #f5f5eb;
       --color-pure-white: #ffffff;
       --color-ash: #d2d2c8;
-      --color-graphite: #383832; /* High-contrast graphite (>8:1) */
-      --color-deep-charcoal: #252520;
+      --color-graphite: #383832; /* Contrast >8:1 */
       
       --font-otsono: 'Inter', system-ui, -apple-system, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -80,10 +78,10 @@
     }
 
     .perk-nav-context {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--color-graphite);
-      letter-spacing: 0.02em;
+      letter-spacing: 0.01em;
     }
 
     /* Subheader Title */
@@ -100,7 +98,7 @@
     }
 
     .header-bar h1 {
-      font-size: 40px;
+      font-size: 42px;
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1;
@@ -108,30 +106,10 @@
       text-wrap: balance;
     }
 
-    .header-stat {
-      display: inline-flex;
-      align-items: baseline;
-      gap: 6px;
-    }
-
-    .header-stat-val {
-      font-family: var(--font-mono);
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--color-accent-coral);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .header-stat-label {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--color-graphite);
-    }
-
     /* STEPPED 2+3 CONTAINER */
     .stepped-container {
       position: absolute;
-      top: 204px;
+      top: 208px;
       left: 100px;
       width: 1720px;
       height: 670px;
@@ -146,7 +124,7 @@
       width: 100%;
       height: 320px;
       display: grid;
-      grid-template-columns: 1fr 1.35fr; /* ENLARGE MAIN FEATURE (REDACCIÓN) */
+      grid-template-columns: 1fr 1.35fr; /* ENLARGED HERO FEATURE (REDACCIÓN) */
       gap: 28px;
     }
 
@@ -159,7 +137,7 @@
       gap: 28px;
     }
 
-    /* PERK CARD BASE: 28px radius, ZERO SHADOWS */
+    /* CARD BASE: 28px radius, ZERO SHADOWS, Concentric Inner Radii */
     .card-item {
       background: var(--color-pure-white);
       border-radius: 28px;
@@ -170,39 +148,26 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      padding: 36px 36px;
+      justify-content: center;
+      gap: 24px;
+      padding: 40px 36px;
       opacity: 0;
       transform: translateY(24px);
     }
 
-    /* ENLARGED HERO FEATURE (REDACCIÓN): Dominant Visual Weight */
+    /* ENLARGED HERO FEATURE (REDACCIÓN): Dominant Visual Presence */
     .card-hero-purple {
       background: var(--color-primary-purple);
       border: 1px solid var(--color-primary-purple);
       color: var(--color-off-black-ink);
-      padding: 40px 44px;
-    }
-
-    /* Step Sequence Number (Tabular Nums, No filler badges) */
-    .step-seq-num {
-      font-family: var(--font-mono);
-      font-size: 15px;
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-      color: var(--color-graphite);
-      align-self: flex-start;
-    }
-
-    .card-hero-purple .step-seq-num {
-      color: var(--color-off-black-ink);
-      opacity: 0.8;
+      gap: 28px;
+      padding: 44px 48px;
     }
 
     /* Icon Container with Inner Radius = Outer - Padding */
     .icon-container {
-      width: 92px;
-      height: 92px;
+      width: 96px;
+      height: 96px;
       border-radius: 20px;
       display: flex;
       align-items: center;
@@ -212,8 +177,8 @@
     }
 
     .card-hero-purple .icon-container {
-      width: 104px;
-      height: 104px;
+      width: 110px;
+      height: 110px;
       border-radius: 24px;
       background: var(--color-off-black-ink);
       border: 1px solid var(--color-off-black-ink);
@@ -231,21 +196,21 @@
     }
 
     .card-hero-purple .icon-container svg {
-      width: 48px;
-      height: 48px;
-      stroke: var(--color-accent-coral); /* Coral Accent Pop! */
+      width: 50px;
+      height: 50px;
+      stroke: var(--color-accent-coral); /* Coral Accent Spark */
     }
 
     .headline-wrap {
       text-align: center;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
 
     /* Specific Headlines */
     .card-title {
-      font-size: 24px;
+      font-size: 25px;
       font-weight: 800;
       letter-spacing: -0.025em;
       line-height: 1.15;
@@ -256,23 +221,26 @@
     }
 
     .card-hero-purple .card-title {
-      font-size: 32px; /* Prominently enlarged */
+      font-size: 34px; /* Prominently enlarged */
       letter-spacing: -0.03em;
       line-height: 1.1;
-      max-width: 460px;
+      max-width: 480px;
     }
 
     .card-desc {
-      font-size: 14px;
+      font-size: 14.5px;
       font-weight: 500;
       color: var(--color-graphite);
-      line-height: 1.35;
+      line-height: 1.4;
       text-wrap: balance;
+      max-width: 340px;
+      margin: 0 auto;
     }
 
     .card-hero-purple .card-desc {
-      color: rgba(20, 20, 15, 0.85);
-      font-size: 15px;
+      color: rgba(20, 20, 15, 0.88);
+      font-size: 16px;
+      max-width: 460px;
     }
 
     /* Bottom Technical Ticker */
@@ -287,14 +255,9 @@
       align-items: center;
       justify-content: space-between;
       font-size: 12px;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--color-graphite);
       z-index: 20;
-    }
-
-    .ticker-numbers {
-      font-family: var(--font-mono);
-      font-variant-numeric: tabular-nums;
     }
 
     .editorial-progress {
@@ -320,19 +283,15 @@
     <!-- Top Editorial Nav -->
     <header class="perk-nav">
       <span class="perk-logo">Perk</span>
-      <span class="perk-nav-context">Estructura Editorial // Flujo Escalonado</span>
+      <span class="perk-nav-context">Estructura Editorial &amp; Calidad de Contenido</span>
     </header>
 
     <!-- Subheader Title -->
     <div class="header-bar" id="header-bar">
       <h1>Metodología de Producción Editorial</h1>
-      <div class="header-stat">
-        <span class="header-stat-val" id="stat-accuracy">100%</span>
-        <span class="header-stat-label">Fuentes Verificadas</span>
-      </div>
     </div>
 
-    <!-- STEPPED 2+3 CONTAINER -->
+    <!-- STEPPED 2+3 CONTAINER: No filler badges, no redundant number tags -->
     <main class="stepped-container">
 
       <!-- ROW 1: 2 WIDE CARDS -->
@@ -340,7 +299,6 @@
 
         <!-- CARD 1: INVESTIGACIÓN -->
         <div class="card-item" id="card-1">
-          <span class="step-seq-num">01</span>
           <div class="icon-container">
             <svg viewBox="0 0 24 24">
               <circle cx="11" cy="11" r="8"></circle>
@@ -355,7 +313,6 @@
 
         <!-- CARD 2: REDACCIÓN (ENLARGED HERO FEATURE) -->
         <div class="card-item card-hero-purple" id="card-2">
-          <span class="step-seq-num">02 // PRINCIPAL</span>
           <div class="icon-container">
             <svg viewBox="0 0 24 24">
               <path d="M12 20h9"></path>
@@ -375,7 +332,6 @@
 
         <!-- CARD 3: REVISIÓN -->
         <div class="card-item" id="card-3">
-          <span class="step-seq-num">03</span>
           <div class="icon-container">
             <svg viewBox="0 0 24 24">
               <polyline points="9 11 12 14 22 4"></polyline>
@@ -390,7 +346,6 @@
 
         <!-- CARD 4: EDICIÓN -->
         <div class="card-item" id="card-4">
-          <span class="step-seq-num">04</span>
           <div class="icon-container">
             <svg viewBox="0 0 24 24">
               <line x1="4" y1="21" x2="4" y2="14"></line>
@@ -412,7 +367,6 @@
 
         <!-- CARD 5: PUBLICACIÓN -->
         <div class="card-item" id="card-5">
-          <span class="step-seq-num">05</span>
           <div class="icon-container">
             <svg viewBox="0 0 24 24">
               <line x1="22" y1="2" x2="11" y2="13"></line>
@@ -431,12 +385,8 @@
 
     <!-- Bottom Technical Rule Ticker -->
     <footer class="perk-footer-ticker">
-      <div>
-        <span>PALETTE: #A78BFA PURPLE // #FF5A36 SIGNAL CORAL // #F5F5EB CANVAS</span>
-      </div>
-      <div class="ticker-numbers">
-        <span>TIMELINE: 10.0s @ 30FPS</span>
-      </div>
+      <span>PALETTE: #A78BFA PURPLE // #FF5A36 SIGNAL CORAL // #F5F5EB CANVAS</span>
+      <span>HYPERFRAME DETERMINISTIC 10.0s @ 30FPS</span>
     </footer>
 
     <!-- Editorial Bottom Progress Bar -->
