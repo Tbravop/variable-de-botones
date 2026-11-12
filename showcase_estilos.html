@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Benchmark Multi-Estilo // 1 Infografía en 4 Sistemas de Diseño</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0B0F19;
+      --card-dark: #131A2A;
+      --border-dark: #232E47;
+      --cyan: #38BDF8;
+      --purple: #A855F7;
+      --lime: #BEFF50;
+      --red: #FF2936;
+      --text-white: #F8FAFC;
+      --text-muted: #94A3B8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text-white);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 24px 60px;
+    }
+
+    /* Ambient Subtle Grid */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle, rgba(56, 189, 248, 0.06) 1.5px, transparent 1.5px);
+      background-size: 32px 32px;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Header Bar */
+    header {
+      width: 100%;
+      max-width: 1720px;
+      background: rgba(19, 26, 42, 0.95);
+      border: 1px solid var(--border-dark);
+      border-radius: 16px;
+      padding: 24px 32px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .brand-wrap h1 {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-wrap h1 .pill-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--cyan);
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-wrap p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* Mode Switcher Buttons */
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-toggle {
+      padding: 10px 18px;
+      background: #1A2438;
+      border: 1px solid #334155;
+      color: var(--text-white);
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-toggle:hover {
+      background: #243048;
+      border-color: #64748B;
+    }
+
+    .btn-toggle.active {
+      background: var(--cyan);
+      color: #0B0F19;
+      border-color: var(--cyan);
+      font-weight: 800;
+    }
+
+    .sync-btn {
+      padding: 10px 16px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-white);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .sync-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* TABS BAR (FOR SINGLE-FOCUS MODE) */
+    .tabs-bar {
+      width: 100%;
+      max-width: 1720px;
+      display: none;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .tab-pill {
+      flex: 1;
+      padding: 14px 20px;
+      background: #131A2A;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+
+    .tab-pill:hover {
+      border-color: #475569;
+      color: var(--text-white);
+    }
+
+    .tab-pill.active {
+      background: #1E293B;
+      border-color: var(--cyan);
+      color: var(--text-white);
+    }
+
+    .tab-pill .tab-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .tab-pill .tab-name {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    /* ===================================================
+       VIEW MODE 1: GRID 2x2 (SIMULTANEOUS 4-PREVIEW)
+       =================================================== */
+    .grid-view {
+      width: 100%;
+      max-width: 1720px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-bottom: 36px;
+    }
+
+    .preview-card {
+      background: #131A2A;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .preview-card:hover {
+      border-color: #475569;
+      transform: translateY(-2px);
+    }
+
+    .card-meta-bar {
+      padding: 14px 20px;
+      background: #0E1524;
+      border-bottom: 1px solid var(--border-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .meta-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .meta-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-white);
+    }
+
+    .style-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .pill-slush { background: #dceeff; color: #000000; border: 1px solid #000; }
+    .pill-freshman { background: #000000; color: #ff2936; border: 1px solid #ff2936; }
+    .pill-perk { background: #beff50; color: #14140f; border: 1px solid #14140f; }
+    .pill-bento { background: #F8FAFC; color: #0284C7; border: 1px solid #0284C7; }
+
+    .card-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-link-btn {
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--cyan);
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .card-link-btn:hover {
+      background: var(--cyan);
+      color: #000;
+    }
+
+    /* Responsive 16:9 Iframe Wrapper */
+    .iframe-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000000;
+      overflow: hidden;
+    }
+
+    .iframe-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ===================================================
+       VIEW MODE 2: SINGLE FOCUS 16:9 THEATER
+       =================================================== */
+    .focus-view {
+      width: 100%;
+      max-width: 1720px;
+      display: none;
+      margin-bottom: 36px;
+    }
+
+    .focus-theater {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000000;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      position: relative;
+    }
+
+    .focus-theater iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* COMPARISON TOKENS TABLE */
+    .tokens-table-wrap {
+      width: 100%;
+      max-width: 1720px;
+      background: #131A2A;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 16px;
+      padding: 28px 32px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .table-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-white);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th {
+      text-align: left;
+      padding: 12px 16px;
+      background: #0E1524;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--border-dark);
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #1E293B;
+      color: #E2E8F0;
+      vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    .color-chip {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      margin-right: 6px;
+      vertical-align: text-top;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER -->
+  <header>
+    <div class="brand-wrap">
+      <h1>
+        Benchmark Multi-Estilo
+        <span class="pill-tag">1 Infografía // 4 Sistemas Visuales</span>
+      </h1>
+      <p>Mismo contenido funcional (*Ciclo de Desarrollo Agéntico*) proyectado a través de 4 filosofías estéticas de diseño completamente distintas.</p>
+    </div>
+
+    <!-- CONTROLS & SWITCHERS -->
+    <div class="controls-bar">
+      <button class="btn-toggle active" id="btn-grid" onclick="setViewMode('grid')">
+        ⊞ Grid 2×2 (Simultáneo)
+      </button>
+      <button class="btn-toggle" id="btn-focus" onclick="setViewMode('focus')">
+        ◻ Enfoque 16:9 (Pestañas)
+      </button>
+
+      <div style="width: 1px; height: 24px; background: var(--border-dark); margin: 0 4px;"></div>
+
+      <button class="sync-btn" onclick="syncAllFrames('restart')">🔄 Reiniciar Todos</button>
+      <button class="sync-btn" onclick="syncAllFrames('toggle')">⏯ Pausa / Play</button>
+    </div>
+  </header>
+
+  <!-- TABS FOR SINGLE-FOCUS THEATER -->
+  <div class="tabs-bar" id="tabs-bar">
+    <div class="tab-pill active" onclick="setFocusTab(0, 'infografia_estilo_slush.html')">
+      <span class="tab-badge" style="color: #4da2ff;">DESIGN (4) // SLUSH</span>
+      <span class="tab-name">01. Inflatable Sticker Pop</span>
+    </div>
+    <div class="tab-pill" onclick="setFocusTab(1, 'infografia_estilo_freshman.html')">
+      <span class="tab-badge" style="color: #ff2936;">DESIGN (6) // FRESHMAN</span>
+      <span class="tab-name">02. Cinema Title Noir</span>
+    </div>
+    <div class="tab-pill" onclick="setFocusTab(2, 'infografia_estilo_perk.html')">
+      <span class="tab-badge" style="color: #beff50;">DESIGN (7) // PERK</span>
+      <span class="tab-name">03. Electric Lime Parchment</span>
+    </div>
+    <div class="tab-pill" onclick="setFocusTab(3, 'infografia_estilo_bento.html')">
+      <span class="tab-badge" style="color: #0284C7;">DESIGN.MD // BENTO 2026</span>
+      <span class="tab-name">04. Notion &amp; Apple Light UI</span>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       VIEW 1: GRID 2x2 SIMULTANEOUS
+       ===================================================== -->
+  <div class="grid-view" id="grid-view">
+    
+    <!-- CARD 1: SLUSH -->
+    <div class="preview-card">
+      <div class="card-meta-bar">
+        <div class="meta-title-group">
+          <span class="style-pill pill-slush">DESIGN (4) · SLUSH</span>
+          <span class="meta-title">Inflatable Sticker Universe</span>
+        </div>
+        <div class="card-actions">
+          <a class="card-link-btn" href="infografia_estilo_slush.html" target="_blank">Abrir Completa ↗</a>
+        </div>
+      </div>
+      <div class="iframe-wrapper">
+        <iframe id="iframe-slush" src="infografia_estilo_slush.html"></iframe>
+      </div>
+    </div>
+
+    <!-- CARD 2: FRESHMAN -->
+    <div class="preview-card">
+      <div class="card-meta-bar">
+        <div class="meta-title-group">
+          <span class="style-pill pill-freshman">DESIGN (6) · FRESHMAN</span>
+          <span class="meta-title">Cinema Title Card on Black Velvet</span>
+        </div>
+        <div class="card-actions">
+          <a class="card-link-btn" href="infografia_estilo_freshman.html" target="_blank">Abrir Completa ↗</a>
+        </div>
+      </div>
+      <div class="iframe-wrapper">
+        <iframe id="iframe-freshman" src="infografia_estilo_freshman.html"></iframe>
+      </div>
+    </div>
+
+    <!-- CARD 3: PERK -->
+    <div class="preview-card">
+      <div class="card-meta-bar">
+        <div class="meta-title-group">
+          <span class="style-pill pill-perk">DESIGN (7) · PERK</span>
+          <span class="meta-title">Electric Lime on Warm Parchment</span>
+        </div>
+        <div class="card-actions">
+          <a class="card-link-btn" href="infografia_estilo_perk.html" target="_blank">Abrir Completa ↗</a>
+        </div>
+      </div>
+      <div class="iframe-wrapper">
+        <iframe id="iframe-perk" src="infografia_estilo_perk.html"></iframe>
+      </div>
+    </div>
+
+    <!-- CARD 4: BENTO 2026 -->
+    <div class="preview-card">
+      <div class="card-meta-bar">
+        <div class="meta-title-group">
+          <span class="style-pill pill-bento">REPO · BENTO 2026</span>
+          <span class="meta-title">Ultra-Clean Notion &amp; Keynote UI</span>
+        </div>
+        <div class="card-actions">
+          <a class="card-link-btn" href="infografia_estilo_bento.html" target="_blank">Abrir Completa ↗</a>
+        </div>
+      </div>
+      <div class="iframe-wrapper">
+        <iframe id="iframe-bento" src="infografia_estilo_bento.html"></iframe>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- =====================================================
+       VIEW 2: SINGLE FOCUS THEATER 16:9
+       ===================================================== -->
+  <div class="focus-view" id="focus-view">
+    <div class="focus-theater">
+      <iframe id="focus-iframe" src="infografia_estilo_slush.html"></iframe>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       DESIGN TOKENS COMPARISON TABLE
+       ===================================================== -->
+  <div class="tokens-table-wrap">
+    <div class="table-title">
+      <span>📊 Matriz de Comparación de Tokens de Diseño</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Sistema</th>
+          <th>Tema</th>
+          <th>Lienzo / Fondo</th>
+          <th>Paleta de Acentos</th>
+          <th>Bordes &amp; Radios</th>
+          <th>Elevación / Sombras</th>
+          <th>Tipografía Distintiva</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color: #4da2ff;">01. Slush</strong><br><small style="color: var(--text-muted);">DESIGN (4)/(5).md</small></td>
+          <td>Light</td>
+          <td><span class="color-chip" style="background: #dceeff;"></span>Sky Wash (#dceeff)</td>
+          <td>
+            <span class="color-chip" style="background: #4da2ff;"></span>#4da2ff (Electric Blue)<br>
+            <span class="color-chip" style="background: #55db9c;"></span>#55db9c (Mint Pop)<br>
+            <span class="color-chip" style="background: #ffd731;"></span>#ffd731 (Sunburst)<br>
+            <span class="color-chip" style="background: #e9ccff;"></span>#e9ccff (Lavender)
+          </td>
+          <td>Borde 1.5-2px negro (#000000) hand-cut, radio 28-36px en tarjetas y 1600px en píldoras.</td>
+          <td><strong>Cero sombras.</strong> Formas recortadas planas y tubo inflable 3D.</td>
+          <td>Lateral / Bowlby One (crushed leading 0.8) + Plus Jakarta Sans 800.</td>
+        </tr>
+        <tr>
+          <td><strong style="color: #ff2936;">02. Freshman</strong><br><small style="color: var(--text-muted);">DESIGN (6).md</small></td>
+          <td>Dark</td>
+          <td><span class="color-chip" style="background: #000000;"></span>Carbon Black (#000000)</td>
+          <td>
+            <span class="color-chip" style="background: #ffffff;"></span>#ffffff (Pure White 92%)<br>
+            <span class="color-chip" style="background: #ff2936;"></span>#ff2936 (Signal Red puntuación)
+          </td>
+          <td><strong>Radio estricto de 0px</strong> en todos los elementos. Líneas de pelo de 1px.</td>
+          <td><strong>Cero sombras ni gradientes.</strong> Contraste puro de masa y escala.</td>
+          <td>Editorial New (serif ultralight 200 cursiva) + TT Firs Neue + Altform compacta.</td>
+        </tr>
+        <tr>
+          <td><strong style="color: #beff50;">03. Perk</strong><br><small style="color: var(--text-muted);">DESIGN (7).md</small></td>
+          <td>Light</td>
+          <td><span class="color-chip" style="background: #f5f5eb;"></span>Warm Parchment (#f5f5eb)</td>
+          <td>
+            <span class="color-chip" style="background: #beff50;"></span>#beff50 (Electric Lime único)<br>
+            <span class="color-chip" style="background: #14140f;"></span>#14140f (Off-black ink)
+          </td>
+          <td>Radio 28px en tarjetas, 9999px en pills. Bordes cálidos en Ash (#d2d2c8).</td>
+          <td><strong>Cero sombras.</strong> Capas tonales: pergamino → tarjeta blanca → hero lime.</td>
+          <td>OTSono / Inter sans (tracking display -0.03em, micro-eyebrows +0.1em all-caps).</td>
+        </tr>
+        <tr>
+          <td><strong style="color: #38bdf8;">04. Bento 2026</strong><br><small style="color: var(--text-muted);">design.md (Repo)</small></td>
+          <td>Light</td>
+          <td><span class="color-chip" style="background: #F8FAFC;"></span>Off-White (#F8FAFC)</td>
+          <td>
+            <span class="color-chip" style="background: #0284C7;"></span>Cobalt Blue (#0284C7)<br>
+            <span class="color-chip" style="background: #7C3AED;"></span>Indigo Violet (#7C3AED)<br>
+            <span class="color-chip" style="background: #059669;"></span>Emerald (#059669)
+          </td>
+          <td>Radio 28-32px, bordes sutiles de 1px (#E2E8F0), badges pasteles redondeados.</td>
+          <td><strong>Sombras de caída ambiental suaves</strong> (box-shadow 0 10px 30px -4px rgba(15,23,42,0.04)).</td>
+          <td>Inter / Outfit 800-900 en Dark Slate (#0F172A) + JetBrains Mono.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // View Switcher (Grid 2x2 vs Focus Theater)
+    function setViewMode(mode) {
+      const gridView = document.getElementById('grid-view');
+      const focusView = document.getElementById('focus-view');
+      const tabsBar = document.getElementById('tabs-bar');
+      const btnGrid = document.getElementById('btn-grid');
+      const btnFocus = document.getElementById('btn-focus');
+
+      if (mode === 'grid') {
+        gridView.style.display = 'grid';
+        focusView.style.display = 'none';
+        tabsBar.style.display = 'none';
+        btnGrid.classList.add('active');
+        btnFocus.classList.remove('active');
+      } else {
+        gridView.style.display = 'none';
+        focusView.style.display = 'block';
+        tabsBar.style.display = 'flex';
+        btnGrid.classList.remove('active');
+        btnFocus.classList.add('active');
+      }
+    }
+
+    // Tab Switcher for Focus View
+    function setFocusTab(index, url) {
+      const tabs = document.querySelectorAll('.tab-pill');
+      tabs.forEach((t, i) => t.classList.toggle('active', i === index));
+      const focusIframe = document.getElementById('focus-iframe');
+      focusIframe.src = url;
+    }
+
+    // Synchronized playback triggers
+    function syncAllFrames(action) {
+      const iframes = [
+        document.getElementById('iframe-slush'),
+        document.getElementById('iframe-freshman'),
+        document.getElementById('iframe-perk'),
+        document.getElementById('iframe-bento'),
+        document.getElementById('focus-iframe')
+      ];
+
+      iframes.forEach(f => {
+        if (!f || !f.contentWindow) return;
+        try {
+          if (action === 'restart') {
+            f.contentWindow.location.reload();
+          } else if (action === 'toggle') {
+            const ev = new KeyboardEvent('keydown', { code: 'Space' });
+            f.contentWindow.dispatchEvent(ev);
+          }
+        } catch(e) {}
+      });
+    }
+  </script>
+</body>
+</html>

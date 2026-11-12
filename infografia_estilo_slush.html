@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es" data-fps="30" data-duration="10" data-width="1920" data-height="1080">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>Ciclo Agéntico // Estilo Slush (Sticker Universe)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Plus+Jakarta+Sans:wght@500;700;800&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <style>
+    /* Slush Design Tokens (DESIGN.md) */
+    :root {
+      --color-carbon: #000000;
+      --color-paper-white: #ffffff;
+      --color-sky-wash: #dceeff;
+      --color-concrete-gray: #cccccc;
+      --color-soft-mist: #e9e9e9;
+      --color-electric-blue: #4da2ff;
+      --color-mint-pop: #55db9c;
+      --color-lavender: #e9ccff;
+      --color-ember: #fb4903;
+      --color-sunburst: #ffd731;
+      --color-voltage-violet: #5c4ade;
+      
+      --font-display: 'Bowlby One', cursive, sans-serif;
+      --font-ui: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--color-sky-wash);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-ui);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #stage-scaler {
+      position: absolute;
+      width: 1920px;
+      height: 1080px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      transform-origin: center center;
+      background: var(--color-sky-wash);
+      overflow: hidden;
+    }
+
+    /* Top Marquee Ribbon */
+    .slush-marquee {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 44px;
+      background: var(--color-carbon);
+      color: var(--color-paper-white);
+      display: flex;
+      align-items: center;
+      padding: 0 40px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      z-index: 40;
+      overflow: hidden;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 40px;
+      white-space: nowrap;
+    }
+
+    /* Top Slush Nav */
+    .slush-nav {
+      position: absolute;
+      top: 64px;
+      left: 100px;
+      right: 100px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 30;
+    }
+
+    .slush-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 24px;
+      background: var(--color-paper-white);
+      border: 1.5px solid var(--color-carbon);
+      border-radius: 1600px;
+      font-family: var(--font-display);
+      font-size: 22px;
+      color: var(--color-carbon);
+    }
+
+    .slush-nav-pills {
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav-pill {
+      padding: 10px 22px;
+      background: var(--color-paper-white);
+      border: 1.5px solid var(--color-carbon);
+      border-radius: 1600px;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--color-carbon);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .nav-pill.cta {
+      background: var(--color-carbon);
+      color: var(--color-paper-white);
+    }
+
+    /* 3D Inflatable Ribbon Tube Motif (SVG Layer) */
+    #ribbon-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Giant Sculptural Display Headline */
+    .headline-wrap {
+      position: absolute;
+      top: 140px;
+      left: 100px;
+      right: 100px;
+      z-index: 15;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    .sculptural-title {
+      font-family: var(--font-display);
+      font-size: 82px;
+      line-height: 0.85;
+      color: var(--color-carbon);
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    .sub-tagline {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-carbon);
+      background: var(--color-sunburst);
+      padding: 8px 20px;
+      border: 1.5px solid var(--color-carbon);
+      border-radius: 1600px;
+      transform: rotate(-2deg);
+    }
+
+    /* Bento Grid: 3 Soft Rounded Sticker Cards */
+    .cards-container {
+      position: absolute;
+      top: 250px;
+      left: 100px;
+      width: 1720px;
+      height: 680px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      z-index: 20;
+    }
+
+    .slush-card {
+      border: 2px solid var(--color-carbon);
+      border-radius: 36px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 36px;
+      gap: 32px;
+      opacity: 0;
+      transform: translateY(40px) scale(0.96);
+      /* Slush rule: NO box-shadows, pure flat surface + hand-cut outline */
+      box-shadow: none;
+    }
+
+    /* Card Color Variations from Slush Palette */
+    .card-lavender {
+      background: var(--color-lavender);
+    }
+
+    .card-white {
+      background: var(--color-paper-white);
+    }
+
+    .card-mint {
+      background: var(--color-mint-pop);
+    }
+
+    /* Floating Stickers (Playful Hand-Cut Accents) */
+    .sticker-badge {
+      position: absolute;
+      border: 1.5px solid var(--color-carbon);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--color-carbon);
+      padding: 6px 14px;
+      z-index: 5;
+    }
+
+    .badge-top-right {
+      top: 20px;
+      right: 20px;
+      transform: rotate(4deg);
+    }
+
+    .sticker-ember { background: var(--color-ember); color: var(--color-paper-white); }
+    .sticker-sunburst { background: var(--color-sunburst); }
+    .sticker-violet { background: var(--color-voltage-violet); color: var(--color-paper-white); }
+
+    /* Central Sticker Icon Well */
+    .slush-icon-well {
+      width: 130px;
+      height: 130px;
+      border-radius: 1600px; /* pill / circular */
+      border: 2px solid var(--color-carbon);
+      background: var(--color-paper-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .slush-icon-well svg {
+      width: 62px;
+      height: 62px;
+      stroke: var(--color-carbon);
+      stroke-width: 2.2px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    /* Slush Card Big Punchy Title */
+    .card-title-slush {
+      font-family: var(--font-display);
+      font-size: 40px;
+      line-height: 0.9;
+      color: var(--color-carbon);
+      text-transform: uppercase;
+      text-align: center;
+      letter-spacing: -0.01em;
+    }
+
+    /* Hand-cut Pill Step Tag */
+    .step-pill {
+      padding: 8px 24px;
+      background: var(--color-carbon);
+      color: var(--color-paper-white);
+      border-radius: 1600px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Floating Decor Stickers Scattered */
+    .floating-sticker {
+      position: absolute;
+      border: 2px solid var(--color-carbon);
+      border-radius: 24px;
+      padding: 12px 20px;
+      font-family: var(--font-display);
+      font-size: 18px;
+      z-index: 25;
+      pointer-events: none;
+    }
+
+    /* Bottom Linear Progress Track */
+    .slush-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: var(--color-concrete-gray);
+      border-top: 1.5px solid var(--color-carbon);
+      z-index: 50;
+    }
+
+    .slush-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--color-electric-blue);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="stage-scaler" class="clip" data-composition-id="slush_agentic" data-width="1920" data-height="1080" data-duration="10" data-start="0">
+    
+    <!-- Top Marquee -->
+    <div class="slush-marquee">
+      <div class="marquee-track">
+        <span>★ SLUSH DESIGN SYSTEM ★ STICKER UNIVERSE 2026 ★ INFLATABLE EDITORIAL UI ★ DECOUPLED ARCHITECTURE ★</span>
+        <span>★ SLUSH DESIGN SYSTEM ★ STICKER UNIVERSE 2026 ★ INFLATABLE EDITORIAL UI ★ DECOUPLED ARCHITECTURE ★</span>
+      </div>
+    </div>
+
+    <!-- Slush Header Nav -->
+    <header class="slush-nav" id="slush-nav">
+      <div class="slush-logo">SLUSH ⚡</div>
+      <div class="slush-nav-pills">
+        <div class="nav-pill">01 // INCEPTION</div>
+        <div class="nav-pill">02 // ORCHESTRATION</div>
+        <div class="nav-pill">03 // DEPLOY</div>
+        <div class="nav-pill cta">LAUNCH AGENT →</div>
+      </div>
+    </header>
+
+    <!-- 3D Electric Blue Inflatable Ribbon (SVG Vector Sculpture) -->
+    <svg id="ribbon-layer" viewBox="0 0 1920 1080">
+      <defs>
+        <!-- Filter to give smooth tubular 3D shading to the ribbon -->
+        <linearGradient id="blueTubeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#80beff" />
+          <stop offset="45%" stop-color="#4da2ff" />
+          <stop offset="85%" stop-color="#1a78e6" />
+          <stop offset="100%" stop-color="#0954b3" />
+        </linearGradient>
+      </defs>
+      <!-- Big curved inflatable ribbon crossing behind the cards -->
+      <path id="blue-ribbon" d="M -50 620 C 350 420, 600 780, 960 520 C 1320 260, 1600 750, 1980 460" 
+            fill="none" stroke="url(#blueTubeGrad)" stroke-width="48" stroke-linecap="round" opacity="0.9" />
+      <path d="M -50 620 C 350 420, 600 780, 960 520 C 1320 260, 1600 750, 1980 460" 
+            fill="none" stroke="#000000" stroke-width="52" stroke-linecap="round" opacity="0.15" />
+    </svg>
+
+    <!-- Headline Block -->
+    <div class="headline-wrap" id="headline-wrap">
+      <h1 class="sculptural-title">CICLO AGÉNTICO</h1>
+      <div class="sub-tagline">3 STATIONS PIPELINE</div>
+    </div>
+
+    <!-- 3 Bento Sticker Cards -->
+    <div class="cards-container">
+      
+      <!-- CARD 1: ESPECIFICACIÓN (Lavender Surface) -->
+      <div class="slush-card card-lavender" id="card-1">
+        <div class="sticker-badge badge-top-right sticker-ember">STATION 01</div>
+        <div class="slush-icon-well">
+          <!-- Terminal / Prompt Code Icon -->
+          <svg viewBox="0 0 24 24">
+            <polyline points="4 17 10 11 4 5"></polyline>
+            <line x1="12" y1="19" x2="20" y2="19"></line>
+          </svg>
+        </div>
+        <div class="step-pill">HUMAN INCEPTION</div>
+        <h2 class="card-title-slush">ESPECIFICACIÓN</h2>
+      </div>
+
+      <!-- CARD 2: ORQUESTACIÓN (Paper White Surface) -->
+      <div class="slush-card card-white" id="card-2">
+        <div class="sticker-badge badge-top-right sticker-sunburst">CORE ENGINE</div>
+        <div class="slush-icon-well" style="background: var(--color-sunburst);">
+          <!-- Bot / AI Engine Icon -->
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="11" width="18" height="10" rx="2"></rect>
+            <circle cx="12" cy="5" r="2"></circle>
+            <path d="M12 7v4"></path>
+            <line x1="8" y1="16" x2="8" y2="16"></line>
+            <line x1="16" y1="16" x2="16" y2="16"></line>
+          </svg>
+        </div>
+        <div class="step-pill" style="background: var(--color-voltage-violet);">NEURAL SYNTHESIS</div>
+        <h2 class="card-title-slush">ORQUESTACIÓN</h2>
+      </div>
+
+      <!-- CARD 3: DESPLIEGUE (Mint Pop Surface) -->
+      <div class="slush-card card-mint" id="card-3">
+        <div class="sticker-badge badge-top-right sticker-violet">FINAL RELEASE</div>
+        <div class="slush-icon-well">
+          <!-- Merge / Checkmark Release Icon -->
+          <svg viewBox="0 0 24 24">
+            <circle cx="18" cy="18" r="3"></circle>
+            <circle cx="6" cy="6" r="3"></circle>
+            <path d="M6 21V9a9 9 0 0 0 9 9"></path>
+          </svg>
+        </div>
+        <div class="step-pill">VERIFIED MERGE</div>
+        <h2 class="card-title-slush">DESPLIEGUE</h2>
+      </div>
+
+    </div>
+
+    <!-- Scattered Fun Decorative Stickers -->
+    <div class="floating-sticker sticker-sunburst" id="dec-1" style="top: 220px; left: 80px; transform: rotate(-8deg);">
+      🚀 FAST SHIP
+    </div>
+    <div class="floating-sticker sticker-ember" id="dec-2" style="top: 860px; right: 90px; transform: rotate(6deg); color: #fff;">
+      ✓ 100% SPEC
+    </div>
+
+    <!-- Slush Bottom Progress -->
+    <div class="slush-progress">
+      <div class="slush-progress-fill" id="progress-fill"></div>
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Responsive stage scaler
+      function handleResize() {
+        const stage = document.getElementById("stage-scaler");
+        const scaleX = window.innerWidth / 1920;
+        const scaleY = window.innerHeight / 1080;
+        const scale = Math.min(scaleX, scaleY);
+        stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+      }
+      window.addEventListener('resize', handleResize);
+      handleResize();
+
+      // GSAP Master Timeline (10.0s strict)
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["slush_agentic"] = tl;
+
+      // Bottom progress bar
+      tl.to("#progress-fill", { width: "100%", duration: 10, ease: "none" }, 0);
+
+      // Initial visual states
+      gsap.set(["#slush-nav", "#headline-wrap"], { opacity: 0, y: -20 });
+      gsap.set(".slush-card", { opacity: 0, y: 50, scale: 0.94 });
+      gsap.set([".floating-sticker", "#blue-ribbon"], { opacity: 0 });
+
+      // 1. Entrance (0.2s - 0.6s)
+      tl.to("#slush-nav", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.2);
+      tl.to("#headline-wrap", { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.4)" }, 0.4);
+      tl.to("#blue-ribbon", { opacity: 0.9, duration: 0.8, ease: "power2.out" }, 0.5);
+
+      // 2. Card 1 Activation (0.8s)
+      tl.to("#card-1", { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.5)" }, 0.8);
+      tl.to("#dec-1", { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, 1.1);
+
+      // 3. Card 2 Activation (2.6s)
+      tl.to("#card-2", { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.5)" }, 2.6);
+
+      // 4. Card 3 Activation (4.8s)
+      tl.to("#card-3", { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.5)" }, 4.8);
+      tl.to("#dec-2", { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, 5.2);
+
+      // 5. Final Hold State (7.5s - 10.0s)
+      tl.to(".slush-card", { scale: 1.02, duration: 0.6, ease: "power1.inOut", yoyo: true, repeat: 1 }, 7.5);
+
+      // Keyboard playback shortcuts
+      window.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') tl.paused(!tl.paused());
+        if (e.code === 'KeyR') tl.restart();
+      });
+
+      tl.play();
+    });
+  </script>
+</body>
+</html>

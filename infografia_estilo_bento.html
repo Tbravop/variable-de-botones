@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es" data-fps="30" data-duration="10" data-width="1920" data-height="1080">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>Ciclo de Desarrollo Agéntico // 2026 Bento Grid (Notion Light UI)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=JetBrains+Mono:wght@700;800&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <style>
+    :root {
+      --bg-canvas: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --card-border: #E2E8F0;
+      --card-border-active: #CBD5E1;
+      
+      --title-dark: #0F172A;
+      --text-muted: #64748B;
+      
+      --cobalt: #0284C7;
+      --cobalt-pastel: #E0F2FE;
+      --cobalt-border: rgba(2, 132, 199, 0.22);
+      
+      --violet: #7C3AED;
+      --violet-pastel: #EDE9FE;
+      --violet-border: rgba(124, 58, 237, 0.22);
+      
+      --emerald: #059669;
+      --emerald-pastel: #D1FAE5;
+      --emerald-border: rgba(5, 150, 105, 0.22);
+      
+      --shadow-ambient: 0 10px 30px -4px rgba(15, 23, 42, 0.04), 0 4px 12px -2px rgba(15, 23, 42, 0.02);
+      --shadow-active: 0 24px 48px -12px rgba(15, 23, 42, 0.09), 0 8px 16px -4px rgba(15, 23, 42, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg-canvas);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #stage-scaler {
+      position: absolute;
+      width: 1920px;
+      height: 1080px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      transform-origin: center center;
+      background: #F8FAFC;
+      overflow: hidden;
+    }
+
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(#CBD5E1 1px, transparent 1px);
+      background-size: 36px 36px;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .header-bar {
+      position: absolute;
+      top: 65px;
+      left: 140px;
+      right: 140px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 20;
+    }
+
+    .header-bar h1 {
+      font-family: 'Outfit', 'Inter', sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--title-dark);
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: var(--violet-pastel);
+      border: 1px solid var(--violet-border);
+      border-radius: 9999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--violet);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .header-badge .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--violet);
+    }
+
+    .bento-container {
+      position: absolute;
+      top: 185px;
+      left: 140px;
+      width: 1640px;
+      height: 600px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+      z-index: 10;
+    }
+
+    .bento-card {
+      background: var(--card-bg);
+      border-radius: 32px;
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow-ambient);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+      padding: 60px 40px;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+
+    .bento-card.active {
+      border-color: var(--card-border-active);
+      box-shadow: var(--shadow-active);
+    }
+
+    .badge-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-badge {
+      width: 120px;
+      height: 120px;
+      border-radius: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .icon-badge svg {
+      width: 56px;
+      height: 56px;
+      stroke-width: 2px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    .badge-cobalt {
+      background: var(--cobalt-pastel);
+      border: 1px solid var(--cobalt-border);
+      color: var(--cobalt);
+    }
+    .badge-cobalt svg { stroke: var(--cobalt); }
+
+    .badge-violet {
+      background: var(--violet-pastel);
+      border: 1px solid var(--violet-border);
+      color: var(--violet);
+    }
+    .badge-violet svg { stroke: var(--violet); }
+
+    .badge-emerald {
+      background: var(--emerald-pastel);
+      border: 1px solid var(--emerald-border);
+      color: var(--emerald);
+    }
+    .badge-emerald svg { stroke: var(--emerald); }
+
+    .pulse-ring {
+      position: absolute;
+      inset: -16px;
+      border-radius: 44px;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .ring-cobalt { border: 2px solid var(--cobalt); }
+    .ring-violet { border: 2px solid var(--violet); }
+    .ring-emerald { border: 2px solid var(--emerald); }
+
+    .card-title {
+      font-family: 'Outfit', 'Inter', sans-serif;
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--title-dark);
+      text-transform: uppercase;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    #connecting-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .vector-track {
+      fill: none;
+      stroke: #E2E8F0;
+      stroke-width: 2px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 6 6;
+    }
+
+    .vector-active {
+      fill: none;
+      stroke-width: 3px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .vector-packet {
+      opacity: 0;
+    }
+
+    .editorial-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: #E2E8F0;
+      z-index: 50;
+    }
+
+    .editorial-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--cobalt), var(--violet), var(--emerald));
+    }
+  </style>
+</head>
+<body>
+
+  <div id="stage-scaler" class="clip" data-composition-id="bento_agentic" data-width="1920" data-height="1080" data-duration="10" data-start="0">
+    <div class="bg-grid"></div>
+
+    <header class="header-bar" id="header-bar">
+      <h1>Ciclo de Desarrollo Agéntico</h1>
+      <div class="header-badge">
+        <div class="badge-dot"></div>
+        2026 Linear Bento Grid (3 Columns)
+      </div>
+    </header>
+
+    <div class="bento-container">
+      <svg id="connecting-svg" viewBox="0 0 1640 600">
+        <path class="vector-track" d="M 515 300 L 563 300" />
+        <path id="vector-1" class="vector-active" stroke="var(--cobalt)" d="M 515 300 L 563 300" />
+        <circle id="pkt-1" class="vector-packet" r="5" fill="var(--cobalt)" />
+
+        <path class="vector-track" d="M 1077 300 L 1125 300" />
+        <path id="vector-2" class="vector-active" stroke="var(--violet)" d="M 1077 300 L 1125 300" />
+        <circle id="pkt-2" class="vector-packet" r="5" fill="var(--violet)" />
+      </svg>
+
+      <!-- COLUMN 1: ESPECIFICACIÓN -->
+      <div class="bento-card" id="card-1">
+        <div class="badge-wrap">
+          <div class="pulse-ring ring-cobalt" id="pulse-1"></div>
+          <div class="icon-badge badge-cobalt">
+            <svg viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+          </div>
+        </div>
+        <h2 class="card-title">ESPECIFICACIÓN</h2>
+      </div>
+
+      <!-- COLUMN 2: ORQUESTACIÓN -->
+      <div class="bento-card" id="card-2">
+        <div class="badge-wrap">
+          <div class="pulse-ring ring-violet" id="pulse-2"></div>
+          <div class="icon-badge badge-violet">
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path><line x1="8" y1="16" x2="8" y2="16"></line><line x1="16" y1="16" x2="16" y2="16"></line></svg>
+          </div>
+        </div>
+        <h2 class="card-title">ORQUESTACIÓN</h2>
+      </div>
+
+      <!-- COLUMN 3: DESPLIEGUE -->
+      <div class="bento-card" id="card-3">
+        <div class="badge-wrap">
+          <div class="pulse-ring ring-emerald" id="pulse-3"></div>
+          <div class="icon-badge badge-emerald">
+            <svg viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M6 21V9a9 9 0 0 0 9 9"></path></svg>
+          </div>
+        </div>
+        <h2 class="card-title">DESPLIEGUE</h2>
+      </div>
+    </div>
+
+    <div class="editorial-progress">
+      <div class="editorial-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      function handleResize() {
+        const stage = document.getElementById("stage-scaler");
+        const scaleX = window.innerWidth / 1920;
+        const scaleY = window.innerHeight / 1080;
+        const scale = Math.min(scaleX, scaleY);
+        stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+      }
+      window.addEventListener('resize', handleResize);
+      handleResize();
+
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["bento_agentic"] = tl;
+
+      tl.to("#progress-fill", { width: "100%", duration: 10, ease: "none" }, 0);
+
+      const setupVector = (id) => {
+        const p = document.getElementById(id);
+        if (!p) return { path: null, len: 0 };
+        const len = p.getTotalLength() + 4;
+        gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+        return { path: p, len };
+      };
+
+      const v1 = setupVector("vector-1");
+      const v2 = setupVector("vector-2");
+
+      gsap.set("#header-bar", { opacity: 0, y: -16 });
+      gsap.set(".bento-card", { opacity: 0, y: 32 });
+
+      tl.to("#header-bar", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.2);
+
+      tl.to("#card-1", {
+        opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.4)",
+        onStart: () => document.getElementById("card-1").classList.add("active")
+      }, 0.7);
+      tl.fromTo("#pulse-1", { scale: 0.85, opacity: 0.9 }, { scale: 1.8, opacity: 0, duration: 0.6, ease: "power2.out" }, 0.9);
+
+      tl.to(v1.path, { strokeDashoffset: 0, duration: 0.6, ease: "power2.inOut" }, 2.6);
+      tl.set("#pkt-1", { opacity: 1 }, 2.6);
+      tl.to("#pkt-1", {
+        duration: 0.6, ease: "power2.inOut",
+        onUpdate: function() {
+          const pt = v1.path.getPointAtLength(this.progress() * v1.len);
+          const el = document.getElementById("pkt-1");
+          el.setAttribute("cx", pt.x); el.setAttribute("cy", pt.y);
+        }
+      }, 2.6);
+      tl.set("#pkt-1", { opacity: 0 }, 3.2);
+
+      tl.to("#card-2", {
+        opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.4)",
+        onStart: () => {
+          document.getElementById("card-1").classList.remove("active");
+          document.getElementById("card-2").classList.add("active");
+        }
+      }, 3.2);
+      tl.fromTo("#pulse-2", { scale: 0.85, opacity: 0.9 }, { scale: 1.8, opacity: 0, duration: 0.6, ease: "power2.out" }, 3.4);
+
+      tl.to(v2.path, { strokeDashoffset: 0, duration: 0.6, ease: "power2.inOut" }, 5.2);
+      tl.set("#pkt-2", { opacity: 1 }, 5.2);
+      tl.to("#pkt-2", {
+        duration: 0.6, ease: "power2.inOut",
+        onUpdate: function() {
+          const pt = v2.path.getPointAtLength(this.progress() * v2.len);
+          const el = document.getElementById("pkt-2");
+          el.setAttribute("cx", pt.x); el.setAttribute("cy", pt.y);
+        }
+      }, 5.2);
+      tl.set("#pkt-2", { opacity: 0 }, 5.8);
+
+      tl.to("#card-3", {
+        opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.4)",
+        onStart: () => {
+          document.getElementById("card-2").classList.remove("active");
+          document.getElementById("card-3").classList.add("active");
+        }
+      }, 5.8);
+      tl.fromTo("#pulse-3", { scale: 0.85, opacity: 0.9 }, { scale: 1.8, opacity: 0, duration: 0.6, ease: "power2.out" }, 6.0);
+
+      tl.to(".bento-card", {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        onStart: () => {
+          document.querySelectorAll(".bento-card").forEach(c => c.classList.add("active"));
+        }
+      }, 7.8);
+
+      window.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') tl.paused(!tl.paused());
+        if (e.code === 'KeyR') tl.restart();
+      });
+
+      tl.play();
+    });
+  </script>
+</body>
+</html>
