@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es" data-fps="30" data-duration="10" data-width="1920" data-height="1080">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>Infografía 3: Refuerzo vs Imitación // Perk Morado Sutil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <style>
+    :root {
+      --color-primary-purple: #A78BFA;
+      --color-primary-purple-soft: #EDE9FE;
+      --color-primary-purple-deep: #7C3AED;
+      --color-off-black-ink: #14140f;
+      --color-off-white-canvas: #f5f5eb;
+      --color-pure-white: #ffffff;
+      --color-ash: #d2d2c8;
+      --color-graphite: #6e6e64;
+      --color-deep-charcoal: #30302a;
+      
+      --font-otsono: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--color-off-white-canvas);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-otsono);
+      color: var(--color-off-black-ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #stage-scaler {
+      position: absolute;
+      width: 1920px;
+      height: 1080px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      transform-origin: center center;
+      background: var(--color-off-white-canvas);
+      overflow: hidden;
+    }
+
+    .perk-nav {
+      position: absolute;
+      top: 48px;
+      left: 80px;
+      right: 80px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--color-ash);
+      padding-bottom: 20px;
+      z-index: 30;
+    }
+
+    .perk-logo-lockup {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .perk-logo {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--color-off-black-ink);
+    }
+
+    .perk-version-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      background: var(--color-pure-white);
+      border: 1px solid var(--color-ash);
+      border-radius: 9999px;
+      color: var(--color-graphite);
+    }
+
+    .perk-nav-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .perk-ghost-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-graphite);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .perk-nav-pill-active {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: var(--color-pure-white);
+      border: 1px solid var(--color-ash);
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .perk-live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--color-primary-purple-deep);
+    }
+
+    .perk-subheader {
+      position: absolute;
+      top: 130px;
+      left: 80px;
+      right: 80px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      z-index: 20;
+    }
+
+    .eyebrow-tech {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-graphite);
+      margin-bottom: 8px;
+    }
+
+    .headline-main {
+      font-size: 48px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--color-off-black-ink);
+    }
+
+    .headline-stat-group {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .headline-stat-item {
+      text-align: right;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-graphite);
+    }
+
+    .stat-val {
+      font-family: var(--font-mono);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--color-off-black-ink);
+    }
+
+    .perk-command-center {
+      position: absolute;
+      top: 228px;
+      left: 80px;
+      width: 1760px;
+      height: 720px;
+      display: grid;
+      grid-template-columns: 1080px 1fr;
+      gap: 28px;
+      z-index: 20;
+    }
+
+    .command-card {
+      border-radius: 28px;
+      position: relative;
+      box-shadow: none;
+      overflow: hidden;
+    }
+
+    .hero-purple-block {
+      background: var(--color-primary-purple);
+      border: 1px solid var(--color-primary-purple);
+      padding: 60px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .hero-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tag-ink-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-off-black-ink);
+      color: var(--color-primary-purple);
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .hero-badge-latency {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-off-black-ink);
+      opacity: 0.85;
+      border: 1px solid rgba(20, 20, 15, 0.22);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .hero-body-content {
+      margin-top: 24px;
+    }
+
+    .hero-huge-title {
+      font-size: 72px;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      color: var(--color-off-black-ink);
+      margin-bottom: 24px;
+      max-width: 920px;
+    }
+
+    .hero-desc {
+      font-size: 20px;
+      line-height: 1.45;
+      font-weight: 400;
+      color: rgba(20, 20, 15, 0.88);
+      max-width: 840px;
+    }
+
+    .hero-telemetry-deck {
+      margin-top: 36px;
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(20, 20, 15, 0.12);
+      border-radius: 20px;
+      padding: 24px 30px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .telem-col-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .telem-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(20, 20, 15, 0.65);
+    }
+
+    .telem-val {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-off-black-ink);
+    }
+
+    .hero-action-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(20, 20, 15, 0.15);
+    }
+
+    .hero-cta-btn {
+      padding: 14px 32px;
+      background: var(--color-off-black-ink);
+      color: var(--color-pure-white);
+      border: none;
+      border-radius: 28px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .hero-cta-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--color-pure-white);
+    }
+
+    .hero-pipeline-state {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-off-black-ink);
+      letter-spacing: 0.04em;
+    }
+
+    .right-stack-col {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      height: 100%;
+    }
+
+    .card-mod-input {
+      flex: 1;
+      background: var(--color-pure-white);
+      border: 1px solid var(--color-ash);
+      padding: 40px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .card-mod-verify {
+      flex: 1;
+      background: var(--color-deep-charcoal);
+      border: 1px solid var(--color-deep-charcoal);
+      color: var(--color-off-white-canvas);
+      padding: 40px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .mod-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mod-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-graphite);
+    }
+
+    .card-mod-verify .mod-eyebrow {
+      color: #919183;
+    }
+
+    .mod-num {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 2px 10px;
+      background: var(--color-off-white-canvas);
+      border-radius: 9999px;
+      color: var(--color-off-black-ink);
+    }
+
+    .card-mod-verify .mod-num {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--color-pure-white);
+    }
+
+    .mod-title {
+      font-size: 30px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin: 12px 0 8px 0;
+    }
+
+    .mod-desc {
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--color-graphite);
+    }
+
+    .card-mod-verify .mod-desc {
+      color: #b9b9b7;
+    }
+
+    .mod-footer-row {
+      padding-top: 18px;
+      border-top: 1px solid var(--color-ash);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-mod-verify .mod-footer-row {
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .mod-tag {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-off-black-ink);
+    }
+
+    .card-mod-verify .mod-tag {
+      color: var(--color-primary-purple);
+    }
+
+    .mod-status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .dot-status {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-primary-purple-deep);
+    }
+
+    .card-mod-verify .dot-status {
+      background: var(--color-primary-purple);
+    }
+
+    .perk-footer-ticker {
+      position: absolute;
+      bottom: 30px;
+      left: 80px;
+      right: 80px;
+      height: 36px;
+      border-top: 1px solid var(--color-ash);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-graphite);
+      z-index: 20;
+    }
+
+    .ticker-left {
+      display: flex;
+      gap: 24px;
+    }
+
+    .ticker-right {
+      display: flex;
+      gap: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div id="stage-scaler">
+
+    <header class="perk-nav">
+      <div class="perk-logo-lockup">
+        <span class="perk-logo">Perk</span>
+        <span class="perk-version-pill">03 // REFUERZO VS. IMITACIÓN</span>
+      </div>
+      <div class="perk-nav-right">
+        <span class="perk-ghost-link">Policy Evaluation</span>
+        <span class="perk-ghost-link">Trajectory Logs</span>
+        <div class="perk-nav-pill-active">
+          <span class="perk-live-dot"></span>
+          <span>NEURAL NETWORK CONVERGED</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="perk-subheader" id="perk-header">
+      <div>
+        <p class="eyebrow-tech">Reinforcement vs. Demonstration Matrix</p>
+        <h1 class="headline-main">Aprendizaje por Refuerzo vs. Imitación</h1>
+      </div>
+      <div class="headline-stat-group">
+        <div class="headline-stat-item">
+          <p class="stat-label">Recompensa Promedio</p>
+          <p class="stat-val" id="stat-reward">+98.2 rwd</p>
+        </div>
+        <div class="headline-stat-item">
+          <p class="stat-label">Alineación con Experto</p>
+          <p class="stat-val" id="stat-expert">99.1% Fidelity</p>
+        </div>
+      </div>
+    </div>
+
+    <main class="perk-command-center">
+
+      <!-- LEFT: Hero Purple Block (Núcleo de Convergencia) -->
+      <section class="command-card hero-purple-block" id="hero-card">
+        <div class="hero-top-row">
+          <div class="tag-ink-pill">
+            <span>● NÚCLEO</span>
+            <span>Política Neuronal Central</span>
+          </div>
+          <span class="hero-badge-latency">OPTIMIZACIÓN: PPO / MCTS HYBRID</span>
+        </div>
+
+        <div class="hero-body-content">
+          <h2 class="hero-huge-title">Convergencia de Política &amp; Espacio de Acciones</h2>
+          <p class="hero-desc">
+            Sintetiza la heurística exploratoria del aprendizaje autónomo con las trayectorias de demostración experta, garantizando un balance óptimo entre descubrimiento creativo y alineación segura.
+          </p>
+        </div>
+
+        <div class="hero-telemetry-deck">
+          <div class="telem-col-item">
+            <span class="telem-label">Espacio de Políticas</span>
+            <span class="telem-val">Contínuo 128-D</span>
+          </div>
+          <div class="telem-col-item">
+            <span class="telem-label">Gradiente de Pérdida</span>
+            <span class="telem-val">0.0012 Stable</span>
+          </div>
+          <div class="telem-col-item">
+            <span class="telem-label">Seguridad de Control</span>
+            <span class="telem-val">100% Bound</span>
+          </div>
+        </div>
+
+        <div class="hero-action-footer">
+          <div class="hero-cta-btn">
+            <span>INSPECCIONAR FUNCIÓN DE VALOR</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+          <span class="hero-pipeline-state">STATE: ACTOR-CRITIC DUAL PASS RUNNING</span>
+        </div>
+      </section>
+
+      <!-- RIGHT: Stacked Cards (RL Exploratorio vs Imitación Humana) -->
+      <div class="right-stack-col">
+
+        <!-- Module 1: RL Autónomo -->
+        <section class="command-card card-mod-input" id="card-input">
+          <div class="mod-header">
+            <span class="mod-eyebrow">[ 01 // EXPLORACIÓN ]</span>
+            <span class="mod-num">RL AGENT</span>
+          </div>
+          <div>
+            <h3 class="mod-title">Agente de Refuerzo Autónomo</h3>
+            <p class="mod-desc">
+              Descubrimiento autónomo de estrategias óptimas mediante ensayo, error y función de recompensa densa.
+            </p>
+          </div>
+          <div class="mod-footer-row">
+            <span class="mod-tag">TRAYECTORIAS: 1.2M EPS</span>
+            <div class="mod-status-indicator">
+              <span class="dot-status"></span>
+              <span>SELF-PLAY ACTIVE</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Module 2: Imitación Humana -->
+        <section class="command-card card-mod-verify" id="card-verify">
+          <div class="mod-header">
+            <span class="mod-eyebrow">[ 02 // ALINEACIÓN ]</span>
+            <span class="mod-num">EXPERT</span>
+          </div>
+          <div>
+            <h3 class="mod-title">Demostración &amp; Clonación de Conducta</h3>
+            <p class="mod-desc">
+              Pistas curadas por operadores humanos expertos para restringir el espacio de búsqueda y prevenir conductas catastróficas.
+            </p>
+          </div>
+          <div class="mod-footer-row">
+            <span class="mod-tag">GUARDRAILS: ZERO-DEVIATION</span>
+            <div class="mod-status-indicator">
+              <span class="dot-status"></span>
+              <span>HUMAN-IN-THE-LOOP</span>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <footer class="perk-footer-ticker">
+      <div class="ticker-left">
+        <span>PALETTE: #A78BFA SUBTLE PURPLE // #14140F INK // #F5F5EB PARCHMENT</span>
+        <span>THEORY: SUTTON &amp; BARTO REINFORCEMENT FRAMEWORK</span>
+      </div>
+      <div class="ticker-right">
+        <span>TIMELINE: GSAP DETERMINISTIC 30FPS</span>
+        <span>HYPERFRAME v2.0 CERTIFIED</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    function fitStage() {
+      const stage = document.getElementById('stage-scaler');
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const scale = Math.min(w / 1920, h / 1080);
+      stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    }
+    window.addEventListener('resize', fitStage);
+    fitStage();
+
+    window.__timelines = window.__timelines || [];
+    const tl = gsap.timeline({ paused: true });
+    window.__timelines.push(tl);
+
+    gsap.set('.perk-nav', { opacity: 0, y: -20 });
+    gsap.set('#perk-header', { opacity: 0, y: -15 });
+    gsap.set('#hero-card', { opacity: 0, y: 40 });
+    gsap.set('#card-input', { opacity: 0, x: 40 });
+    gsap.set('#card-verify', { opacity: 0, x: 40 });
+    gsap.set('.hero-telemetry-deck', { opacity: 0, y: 15 });
+    gsap.set('.perk-footer-ticker', { opacity: 0 });
+
+    tl
+      .to('.perk-nav', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 0.2)
+      .to('#perk-header', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 0.5)
+      .to('#hero-card', { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }, 0.8)
+      .to('.hero-telemetry-deck', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 1.3)
+      .to('#card-input', { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 1.4)
+      .to('#card-verify', { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 1.7)
+      .to('.perk-footer-ticker', { opacity: 1, duration: 0.8, ease: 'power2.out' }, 2.0)
+      .to('#stat-reward', { innerText: 99.6, snap: { innerText: 0.1 }, duration: 2.5, ease: 'power1.inOut' }, 3.0)
+      .to('#hero-card', { backgroundColor: '#9877F7', duration: 1.5, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 4.0)
+      .to('#card-verify', { borderColor: '#A78BFA', duration: 1.0, ease: 'power2.out' }, 7.5);
+
+    tl.play();
+  </script>
+</body>
+</html>

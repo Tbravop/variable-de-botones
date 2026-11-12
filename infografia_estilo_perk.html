@@ -3,21 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
-  <title>Ciclo Agéntico // Estilo Perk (Asymmetric Command Center)</title>
+  <title>Ciclo Agéntico // Estilo Perk (Subtle Purple on Warm Parchment)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <style>
-    /* Perk Design Tokens (DESIGN (7).md) */
+    /* Perk Design Tokens — Subtle Purple Evolution */
     :root {
-      --color-electric-lime: #beff50;
-      --color-off-black-ink: #14140f;
-      --color-off-white-canvas: #f5f5eb;
-      --color-pure-white: #ffffff;
-      --color-ash: #d2d2c8;
-      --color-graphite: #6e6e64;
-      --color-deep-charcoal: #30302a;
+      --color-primary-purple: #A78BFA;      /* Morado sutil elegante (digital lavender / soft iris) */
+      --color-primary-purple-soft: #EDE9FE; /* Wash lavanda muy suave para badges */
+      --color-primary-purple-deep: #7C3AED; /* Acento profundo para focos técnicos */
+      
+      --color-off-black-ink: #14140f;       /* Tinta cálida casi negra */
+      --color-off-white-canvas: #f5f5eb;    /* Pergamino cálido base */
+      --color-pure-white: #ffffff;          /* Superficie blanca pura */
+      --color-ash: #d2d2c8;                 /* Divisores y líneas estructurales */
+      --color-graphite: #6e6e64;            /* Texto secundario cálido */
+      --color-deep-charcoal: #30302a;       /* Bloque técnico invertido */
       
       --font-otsono: 'Inter', system-ui, -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
@@ -122,7 +125,7 @@
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: #10b981;
+      background: var(--color-primary-purple-deep);
     }
 
     /* Subheader Telemetry Row */
@@ -180,7 +183,7 @@
       color: var(--color-off-black-ink);
     }
 
-    /* ASYMMETRIC COMMAND CENTER: 62% Hero on Left, 38% Stacked on Right */
+    /* ASYMMETRIC COMMAND CENTER: 62% Hero Purple on Left, 38% Stacked on Right */
     .perk-command-center {
       position: absolute;
       top: 228px;
@@ -193,7 +196,7 @@
       z-index: 20;
     }
 
-    /* ZERO SHADOWS rule from DESIGN (7).md */
+    /* STRICT Perk: ZERO SHADOWS (tonal elevation canvas -> white -> purple) */
     .command-card {
       border-radius: 28px;
       position: relative;
@@ -201,10 +204,10 @@
       overflow: hidden;
     }
 
-    /* DOMINANT HERO LIME CARD (Left) */
-    .hero-lime-block {
-      background: var(--color-electric-lime);
-      border: 1px solid var(--color-electric-lime);
+    /* DOMINANT HERO PURPLE CARD (Left) */
+    .hero-purple-block {
+      background: var(--color-primary-purple);
+      border: 1px solid var(--color-primary-purple);
       padding: 60px 56px;
       display: flex;
       flex-direction: column;
@@ -224,7 +227,7 @@
       align-items: center;
       gap: 8px;
       background: var(--color-off-black-ink);
-      color: var(--color-electric-lime);
+      color: var(--color-primary-purple);
       padding: 6px 16px;
       border-radius: 9999px;
       font-size: 11px;
@@ -238,10 +241,11 @@
       font-size: 13px;
       font-weight: 600;
       color: var(--color-off-black-ink);
-      opacity: 0.8;
-      border: 1px solid rgba(20, 20, 15, 0.2);
+      opacity: 0.85;
+      border: 1px solid rgba(20, 20, 15, 0.22);
       padding: 4px 12px;
       border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.3);
     }
 
     .hero-body-content {
@@ -320,6 +324,7 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
+      cursor: pointer;
     }
 
     .hero-cta-btn svg {
@@ -357,7 +362,7 @@
       transform: translateY(30px);
     }
 
-    /* MODULE 2: Deterministic Verification (Deep Charcoal/Dark Island Card) */
+    /* MODULE 2: Deterministic Verification (Deep Charcoal Card) */
     .card-mod-verify {
       flex: 1;
       background: var(--color-deep-charcoal);
@@ -442,7 +447,7 @@
     }
 
     .card-mod-verify .mod-tag {
-      color: var(--color-electric-lime);
+      color: var(--color-primary-purple);
     }
 
     .mod-status-indicator {
@@ -457,11 +462,11 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: #0284c7;
+      background: var(--color-primary-purple-deep);
     }
 
     .card-mod-verify .dot-status {
-      background: var(--color-electric-lime);
+      background: var(--color-primary-purple);
     }
 
     /* Bottom Technical Rule Ticker */
@@ -499,7 +504,7 @@
     <header class="perk-nav">
       <div class="perk-logo-lockup">
         <span class="perk-logo">Perk</span>
-        <span class="perk-version-pill">SYSTEM ARCHITECTURE v2.4</span>
+        <span class="perk-version-pill">SUBTLE PURPLE EDITION // v2.5</span>
       </div>
       <div class="perk-nav-right">
         <span class="perk-ghost-link">Telemetry Console</span>
@@ -529,11 +534,11 @@
       </div>
     </div>
 
-    <!-- ASYMMETRIC COMMAND CENTER: 62% Hero Lime + 38% Stacked Cards -->
+    <!-- ASYMMETRIC COMMAND CENTER: 62% Hero Purple + 38% Stacked Cards -->
     <main class="perk-command-center">
 
-      <!-- LEFT: Massive Electric Lime Hero Block -->
-      <section class="command-card hero-lime-block" id="hero-card">
+      <!-- LEFT: Massive Subtle Purple Hero Block -->
+      <section class="command-card hero-purple-block" id="hero-card">
         <div class="hero-top-row">
           <div class="tag-ink-pill">
             <span>● 02</span>
@@ -628,7 +633,7 @@
     <!-- Bottom Technical Rule Ticker -->
     <footer class="perk-footer-ticker">
       <div class="ticker-left">
-        <span>PALETTE: #BEFF50 ELECTRIC LIME // #14140F INK // #F5F5EB PARCHMENT</span>
+        <span>PALETTE: #A78BFA SUBTLE PURPLE // #14140F INK // #F5F5EB PARCHMENT</span>
         <span>ELEVATION: TONAL CONTRAST ONLY (ZERO SHADOWS)</span>
       </div>
       <div class="ticker-right">
@@ -671,7 +676,7 @@
       .to('.perk-nav', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 0.2)
       .to('#perk-header', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 0.5)
 
-      // 0.8s - 2.0s: Dominant Hero Lime Block Entry
+      // 0.8s - 2.0s: Dominant Hero Purple Block Entry
       .to('#hero-card', { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }, 0.8)
       .to('.hero-telemetry-deck', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 1.3)
 
@@ -688,7 +693,7 @@
         ease: 'power1.inOut'
       }, 3.0)
       .to('#hero-card', {
-        backgroundColor: '#b5fa41',
+        backgroundColor: '#9877F7',
         duration: 1.5,
         yoyo: true,
         repeat: 1,
@@ -697,7 +702,7 @@
 
       // 8.0s - 10.0s: Loop settling
       .to('#card-verify', {
-        borderColor: '#beff50',
+        borderColor: '#A78BFA',
         duration: 1.0,
         ease: 'power2.out'
       }, 7.5);
