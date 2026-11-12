@@ -3,23 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
-  <title>Infografía 1: El Proceso Editorial // Perk Morado Sutil (Stepped 2+3)</title>
+  <title>Infografía 1: El Proceso Editorial // Perk Refactorizado (Stepped 2+3)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <style>
-    /* Perk Design Tokens — Subtle Purple Edition (DESIGN (7).md) */
+    /* Perk Refactored Design Tokens */
     :root {
       --color-primary-purple: #A78BFA;
       --color-primary-purple-soft: #EDE9FE;
       --color-primary-purple-deep: #7C3AED;
+      
+      /* Intentional Accent Color: Signal Coral */
+      --color-accent-coral: #FF5A36;
+      --color-accent-coral-soft: #FFEFEB;
+      
       --color-off-black-ink: #14140f;
       --color-off-white-canvas: #f5f5eb;
       --color-pure-white: #ffffff;
       --color-ash: #d2d2c8;
-      --color-graphite: #6e6e64;
-      --color-deep-charcoal: #30302a;
+      --color-graphite: #383832; /* High-contrast graphite (>8:1) */
+      --color-deep-charcoal: #252520;
       
       --font-otsono: 'Inter', system-ui, -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
@@ -55,22 +60,16 @@
     /* Top Editorial Header */
     .perk-nav {
       position: absolute;
-      top: 48px;
+      top: 52px;
       left: 100px;
       right: 100px;
-      height: 54px;
+      height: 52px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--color-ash);
-      padding-bottom: 16px;
+      padding-bottom: 18px;
       z-index: 30;
-    }
-
-    .perk-logo-lockup {
-      display: flex;
-      align-items: center;
-      gap: 16px;
     }
 
     .perk-logo {
@@ -80,49 +79,17 @@
       color: var(--color-off-black-ink);
     }
 
-    .perk-version-pill {
-      font-family: var(--font-mono);
-      font-size: 11px;
+    .perk-nav-context {
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 4px 12px;
-      background: var(--color-pure-white);
-      border: 1px solid var(--color-ash);
-      border-radius: 9999px;
       color: var(--color-graphite);
-    }
-
-    .perk-nav-right {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .perk-pill-active {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 16px;
-      background: var(--color-pure-white);
-      border: 1px solid var(--color-ash);
-      border-radius: 9999px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-    }
-
-    .perk-live-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--color-primary-purple-deep);
+      letter-spacing: 0.02em;
     }
 
     /* Subheader Title */
     .header-bar {
       position: absolute;
-      top: 124px;
+      top: 130px;
       left: 100px;
       right: 100px;
       height: 48px;
@@ -133,29 +100,41 @@
     }
 
     .header-bar h1 {
-      font-size: 38px;
-      font-weight: 700;
+      font-size: 40px;
+      font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1;
       color: var(--color-off-black-ink);
+      text-wrap: balance;
     }
 
-    .eyebrow-tag {
+    .header-stat {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .header-stat-val {
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--color-accent-coral);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .header-stat-label {
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
       color: var(--color-graphite);
     }
 
-    /* STEPPED 2+3 BENTO CONTAINER (Strictly proportioned) */
-    .bento-container {
+    /* STEPPED 2+3 CONTAINER */
+    .stepped-container {
       position: absolute;
-      top: 195px;
+      top: 204px;
       left: 100px;
       width: 1720px;
-      height: 680px;
+      height: 670px;
       display: flex;
       flex-direction: column;
       gap: 28px;
@@ -165,141 +144,135 @@
     /* ROW 1: 2 WIDE CARDS */
     .row-top {
       width: 100%;
-      height: 326px;
+      height: 320px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1.35fr; /* ENLARGE MAIN FEATURE (REDACCIÓN) */
       gap: 28px;
     }
 
     /* ROW 2: 3 EQUAL CARDS */
     .row-bottom {
       width: 100%;
-      height: 326px;
+      height: 320px;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 28px;
     }
 
-    /* PERK CARD BASE: 28px radius, 1px solid ash, ZERO SHADOWS */
-    .bento-card {
+    /* PERK CARD BASE: 28px radius, ZERO SHADOWS */
+    .card-item {
       background: var(--color-pure-white);
       border-radius: 28px;
       border: 1px solid var(--color-ash);
-      box-shadow: none; /* STRICT PERK: ZERO SHADOWS */
+      box-shadow: none;
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 24px;
-      padding: 36px 32px;
+      justify-content: space-between;
+      padding: 36px 36px;
       opacity: 0;
       transform: translateY(24px);
-      transition: border-color 0.3s ease;
     }
 
-    /* HERO CARD (Redacción): Dominant Subtle Purple fill */
+    /* ENLARGED HERO FEATURE (REDACCIÓN): Dominant Visual Weight */
     .card-hero-purple {
       background: var(--color-primary-purple);
       border: 1px solid var(--color-primary-purple);
       color: var(--color-off-black-ink);
+      padding: 40px 44px;
     }
 
-    /* Centered Icon Badge */
-    .badge-wrap {
-      position: relative;
+    /* Step Sequence Number (Tabular Nums, No filler badges) */
+    .step-seq-num {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--color-graphite);
+      align-self: flex-start;
+    }
+
+    .card-hero-purple .step-seq-num {
+      color: var(--color-off-black-ink);
+      opacity: 0.8;
+    }
+
+    /* Icon Container with Inner Radius = Outer - Padding */
+    .icon-container {
+      width: 92px;
+      height: 92px;
+      border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: var(--color-primary-purple-soft);
+      border: 1px solid rgba(124, 58, 237, 0.2);
     }
 
-    .pulse-ring {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 28px;
-      border: 2px solid var(--color-primary-purple-deep);
-      opacity: 0;
-      transform: scale(1);
-      pointer-events: none;
-    }
-
-    .icon-badge {
+    .card-hero-purple .icon-container {
       width: 104px;
       height: 104px;
-      border-radius: 26px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      z-index: 2;
-      background: var(--color-primary-purple-soft);
-      border: 1.5px solid rgba(124, 58, 237, 0.25);
-    }
-
-    .card-hero-purple .icon-badge {
+      border-radius: 24px;
       background: var(--color-off-black-ink);
-      border: 1.5px solid var(--color-off-black-ink);
+      border: 1px solid var(--color-off-black-ink);
     }
 
-    .icon-badge svg {
-      width: 46px;
-      height: 46px;
-      stroke-width: 2.2px;
+    /* Consistent 2px geometric Lucide icons */
+    .icon-container svg {
+      width: 44px;
+      height: 44px;
+      stroke-width: 2px;
       stroke-linecap: round;
       stroke-linejoin: round;
       fill: none;
       stroke: var(--color-primary-purple-deep);
     }
 
-    .card-hero-purple .icon-badge svg {
-      stroke: var(--color-primary-purple);
+    .card-hero-purple .icon-container svg {
+      width: 48px;
+      height: 48px;
+      stroke: var(--color-accent-coral); /* Coral Accent Pop! */
     }
 
-    /* Big Bold Dark Title below icon */
-    .card-title {
-      font-size: 32px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--color-off-black-ink);
-      text-transform: uppercase;
+    .headline-wrap {
       text-align: center;
-      line-height: 1.1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    .card-step-num {
-      position: absolute;
-      top: 24px;
-      left: 28px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      color: var(--color-graphite);
-      padding: 3px 10px;
-      border-radius: 9999px;
-      background: var(--color-off-white-canvas);
-      border: 1px solid var(--color-ash);
-    }
-
-    .card-hero-purple .card-step-num {
-      background: rgba(20, 20, 15, 0.12);
-      border: 1px solid rgba(20, 20, 15, 0.2);
+    /* Specific Headlines */
+    .card-title {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
       color: var(--color-off-black-ink);
+      text-wrap: balance;
+      max-width: 320px;
+      margin: 0 auto;
     }
 
-    .card-subtext {
-      font-size: 13px;
+    .card-hero-purple .card-title {
+      font-size: 32px; /* Prominently enlarged */
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      max-width: 460px;
+    }
+
+    .card-desc {
+      font-size: 14px;
       font-weight: 500;
       color: var(--color-graphite);
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      font-family: var(--font-mono);
+      line-height: 1.35;
+      text-wrap: balance;
     }
 
-    .card-hero-purple .card-subtext {
-      color: rgba(20, 20, 15, 0.75);
+    .card-hero-purple .card-desc {
+      color: rgba(20, 20, 15, 0.85);
+      font-size: 15px;
     }
 
     /* Bottom Technical Ticker */
@@ -313,16 +286,17 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 12px;
+      font-weight: 500;
       color: var(--color-graphite);
       z-index: 20;
     }
 
-    .ticker-left { display: flex; gap: 24px; }
-    .ticker-right { display: flex; gap: 16px; }
+    .ticker-numbers {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
 
-    /* Editorial Progress Bar */
     .editorial-progress {
       position: absolute;
       bottom: 0;
@@ -345,60 +319,53 @@
 
     <!-- Top Editorial Nav -->
     <header class="perk-nav">
-      <div class="perk-logo-lockup">
-        <span class="perk-logo">Perk</span>
-        <span class="perk-version-pill">STEPPED 2+3 // ARCHITECTURE</span>
-      </div>
-      <div class="perk-nav-right">
-        <div class="perk-pill-active">
-          <span class="perk-live-dot"></span>
-          <span>EDITORIAL PIPELINE SYNCHRONIZED</span>
-        </div>
-      </div>
+      <span class="perk-logo">Perk</span>
+      <span class="perk-nav-context">Estructura Editorial // Flujo Escalonado</span>
     </header>
 
     <!-- Subheader Title -->
     <div class="header-bar" id="header-bar">
-      <h1>El Proceso Editorial de Producción</h1>
-      <span class="eyebrow-tag">[ 05 ETAPAS // FLUJO STEPPED 2+3 ]</span>
+      <h1>Metodología de Producción Editorial</h1>
+      <div class="header-stat">
+        <span class="header-stat-val" id="stat-accuracy">100%</span>
+        <span class="header-stat-label">Fuentes Verificadas</span>
+      </div>
     </div>
 
-    <!-- BENTO GRID (STEPPED 2+3) -->
-    <main class="bento-container">
+    <!-- STEPPED 2+3 CONTAINER -->
+    <main class="stepped-container">
 
       <!-- ROW 1: 2 WIDE CARDS -->
       <div class="row-top">
 
         <!-- CARD 1: INVESTIGACIÓN -->
-        <div class="bento-card" id="card-1">
-          <span class="card-step-num">01 // SOURCE</span>
-          <div class="badge-wrap">
-            <div class="pulse-ring" id="pulse-1"></div>
-            <div class="icon-badge">
-              <svg viewBox="0 0 24 24">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-            </div>
+        <div class="card-item" id="card-1">
+          <span class="step-seq-num">01</span>
+          <div class="icon-container">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
           </div>
-          <h2 class="card-title">INVESTIGACIÓN</h2>
-          <span class="card-subtext">Curaduría &amp; Datos Primarios</span>
+          <div class="headline-wrap">
+            <h2 class="card-title">Investigación &amp; Extracción de Fuentes</h2>
+            <p class="card-desc">Curaduría de referencias primarias y estructuración de evidencias.</p>
+          </div>
         </div>
 
-        <!-- CARD 2: REDACCIÓN (Hero Purple Card) -->
-        <div class="bento-card card-hero-purple" id="card-2">
-          <span class="card-step-num">02 // SÍNTESIS CORE</span>
-          <div class="badge-wrap">
-            <div class="pulse-ring" id="pulse-2"></div>
-            <div class="icon-badge">
-              <svg viewBox="0 0 24 24">
-                <path d="M12 20h9"></path>
-                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-              </svg>
-            </div>
+        <!-- CARD 2: REDACCIÓN (ENLARGED HERO FEATURE) -->
+        <div class="card-item card-hero-purple" id="card-2">
+          <span class="step-seq-num">02 // PRINCIPAL</span>
+          <div class="icon-container">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 20h9"></path>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+            </svg>
           </div>
-          <h2 class="card-title">REDACCIÓN</h2>
-          <span class="card-subtext">Estructura &amp; Tono Ejecutivo</span>
+          <div class="headline-wrap">
+            <h2 class="card-title">Redacción Estructurada de Alta Densidad</h2>
+            <p class="card-desc">Síntesis narrativa rigurosa calibrada para máxima retención de lectura.</p>
+          </div>
         </div>
 
       </div>
@@ -407,58 +374,55 @@
       <div class="row-bottom">
 
         <!-- CARD 3: REVISIÓN -->
-        <div class="bento-card" id="card-3">
-          <span class="card-step-num">03 // AUDIT</span>
-          <div class="badge-wrap">
-            <div class="pulse-ring" id="pulse-3"></div>
-            <div class="icon-badge">
-              <svg viewBox="0 0 24 24">
-                <polyline points="9 11 12 14 22 4"></polyline>
-                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-              </svg>
-            </div>
+        <div class="card-item" id="card-3">
+          <span class="step-seq-num">03</span>
+          <div class="icon-container">
+            <svg viewBox="0 0 24 24">
+              <polyline points="9 11 12 14 22 4"></polyline>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
           </div>
-          <h2 class="card-title">REVISIÓN</h2>
-          <span class="card-subtext">Fact-Checking &amp; Coherencia</span>
+          <div class="headline-wrap">
+            <h2 class="card-title">Fact-Checking &amp; Coherencia</h2>
+            <p class="card-desc">Auditoría cruzada de afirmaciones técnicas y eliminación de sesgos.</p>
+          </div>
         </div>
 
         <!-- CARD 4: EDICIÓN -->
-        <div class="bento-card" id="card-4">
-          <span class="card-step-num">04 // STYLE</span>
-          <div class="badge-wrap">
-            <div class="pulse-ring" id="pulse-4"></div>
-            <div class="icon-badge">
-              <svg viewBox="0 0 24 24">
-                <line x1="4" y1="21" x2="4" y2="14"></line>
-                <line x1="4" y1="10" x2="4" y2="3"></line>
-                <line x1="12" y1="21" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12" y2="3"></line>
-                <line x1="20" y1="21" x2="20" y2="16"></line>
-                <line x1="20" y1="12" x2="20" y2="3"></line>
-                <line x1="1" y1="14" x2="7" y2="14"></line>
-                <line x1="9" y1="8" x2="15" y2="8"></line>
-                <line x1="17" y1="16" x2="23" y2="16"></line>
-              </svg>
-            </div>
+        <div class="card-item" id="card-4">
+          <span class="step-seq-num">04</span>
+          <div class="icon-container">
+            <svg viewBox="0 0 24 24">
+              <line x1="4" y1="21" x2="4" y2="14"></line>
+              <line x1="4" y1="10" x2="4" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12" y2="3"></line>
+              <line x1="20" y1="21" x2="20" y2="16"></line>
+              <line x1="20" y1="12" x2="20" y2="3"></line>
+              <line x1="1" y1="14" x2="7" y2="14"></line>
+              <line x1="9" y1="8" x2="15" y2="8"></line>
+              <line x1="17" y1="16" x2="23" y2="16"></line>
+            </svg>
           </div>
-          <h2 class="card-title">EDICIÓN</h2>
-          <span class="card-subtext">Pulido Tipográfico Fino</span>
+          <div class="headline-wrap">
+            <h2 class="card-title">Edición de Estilo &amp; Tipografía</h2>
+            <p class="card-desc">Pulido de ritmo prosódico, micro-espaciado y jerarquías limpias.</p>
+          </div>
         </div>
 
         <!-- CARD 5: PUBLICACIÓN -->
-        <div class="bento-card" id="card-5">
-          <span class="card-step-num">05 // RELEASE</span>
-          <div class="badge-wrap">
-            <div class="pulse-ring" id="pulse-5"></div>
-            <div class="icon-badge">
-              <svg viewBox="0 0 24 24">
-                <line x1="22" y1="2" x2="11" y2="13"></line>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-              </svg>
-            </div>
+        <div class="card-item" id="card-5">
+          <span class="step-seq-num">05</span>
+          <div class="icon-container">
+            <svg viewBox="0 0 24 24">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
           </div>
-          <h2 class="card-title">PUBLICACIÓN</h2>
-          <span class="card-subtext">Distribución Omnicanal</span>
+          <div class="headline-wrap">
+            <h2 class="card-title">Distribución &amp; Difusión</h2>
+            <p class="card-desc">Publicación multicanal y análisis de impacto en la audiencia.</p>
+          </div>
         </div>
 
       </div>
@@ -467,13 +431,11 @@
 
     <!-- Bottom Technical Rule Ticker -->
     <footer class="perk-footer-ticker">
-      <div class="ticker-left">
-        <span>PALETTE: #A78BFA SUBTLE PURPLE // #14140F INK // #F5F5EB CANVAS</span>
-        <span>ELEVATION: TONAL CONTRAST ONLY (ZERO SHADOWS)</span>
+      <div>
+        <span>PALETTE: #A78BFA PURPLE // #FF5A36 SIGNAL CORAL // #F5F5EB CANVAS</span>
       </div>
-      <div class="ticker-right">
-        <span>TIMELINE DETERMINISM: GSAP SEEK 30FPS</span>
-        <span>HYPERFRAME v2.0 CERTIFIED</span>
+      <div class="ticker-numbers">
+        <span>TIMELINE: 10.0s @ 30FPS</span>
       </div>
     </footer>
 
@@ -499,34 +461,24 @@
     const tl = gsap.timeline({ paused: true });
     window.__timelines.push(tl);
 
-    // Initial states
-    gsap.set('.perk-nav', { opacity: 0, y: -20 });
-    gsap.set('#header-bar', { opacity: 0, y: -15 });
+    gsap.set('.perk-nav', { opacity: 0, y: -16 });
+    gsap.set('#header-bar', { opacity: 0, y: -12 });
     gsap.set('.perk-footer-ticker', { opacity: 0 });
-    gsap.set(['#card-1', '#card-2', '#card-3', '#card-4', '#card-5'], { opacity: 0, y: 30 });
+    gsap.set(['#card-1', '#card-3', '#card-4', '#card-5'], { opacity: 0, y: 24 });
+    gsap.set('#card-2', { opacity: 0, scale: 0.96, y: 24 });
 
-    // Timeline Sequence (Total 10.0s)
     tl
-      // Header reveals
-      .to('.perk-nav', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.2)
-      .to('#header-bar', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.4)
-      .to('.perk-footer-ticker', { opacity: 1, duration: 0.6, ease: 'power2.out' }, 0.6)
+      .to('.perk-nav', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.2)
+      .to('#header-bar', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.4)
+      .to('.perk-footer-ticker', { opacity: 1, duration: 0.5, ease: 'power2.out' }, 0.5)
 
-      // Stepped reveal of cards
-      .to('#card-1', { opacity: 1, y: 0, duration: 0.7, ease: 'back.out(1.2)' }, 0.7)
-      .to('#card-2', { opacity: 1, y: 0, duration: 0.8, ease: 'back.out(1.2)' }, 0.9)
-      .to('#card-3', { opacity: 1, y: 0, duration: 0.7, ease: 'back.out(1.2)' }, 1.1)
-      .to('#card-4', { opacity: 1, y: 0, duration: 0.7, ease: 'back.out(1.2)' }, 1.3)
-      .to('#card-5', { opacity: 1, y: 0, duration: 0.7, ease: 'back.out(1.2)' }, 1.5)
+      // Stepped Cards Entry
+      .to('#card-1', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.6)
+      .to('#card-2', { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: 'back.out(1.2)' }, 0.8)
+      .to('#card-3', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 1.1)
+      .to('#card-4', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 1.3)
+      .to('#card-5', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 1.5)
 
-      // Active pulse sequences
-      .fromTo('#pulse-1', { scale: 0.9, opacity: 0.9 }, { scale: 1.45, opacity: 0, duration: 1.2, ease: 'power2.out' }, 2.0)
-      .fromTo('#pulse-2', { scale: 0.9, opacity: 0.9 }, { scale: 1.45, opacity: 0, duration: 1.2, ease: 'power2.out' }, 3.5)
-      .fromTo('#pulse-3', { scale: 0.9, opacity: 0.9 }, { scale: 1.45, opacity: 0, duration: 1.2, ease: 'power2.out' }, 5.0)
-      .fromTo('#pulse-4', { scale: 0.9, opacity: 0.9 }, { scale: 1.45, opacity: 0, duration: 1.2, ease: 'power2.out' }, 6.5)
-      .fromTo('#pulse-5', { scale: 0.9, opacity: 0.9 }, { scale: 1.45, opacity: 0, duration: 1.2, ease: 'power2.out' }, 8.0)
-
-      // Progress bar fill (0s to 10s)
       .to('#progress-fill', { width: '100%', duration: 10, ease: 'none' }, 0);
 
     tl.play();

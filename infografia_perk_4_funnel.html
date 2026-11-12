@@ -3,23 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
-  <title>Infografía 4: Funnel de Conversión // Perk Morado Sutil (Sequential 4 Columns)</title>
+  <title>Infografía 4: Funnel de Conversión // Perk Refactorizado</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <style>
-    /* Perk Design Tokens — Subtle Purple Edition (DESIGN (7).md) */
+    /* Perk Refactored Design Tokens */
     :root {
       --color-primary-purple: #A78BFA;
       --color-primary-purple-soft: #EDE9FE;
       --color-primary-purple-deep: #7C3AED;
+      
+      /* New Intentional Accent Color: Signal Coral */
+      --color-accent-coral: #FF5A36;
+      --color-accent-coral-soft: #FFEFEB;
+      
       --color-off-black-ink: #14140f;
       --color-off-white-canvas: #f5f5eb;
       --color-pure-white: #ffffff;
       --color-ash: #d2d2c8;
-      --color-graphite: #6e6e64;
-      --color-deep-charcoal: #30302a;
+      --color-graphite: #383832; /* High-contrast graphite (>8:1) */
+      --color-deep-charcoal: #252520;
       
       --font-otsono: 'Inter', system-ui, -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
@@ -52,25 +57,19 @@
       overflow: hidden;
     }
 
-    /* Top Editorial Nav */
+    /* Top Editorial Header: Clean, confident, no filler badges */
     .perk-nav {
       position: absolute;
-      top: 48px;
+      top: 52px;
       left: 100px;
       right: 100px;
-      height: 54px;
+      height: 52px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--color-ash);
-      padding-bottom: 16px;
+      padding-bottom: 18px;
       z-index: 30;
-    }
-
-    .perk-logo-lockup {
-      display: flex;
-      align-items: center;
-      gap: 16px;
     }
 
     .perk-logo {
@@ -80,49 +79,17 @@
       color: var(--color-off-black-ink);
     }
 
-    .perk-version-pill {
-      font-family: var(--font-mono);
-      font-size: 11px;
+    .perk-nav-context {
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 4px 12px;
-      background: var(--color-pure-white);
-      border: 1px solid var(--color-ash);
-      border-radius: 9999px;
       color: var(--color-graphite);
+      letter-spacing: 0.02em;
     }
 
-    .perk-nav-right {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .perk-pill-active {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 16px;
-      background: var(--color-pure-white);
-      border: 1px solid var(--color-ash);
-      border-radius: 9999px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-    }
-
-    .perk-live-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--color-primary-purple-deep);
-    }
-
-    /* Subheader Title */
+    /* Subheader Title: Clean and balanced */
     .header-bar {
       position: absolute;
-      top: 124px;
+      top: 132px;
       left: 100px;
       right: 100px;
       height: 48px;
@@ -133,39 +100,51 @@
     }
 
     .header-bar h1 {
-      font-size: 38px;
-      font-weight: 700;
+      font-size: 40px;
+      font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1;
       color: var(--color-off-black-ink);
+      text-wrap: balance;
     }
 
-    .eyebrow-tag {
+    .header-metric {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .header-metric-val {
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--color-accent-coral);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .header-metric-label {
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
       color: var(--color-graphite);
     }
 
-    /* 4 SEQUENTIAL COLUMNS CONTAINER */
-    .bento-container {
+    /* 4-STAGE PROGRESSION CONTAINER: Asymmetric hierarchy (Stages 1-3 + Enlarge Stage 4 Feature) */
+    .funnel-container {
       position: absolute;
-      top: 195px;
+      top: 204px;
       left: 100px;
       width: 1720px;
       height: 620px;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 36px;
+      grid-template-columns: 360px 360px 360px 544px; /* ENLARGE THE MAIN FEATURE */
+      gap: 32px;
       z-index: 10;
     }
 
-    /* SVG Connecting Vector Tracks (1 -> 2 -> 3 -> 4) */
+    /* SVG Connecting Vector Tracks (Continuous conduit) */
     #connecting-svg {
       position: absolute;
-      top: 195px;
+      top: 204px;
       left: 100px;
       width: 1720px;
       height: 620px;
@@ -188,13 +167,26 @@
       fill: none;
     }
 
+    .vector-active-coral {
+      stroke: var(--color-accent-coral);
+      stroke-width: 2.5px;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      fill: none;
+    }
+
     .vector-packet {
       fill: var(--color-primary-purple-deep);
       opacity: 0;
     }
 
-    /* PERK CARD BASE: 28px radius, ZERO SHADOWS */
-    .bento-card {
+    .vector-packet-coral {
+      fill: var(--color-accent-coral);
+      opacity: 0;
+    }
+
+    /* CARD BASE: 28px radius, ZERO SHADOWS, Concentric Inner Radii */
+    .funnel-card {
       background: var(--color-pure-white);
       border-radius: 28px;
       border: 1px solid var(--color-ash);
@@ -204,116 +196,149 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 28px;
-      padding: 50px 24px;
+      justify-content: space-between;
+      padding: 44px 32px;
       opacity: 0;
       transform: translateY(28px);
       transition: border-color 0.3s ease;
     }
 
-    /* FINAL STAGE HERO CARD: Dominant Subtle Purple */
-    .card-hero-purple {
+    /* ENLARGE MAIN FEATURE (STAGE 4): Dominant Visual Weight */
+    .card-hero-feature {
       background: var(--color-primary-purple);
       border: 1px solid var(--color-primary-purple);
       color: var(--color-off-black-ink);
+      padding: 48px 40px;
+      z-index: 12;
     }
 
-    .card-step-num {
-      position: absolute;
-      top: 24px;
-      left: 24px;
+    /* Step Sequence Number (Tabular Nums, High Contrast, No redundant word) */
+    .stage-num {
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 15px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      font-variant-numeric: tabular-nums;
       color: var(--color-graphite);
-      padding: 4px 12px;
-      border-radius: 9999px;
-      background: var(--color-off-white-canvas);
-      border: 1px solid var(--color-ash);
+      align-self: flex-start;
     }
 
-    .card-hero-purple .card-step-num {
-      background: rgba(20, 20, 15, 0.12);
-      border: 1px solid rgba(20, 20, 15, 0.2);
+    .card-hero-feature .stage-num {
       color: var(--color-off-black-ink);
+      opacity: 0.8;
     }
 
-    .badge-wrap {
-      position: relative;
+    /* Icon Container: Optical Alignment & Consistent 2px Stroke */
+    .icon-container {
+      width: 96px;
+      height: 96px;
+      border-radius: 22px; /* Inner radius = 28 - 6 */
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .pulse-ring {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 26px;
-      border: 2px solid var(--color-primary-purple-deep);
-      opacity: 0;
-      transform: scale(1);
-      pointer-events: none;
-    }
-
-    .icon-badge {
-      width: 104px;
-      height: 104px;
-      border-radius: 26px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      z-index: 2;
       background: var(--color-primary-purple-soft);
-      border: 1.5px solid rgba(124, 58, 237, 0.25);
+      border: 1px solid rgba(124, 58, 237, 0.2);
     }
 
-    .card-hero-purple .icon-badge {
+    .card-hero-feature .icon-container {
+      width: 108px;
+      height: 108px;
+      border-radius: 24px;
       background: var(--color-off-black-ink);
-      border: 1.5px solid var(--color-off-black-ink);
+      border: 1px solid var(--color-off-black-ink);
     }
 
-    .icon-badge svg {
-      width: 48px;
-      height: 48px;
-      stroke-width: 2.2px;
+    /* Consistent 2px geometric Lucide icons */
+    .icon-container svg {
+      width: 44px;
+      height: 44px;
+      stroke-width: 2px;
       stroke-linecap: round;
       stroke-linejoin: round;
       fill: none;
       stroke: var(--color-primary-purple-deep);
     }
 
-    .card-hero-purple .icon-badge svg {
-      stroke: var(--color-primary-purple);
+    .card-hero-feature .icon-container svg {
+      width: 50px;
+      height: 50px;
+      stroke: var(--color-accent-coral); /* Second Accent Color Pop! */
     }
 
-    .card-title {
-      font-size: 30px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--color-off-black-ink);
-      text-transform: uppercase;
+    /* Optical Alignment Adjustments */
+    .icon-funnel svg {
+      transform: translateY(-1px); /* Optical center */
+    }
+
+    .icon-trophy svg {
+      transform: translateY(-2px);
+    }
+
+    /* Specific, Informative Headlines (No generic one-word abstractions) */
+    .headline-wrap {
       text-align: center;
-      line-height: 1.1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .card-subtext {
-      font-size: 13px;
+    .stage-headline {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      color: var(--color-off-black-ink);
+      text-wrap: balance;
+      max-width: 290px;
+      margin: 0 auto;
+    }
+
+    .card-hero-feature .stage-headline {
+      font-size: 34px; /* Noticeably enlarged */
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      max-width: 440px;
+    }
+
+    .stage-detail {
+      font-size: 14px;
       font-weight: 500;
       color: var(--color-graphite);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+      line-height: 1.4;
+      text-wrap: balance;
+    }
+
+    .card-hero-feature .stage-detail {
+      color: rgba(20, 20, 15, 0.85);
+      font-size: 15px;
+    }
+
+    /* High-contrast Conversion Metric Badge in Hero Card */
+    .hero-metric-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-off-black-ink);
+      color: var(--color-pure-white);
+      padding: 8px 18px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .hero-metric-badge .coral-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--color-accent-coral);
+    }
+
+    .hero-metric-badge span.tnum {
       font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      color: var(--color-accent-coral);
     }
 
-    .card-hero-purple .card-subtext {
-      color: rgba(20, 20, 15, 0.75);
-    }
-
-    /* Bottom Technical Ticker */
+    /* Bottom Technical Rule Ticker */
     .perk-footer-ticker {
       position: absolute;
       bottom: 30px;
@@ -324,14 +349,16 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 12px;
+      font-weight: 500;
       color: var(--color-graphite);
       z-index: 20;
     }
 
-    .ticker-left { display: flex; gap: 24px; }
-    .ticker-right { display: flex; gap: 16px; }
+    .ticker-numbers {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
 
     .editorial-progress {
       position: absolute;
@@ -353,128 +380,122 @@
 
   <div id="stage-scaler">
 
-    <!-- Top Editorial Nav -->
+    <!-- Top Editorial Nav: Clean and unembellished -->
     <header class="perk-nav">
-      <div class="perk-logo-lockup">
-        <span class="perk-logo">Perk</span>
-        <span class="perk-version-pill">SEQUENTIAL 4 COLUMNS // REVENUE FUNNEL</span>
-      </div>
-      <div class="perk-nav-right">
-        <div class="perk-pill-active">
-          <span class="perk-live-dot"></span>
-          <span>REVENUE CONVERSION MAXIMIZED</span>
-        </div>
-      </div>
+      <span class="perk-logo">Perk</span>
+      <span class="perk-nav-context">Arquitectura de Crecimiento &amp; Conversión</span>
     </header>
 
-    <!-- Subheader Title -->
+    <!-- Subheader Title: Specific and bold -->
     <div class="header-bar" id="header-bar">
-      <h1>Funnel de Conversión &amp; Crecimiento</h1>
-      <span class="eyebrow-tag">[ 04 ETAPAS // PROGRESIÓN SECUENCIAL ]</span>
+      <h1>Optimización del Funnel de Conversión</h1>
+      <div class="header-metric">
+        <span class="header-metric-val" id="metric-conversion">24.8%</span>
+        <span class="header-metric-label">Conversión a Pago</span>
+      </div>
     </div>
 
-    <!-- SVG Connecting Vectors (1 -> 2 -> 3 -> 4) -->
+    <!-- SVG Vector Flow Tracks (1 -> 2 -> 3 -> 4) -->
     <svg id="connecting-svg" viewBox="0 0 1720 620">
-      <!-- 1 to 2 (X: 388 to 424, Y: 310) -->
-      <path class="vector-track" d="M 388 310 L 424 310" />
-      <path id="vector-1-2" class="vector-active" d="M 388 310 L 424 310" />
-      <circle id="pkt-1-2" class="vector-packet" r="5" />
+      <!-- 1 to 2 (X: 360 to 392, Y: 310) -->
+      <path class="vector-track" d="M 360 310 L 392 310" />
+      <path id="vector-1-2" class="vector-active" d="M 360 310 L 392 310" />
+      <circle id="pkt-1-2" class="vector-packet" r="4.5" />
 
-      <!-- 2 to 3 (X: 828 to 864, Y: 310) -->
-      <path class="vector-track" d="M 828 310 L 864 310" />
-      <path id="vector-2-3" class="vector-active" d="M 828 310 L 864 310" />
-      <circle id="pkt-2-3" class="vector-packet" r="5" />
+      <!-- 2 to 3 (X: 752 to 784, Y: 310) -->
+      <path class="vector-track" d="M 752 310 L 784 310" />
+      <path id="vector-2-3" class="vector-active" d="M 752 310 L 784 310" />
+      <circle id="pkt-2-3" class="vector-packet" r="4.5" />
 
-      <!-- 3 to 4 (X: 1268 to 1304, Y: 310) -->
-      <path class="vector-track" d="M 1268 310 L 1304 310" />
-      <path id="vector-3-4" class="vector-active" d="M 1268 310 L 1304 310" />
-      <circle id="pkt-3-4" class="vector-packet" r="5" />
+      <!-- 3 to 4 (X: 1144 to 1176, Y: 310) -> With Coral Accent Charge -->
+      <path class="vector-track" d="M 1144 310 L 1176 310" />
+      <path id="vector-3-4" class="vector-active-coral" d="M 1144 310 L 1176 310" />
+      <circle id="pkt-3-4" class="vector-packet-coral" r="5" />
     </svg>
 
-    <!-- 4 SEQUENTIAL COLUMNS CONTAINER -->
-    <main class="bento-container">
+    <!-- 4 PROGRESSIVE COLUMNS CONTAINER: Stages 1-3 + Enlarge Stage 4 Feature -->
+    <main class="funnel-container">
 
-      <!-- STAGE 1: ATRACCIÓN -->
-      <div class="bento-card" id="card-1">
-        <span class="card-step-num">01 // TOFU</span>
-        <div class="badge-wrap">
-          <div class="pulse-ring" id="pulse-1"></div>
-          <div class="icon-badge">
-            <svg viewBox="0 0 24 24">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-              <circle cx="9" cy="7" r="4"></circle>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-            </svg>
-          </div>
+      <!-- STAGE 1: CAPTACIÓN -->
+      <div class="funnel-card" id="card-1">
+        <span class="stage-num">01</span>
+        <div class="icon-container">
+          <svg viewBox="0 0 24 24">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
         </div>
-        <h2 class="card-title">ATRACCIÓN</h2>
-        <span class="card-subtext">Tráfico Orgánico &amp; Alcance</span>
+        <div class="headline-wrap">
+          <h2 class="stage-headline">Atracción de Demanda Orgánica</h2>
+          <p class="stage-detail">Captura de tráfico de alta intención y referencias técnicas verificadas.</p>
+        </div>
       </div>
 
-      <!-- STAGE 2: INTERÉS -->
-      <div class="bento-card" id="card-2">
-        <span class="card-step-num">02 // MOFU</span>
-        <div class="badge-wrap">
-          <div class="pulse-ring" id="pulse-2"></div>
-          <div class="icon-badge">
-            <svg viewBox="0 0 24 24">
-              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-            </svg>
-          </div>
+      <!-- STAGE 2: CUALIFICACIÓN -->
+      <div class="funnel-card" id="card-2">
+        <span class="stage-num">02</span>
+        <div class="icon-container icon-funnel">
+          <svg viewBox="0 0 24 24">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+          </svg>
         </div>
-        <h2 class="card-title">INTERÉS</h2>
-        <span class="card-subtext">Cualificación Semántica</span>
+        <div class="headline-wrap">
+          <h2 class="stage-headline">Cualificación Semántica de Leads</h2>
+          <p class="stage-detail">Scoring predictivo en tiempo real y ajuste algorítmico al perfil ICP.</p>
+        </div>
       </div>
 
-      <!-- STAGE 3: DECISIÓN -->
-      <div class="bento-card" id="card-3">
-        <span class="card-step-num">03 // EVAL</span>
-        <div class="badge-wrap">
-          <div class="pulse-ring" id="pulse-3"></div>
-          <div class="icon-badge">
-            <svg viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="10"></circle>
-              <circle cx="12" cy="12" r="6"></circle>
-              <circle cx="12" cy="12" r="2"></circle>
-            </svg>
-          </div>
+      <!-- STAGE 3: EVALUACIÓN -->
+      <div class="funnel-card" id="card-3">
+        <span class="stage-num">03</span>
+        <div class="icon-container">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="6"></circle>
+            <circle cx="12" cy="12" r="2"></circle>
+          </svg>
         </div>
-        <h2 class="card-title">DECISIÓN</h2>
-        <span class="card-subtext">Demostración de Valor</span>
+        <div class="headline-wrap">
+          <h2 class="stage-headline">Demostración Directa de Valor</h2>
+          <p class="stage-detail">Eliminación de barreras técnicas con pruebas en entornos interactivos.</p>
+        </div>
       </div>
 
-      <!-- STAGE 4: CONVERSIÓN (Hero Purple Card) -->
-      <div class="bento-card card-hero-purple" id="card-4">
-        <span class="card-step-num">04 // BOFU</span>
-        <div class="badge-wrap">
-          <div class="pulse-ring" id="pulse-4"></div>
-          <div class="icon-badge">
-            <svg viewBox="0 0 24 24">
-              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-              <path d="M4 22h16"></path>
-              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
-              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
-              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
-            </svg>
-          </div>
+      <!-- STAGE 4: CONVERSIÓN & ACTIVACIÓN (ENLARGED MAIN FEATURE) -->
+      <div class="funnel-card card-hero-feature" id="card-4">
+        <span class="stage-num">04 // FOCAL</span>
+        <div class="icon-container icon-trophy">
+          <svg viewBox="0 0 24 24">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+            <path d="M4 22h16"></path>
+            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+          </svg>
         </div>
-        <h2 class="card-title">CONVERSIÓN</h2>
-        <span class="card-subtext">Cierre &amp; Retención LTV</span>
+        <div class="headline-wrap">
+          <h2 class="stage-headline">Activación Inmediata &amp; Cierre de Pago</h2>
+          <p class="stage-detail">Onboarding fluido sin fricción y retención vitalicia de cuenta.</p>
+        </div>
+        <div class="hero-metric-badge">
+          <span class="coral-dot"></span>
+          <span>VALOR EXPANSIVO:</span>
+          <span class="tnum">+340% LTV</span>
+        </div>
       </div>
 
     </main>
 
     <!-- Bottom Technical Ticker -->
     <footer class="perk-footer-ticker">
-      <div class="ticker-left">
-        <span>PALETTE: #A78BFA SUBTLE PURPLE // #14140F INK // #F5F5EB CANVAS</span>
-        <span>FLOW: 4-STAGE SEQUENTIAL FUNNEL (ZERO SHADOWS)</span>
+      <div>
+        <span>PALETTE: #A78BFA PURPLE // #FF5A36 SIGNAL CORAL // #F5F5EB CANVAS</span>
       </div>
-      <div class="ticker-right">
-        <span>TIMELINE DETERMINISM: GSAP SEEK 30FPS</span>
-        <span>HYPERFRAME v2.0 CERTIFIED</span>
+      <div class="ticker-numbers">
+        <span>TIMELINE: 10.0s @ 30FPS</span>
       </div>
     </footer>
 
@@ -500,41 +521,43 @@
     const tl = gsap.timeline({ paused: true });
     window.__timelines.push(tl);
 
-    gsap.set('.perk-nav', { opacity: 0, y: -20 });
-    gsap.set('#header-bar', { opacity: 0, y: -15 });
+    gsap.set('.perk-nav', { opacity: 0, y: -16 });
+    gsap.set('#header-bar', { opacity: 0, y: -12 });
     gsap.set('.perk-footer-ticker', { opacity: 0 });
-    gsap.set(['#card-1', '#card-2', '#card-3', '#card-4'], { opacity: 0, y: 30 });
+    gsap.set(['#card-1', '#card-2', '#card-3'], { opacity: 0, y: 24 });
+    gsap.set('#card-4', { opacity: 0, scale: 0.96, y: 24 });
     gsap.set('#connecting-svg', { opacity: 0 });
 
     tl
-      .to('.perk-nav', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.2)
-      .to('#header-bar', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.4)
-      .to('.perk-footer-ticker', { opacity: 1, duration: 0.6, ease: 'power2.out' }, 0.6)
+      // Clean, prompt header entrance
+      .to('.perk-nav', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.2)
+      .to('#header-bar', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.4)
+      .to('.perk-footer-ticker', { opacity: 1, duration: 0.5, ease: 'power2.out' }, 0.5)
 
-      // Sequential Columns Entry
-      .to('#card-1', { opacity: 1, y: 0, duration: 0.7, ease: 'back.out(1.2)' }, 0.7)
-      .to('#card-2', { opacity: 1, y: 0, duration: 0.7, ease: 'back.out(1.2)' }, 0.9)
-      .to('#card-3', { opacity: 1, y: 0, duration: 0.7, ease: 'back.out(1.2)' }, 1.1)
-      .to('#card-4', { opacity: 1, y: 0, duration: 0.7, ease: 'back.out(1.2)' }, 1.3)
-      .to('#connecting-svg', { opacity: 1, duration: 0.5 }, 1.5)
+      // Sequential Card Entry with enlarged feature prominence
+      .to('#card-1', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.6)
+      .to('#card-2', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.8)
+      .to('#card-3', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 1.0)
+      .to('#card-4', { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: 'back.out(1.2)' }, 1.2)
+      .to('#connecting-svg', { opacity: 1, duration: 0.4 }, 1.4)
 
-      // Pulse 1 & Conduit 1 -> 2
-      .fromTo('#pulse-1', { scale: 0.9, opacity: 0.9 }, { scale: 1.45, opacity: 0, duration: 1.0, ease: 'power2.out' }, 2.0)
-      .fromTo('#vector-1-2', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.7, ease: 'power1.inOut' }, 2.5)
-      .fromTo('#pkt-1-2', { cx: 388, cy: 310, opacity: 1 }, { cx: 424, cy: 310, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 2.5)
+      // Vector Conduits in Sequence
+      .fromTo('#vector-1-2', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.7, ease: 'power1.inOut' }, 2.0)
+      .fromTo('#pkt-1-2', { cx: 360, cy: 310, opacity: 1 }, { cx: 392, cy: 310, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 2.0)
 
-      // Pulse 2 & Conduit 2 -> 3
-      .fromTo('#pulse-2', { scale: 0.9, opacity: 0.9 }, { scale: 1.45, opacity: 0, duration: 1.0, ease: 'power2.out' }, 4.0)
-      .fromTo('#vector-2-3', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.7, ease: 'power1.inOut' }, 4.5)
-      .fromTo('#pkt-2-3', { cx: 828, cy: 310, opacity: 1 }, { cx: 864, cy: 310, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 4.5)
+      .fromTo('#vector-2-3', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.7, ease: 'power1.inOut' }, 3.8)
+      .fromTo('#pkt-2-3', { cx: 752, cy: 310, opacity: 1 }, { cx: 784, cy: 310, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 3.8)
 
-      // Pulse 3 & Conduit 3 -> 4
-      .fromTo('#pulse-3', { scale: 0.9, opacity: 0.9 }, { scale: 1.45, opacity: 0, duration: 1.0, ease: 'power2.out' }, 6.0)
-      .fromTo('#vector-3-4', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.7, ease: 'power1.inOut' }, 6.5)
-      .fromTo('#pkt-3-4', { cx: 1268, cy: 310, opacity: 1 }, { cx: 1304, cy: 310, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 6.5)
+      // Coral Accent Flow towards Final Feature
+      .fromTo('#vector-3-4', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power1.inOut' }, 5.5)
+      .fromTo('#pkt-3-4', { cx: 1144, cy: 310, opacity: 1 }, { cx: 1176, cy: 310, opacity: 0, duration: 0.8, ease: 'power1.inOut' }, 5.5)
 
-      // Final Hero Conversion Pulse
-      .fromTo('#pulse-4', { scale: 0.9, opacity: 0.9 }, { scale: 1.5, opacity: 0, duration: 1.3, ease: 'power2.out' }, 7.5)
+      // Counter animation with tabular numbers
+      .to('#metric-conversion', {
+        innerText: "34.2%",
+        duration: 2.0,
+        ease: 'power1.inOut'
+      }, 6.5)
 
       .to('#progress-fill', { width: '100%', duration: 10, ease: 'none' }, 0);
 
