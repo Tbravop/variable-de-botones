@@ -352,6 +352,31 @@
       display: flex;
       gap: 14px;
     }
+
+    @media (max-width: 900px) {
+      .infographic-nav {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .controls-panel {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .suite-footer {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .infographic-nav {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>

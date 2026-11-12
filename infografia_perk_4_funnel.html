@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <style>
-    /* Perk Refactored Design Tokens — Strictly Unembellished */
+    /* Perk Refactored Design Tokens — Generous Spacing & Tailored Funnel */
     :root {
       --color-primary-purple: #A78BFA;
       --color-primary-purple-soft: #EDE9FE;
@@ -55,12 +55,12 @@
       overflow: hidden;
     }
 
-    /* Top Editorial Header */
+    /* Top Editorial Header — Generous Margins */
     .perk-nav {
       position: absolute;
-      top: 52px;
-      left: 100px;
-      right: 100px;
+      top: 48px;
+      left: 173px;
+      right: 173px;
       height: 52px;
       display: flex;
       align-items: center;
@@ -71,26 +71,26 @@
     }
 
     .perk-logo {
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 800;
       letter-spacing: -0.04em;
       color: var(--color-off-black-ink);
     }
 
     .perk-nav-context {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--color-graphite);
       letter-spacing: 0.01em;
     }
 
-    /* Subheader Title */
+    /* Subheader Title — Punchy Scale */
     .header-bar {
       position: absolute;
-      top: 132px;
-      left: 100px;
-      right: 100px;
-      height: 48px;
+      top: 122px;
+      left: 173px;
+      right: 173px;
+      height: 52px;
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
@@ -98,7 +98,7 @@
     }
 
     .header-bar h1 {
-      font-size: 42px;
+      font-size: 46px;
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1;
@@ -106,26 +106,26 @@
       text-wrap: balance;
     }
 
-    /* 4-STAGE PROGRESSION CONTAINER: Asymmetric hierarchy (Stages 1-3 + Enlarge Stage 4 Feature) */
+    /* 4-STAGE PROGRESSION CONTAINER: Tailored Cards with Generous Breathing Space */
     .funnel-container {
       position: absolute;
-      top: 210px;
-      left: 100px;
-      width: 1720px;
-      height: 620px;
+      top: 236px;
+      left: 173px;
+      width: 1574px;
+      height: 490px;
       display: grid;
-      grid-template-columns: 360px 360px 360px 544px; /* ENLARGED MAIN FEATURE */
-      gap: 32px;
+      grid-template-columns: 330px 330px 330px 500px; /* ENLARGED MAIN FEATURE */
+      gap: 28px;
       z-index: 10;
     }
 
     /* SVG Connecting Vector Tracks */
     #connecting-svg {
       position: absolute;
-      top: 210px;
-      left: 100px;
-      width: 1720px;
-      height: 620px;
+      top: 236px;
+      left: 173px;
+      width: 1574px;
+      height: 490px;
       z-index: 5;
       pointer-events: none;
     }
@@ -163,10 +163,10 @@
       opacity: 0;
     }
 
-    /* CARD BASE: 28px radius, ZERO SHADOWS, Concentric Inner Radii */
+    /* CARD BASE: 26px radius, ZERO SHADOWS, Concentric Inner Radii */
     .funnel-card {
       background: var(--color-pure-white);
-      border-radius: 28px;
+      border-radius: 26px;
       border: 1px solid var(--color-ash);
       box-shadow: none;
       position: relative;
@@ -175,27 +175,28 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 36px; /* Group with calibrated spacing */
-      padding: 56px 36px;
+      gap: 20px;
+      padding: 30px 24px;
+      height: 490px;
       opacity: 0;
-      transform: translateY(28px);
+      transform: translateY(24px);
     }
 
-    /* ENLARGED HERO FEATURE (STAGE 4): Dominant Visual Presence */
+    /* ENLARGED HERO FEATURE (STAGE 4: ACTIVACIÓN) */
     .card-hero-feature {
       background: var(--color-primary-purple);
       border: 1px solid var(--color-primary-purple);
       color: var(--color-off-black-ink);
-      gap: 40px;
-      padding: 60px 48px;
+      gap: 24px;
+      padding: 36px 36px;
       z-index: 12;
     }
 
-    /* Icon Container: Optical Alignment & Consistent 2px Stroke */
+    /* Icon Containers with Inner Radius = Outer - Padding */
     .icon-container {
-      width: 100px;
-      height: 100px;
-      border-radius: 22px; /* Inner radius = 28 - 6 */
+      width: 80px;
+      height: 80px;
+      border-radius: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -204,17 +205,17 @@
     }
 
     .card-hero-feature .icon-container {
-      width: 116px;
-      height: 116px;
-      border-radius: 24px;
+      width: 96px;
+      height: 96px;
+      border-radius: 22px;
       background: var(--color-off-black-ink);
       border: 1px solid var(--color-off-black-ink);
     }
 
     /* Consistent 2px geometric Lucide icons */
     .icon-container svg {
-      width: 46px;
-      height: 46px;
+      width: 40px;
+      height: 40px;
       stroke-width: 2px;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -223,30 +224,21 @@
     }
 
     .card-hero-feature .icon-container svg {
-      width: 52px;
-      height: 52px;
-      stroke: var(--color-accent-coral); /* Second Accent Color Pop */
+      width: 48px;
+      height: 48px;
+      stroke: var(--color-accent-coral); /* Coral Accent Spark */
     }
 
-    /* Optical Centering Adjustments */
-    .icon-funnel svg {
-      transform: translateY(-1.5px);
-    }
-
-    .icon-trophy svg {
-      transform: translateY(-2px);
-    }
-
-    /* Specific, Informative Headlines (No generic one-word abstractions) */
     .headline-wrap {
       text-align: center;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
     }
 
+    /* Specific Headlines — Enriched Scale for Wide Phones & Large Screens */
     .stage-headline {
-      font-size: 26px;
+      font-size: 27px;
       font-weight: 800;
       letter-spacing: -0.025em;
       line-height: 1.15;
@@ -257,14 +249,14 @@
     }
 
     .card-hero-feature .stage-headline {
-      font-size: 36px; /* Noticeably enlarged */
-      letter-spacing: -0.035em;
+      font-size: 36px; /* Prominently enlarged */
+      letter-spacing: -0.03em;
       line-height: 1.1;
-      max-width: 460px;
+      max-width: 440px;
     }
 
     .stage-detail {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 500;
       color: var(--color-graphite);
       line-height: 1.45;
@@ -275,22 +267,22 @@
 
     .card-hero-feature .stage-detail {
       color: rgba(20, 20, 15, 0.88);
-      font-size: 16px;
-      max-width: 440px;
+      font-size: 17.5px;
+      max-width: 420px;
     }
 
-    /* Bottom Technical Rule Ticker */
+    /* Bottom Technical Ticker */
     .perk-footer-ticker {
       position: absolute;
-      bottom: 30px;
-      left: 100px;
-      right: 100px;
+      bottom: 40px;
+      left: 173px;
+      right: 173px;
       height: 38px;
       border-top: 1px solid var(--color-ash);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
       color: var(--color-graphite);
       z-index: 20;
@@ -328,24 +320,24 @@
     </div>
 
     <!-- SVG Vector Flow Tracks (1 -> 2 -> 3 -> 4) -->
-    <svg id="connecting-svg" viewBox="0 0 1720 620">
-      <!-- 1 to 2 (X: 360 to 392, Y: 310) -->
-      <path class="vector-track" d="M 360 310 L 392 310" />
-      <path id="vector-1-2" class="vector-active" d="M 360 310 L 392 310" />
+    <svg id="connecting-svg" viewBox="0 0 1574 490">
+      <!-- 1 to 2 (X: 330 to 358, Y: 245) -->
+      <path class="vector-track" d="M 330 245 L 358 245" />
+      <path id="vector-1-2" class="vector-active" d="M 330 245 L 358 245" />
       <circle id="pkt-1-2" class="vector-packet" r="4.5" />
 
-      <!-- 2 to 3 (X: 752 to 784, Y: 310) -->
-      <path class="vector-track" d="M 752 310 L 784 310" />
-      <path id="vector-2-3" class="vector-active" d="M 752 310 L 784 310" />
+      <!-- 2 to 3 (X: 688 to 716, Y: 245) -->
+      <path class="vector-track" d="M 688 245 L 716 245" />
+      <path id="vector-2-3" class="vector-active" d="M 688 245 L 716 245" />
       <circle id="pkt-2-3" class="vector-packet" r="4.5" />
 
-      <!-- 3 to 4 (X: 1144 to 1176, Y: 310) -> With Coral Accent Charge -->
-      <path class="vector-track" d="M 1144 310 L 1176 310" />
-      <path id="vector-3-4" class="vector-active-coral" d="M 1144 310 L 1176 310" />
+      <!-- 3 to 4 (X: 1046 to 1074, Y: 245) -> With Coral Accent Charge -->
+      <path class="vector-track" d="M 1046 245 L 1074 245" />
+      <path id="vector-3-4" class="vector-active-coral" d="M 1046 245 L 1074 245" />
       <circle id="pkt-3-4" class="vector-packet-coral" r="5" />
     </svg>
 
-    <!-- 4 PROGRESSIVE COLUMNS: Stages 1-3 + Enlarge Stage 4 Feature (No filler badges, no redundant labels) -->
+    <!-- 4 PROGRESSIVE COLUMNS: Tailored to Content, Generous Air -->
     <main class="funnel-container">
 
       <!-- STAGE 1: CAPTACIÓN -->
@@ -462,14 +454,14 @@
 
       // Vector Conduits in Sequence
       .fromTo('#vector-1-2', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.7, ease: 'power1.inOut' }, 2.0)
-      .fromTo('#pkt-1-2', { cx: 360, cy: 310, opacity: 1 }, { cx: 392, cy: 310, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 2.0)
+      .fromTo('#pkt-1-2', { cx: 330, cy: 245, opacity: 1 }, { cx: 358, cy: 245, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 2.0)
 
       .fromTo('#vector-2-3', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.7, ease: 'power1.inOut' }, 3.8)
-      .fromTo('#pkt-2-3', { cx: 752, cy: 310, opacity: 1 }, { cx: 784, cy: 310, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 3.8)
+      .fromTo('#pkt-2-3', { cx: 688, cy: 245, opacity: 1 }, { cx: 716, cy: 245, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 3.8)
 
       // Coral Accent Flow towards Final Feature
       .fromTo('#vector-3-4', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power1.inOut' }, 5.5)
-      .fromTo('#pkt-3-4', { cx: 1144, cy: 310, opacity: 1 }, { cx: 1176, cy: 310, opacity: 0, duration: 0.8, ease: 'power1.inOut' }, 5.5)
+      .fromTo('#pkt-3-4', { cx: 1046, cy: 245, opacity: 1 }, { cx: 1074, cy: 245, opacity: 0, duration: 0.8, ease: 'power1.inOut' }, 5.5)
 
       .to('#progress-fill', { width: '100%', duration: 10, ease: 'none' }, 0);
 

@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <style>
-    /* Perk Refactored Design Tokens */
+    /* Perk Refactored Design Tokens — Generous Spacing & Tailored Columns */
     :root {
       --color-primary-purple: #A78BFA;
       --color-primary-purple-soft: #EDE9FE;
@@ -57,12 +57,12 @@
       overflow: hidden;
     }
 
-    /* Top Editorial Header */
+    /* Top Editorial Header — Generous Margins */
     .perk-nav {
       position: absolute;
-      top: 52px;
-      left: 100px;
-      right: 100px;
+      top: 48px;
+      left: 154px;
+      right: 154px;
       height: 52px;
       display: flex;
       align-items: center;
@@ -73,26 +73,26 @@
     }
 
     .perk-logo {
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 800;
       letter-spacing: -0.04em;
       color: var(--color-off-black-ink);
     }
 
     .perk-nav-context {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--color-graphite);
       letter-spacing: 0.01em;
     }
 
-    /* Subheader Title */
+    /* Subheader Title — Punchy Scale */
     .header-bar {
       position: absolute;
-      top: 130px;
-      left: 100px;
-      right: 100px;
-      height: 48px;
+      top: 122px;
+      left: 154px;
+      right: 154px;
+      height: 52px;
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
@@ -100,7 +100,7 @@
     }
 
     .header-bar h1 {
-      font-size: 42px;
+      font-size: 46px;
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1;
@@ -108,26 +108,26 @@
       text-wrap: balance;
     }
 
-    /* 3 LINEAR COLUMNS: Enlarge Center Hero Column */
+    /* 3 LINEAR COLUMNS: Tailored Card Height & Generous Air */
     .columns-container {
       position: absolute;
-      top: 204px;
-      left: 100px;
-      width: 1720px;
-      height: 620px;
+      top: 236px;
+      left: 154px;
+      width: 1612px;
+      height: 500px;
       display: grid;
-      grid-template-columns: 480px 680px 480px; /* ENLARGE MAIN FEATURE */
-      gap: 40px;
+      grid-template-columns: 440px 660px 440px; /* ENLARGED MAIN FEATURE */
+      gap: 36px;
       z-index: 10;
     }
 
     /* SVG Connecting Vector Tracks */
     #connecting-svg {
       position: absolute;
-      top: 204px;
-      left: 100px;
-      width: 1720px;
-      height: 620px;
+      top: 236px;
+      left: 154px;
+      width: 1612px;
+      height: 500px;
       z-index: 5;
       pointer-events: none;
     }
@@ -142,16 +142,16 @@
     .vector-active {
       stroke: var(--color-primary-purple-deep);
       stroke-width: 2.5px;
-      stroke-dasharray: 120;
-      stroke-dashoffset: 120;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
       fill: none;
     }
 
     .vector-active-coral {
       stroke: var(--color-accent-coral);
       stroke-width: 2.5px;
-      stroke-dasharray: 120;
-      stroke-dashoffset: 120;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
       fill: none;
     }
 
@@ -165,10 +165,10 @@
       opacity: 0;
     }
 
-    /* CARD BASE: 28px radius, ZERO SHADOWS, Concentric Inner Radii */
+    /* CARD BASE: 26px radius, ZERO SHADOWS, Concentric Inner Radii */
     .col-card {
       background: var(--color-pure-white);
-      border-radius: 28px;
+      border-radius: 26px;
       border: 1px solid var(--color-ash);
       box-shadow: none;
       position: relative;
@@ -177,10 +177,11 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 32px;
-      padding: 48px 36px;
+      gap: 22px;
+      padding: 36px 32px;
+      height: 500px;
       opacity: 0;
-      transform: translateY(28px);
+      transform: translateY(24px);
     }
 
     /* ENLARGED HERO CENTER FEATURE */
@@ -188,15 +189,15 @@
       background: var(--color-primary-purple);
       border: 1px solid var(--color-primary-purple);
       color: var(--color-off-black-ink);
-      gap: 36px;
-      padding: 52px 48px;
+      gap: 24px;
+      padding: 40px 42px;
       z-index: 12;
     }
 
     .icon-container {
-      width: 100px;
-      height: 100px;
-      border-radius: 22px;
+      width: 88px;
+      height: 88px;
+      border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -205,16 +206,16 @@
     }
 
     .card-hero-purple .icon-container {
-      width: 114px;
-      height: 114px;
-      border-radius: 24px;
+      width: 104px;
+      height: 104px;
+      border-radius: 22px;
       background: var(--color-off-black-ink);
       border: 1px solid var(--color-off-black-ink);
     }
 
     .icon-container svg {
-      width: 46px;
-      height: 46px;
+      width: 44px;
+      height: 44px;
       stroke-width: 2px;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -223,8 +224,8 @@
     }
 
     .card-hero-purple .icon-container svg {
-      width: 52px;
-      height: 52px;
+      width: 50px;
+      height: 50px;
       stroke: var(--color-accent-coral); /* Coral Accent Spark */
     }
 
@@ -232,29 +233,29 @@
       text-align: center;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .card-title {
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 800;
       letter-spacing: -0.025em;
       line-height: 1.15;
       color: var(--color-off-black-ink);
       text-wrap: balance;
-      max-width: 360px;
+      max-width: 380px;
       margin: 0 auto;
     }
 
     .card-hero-purple .card-title {
-      font-size: 34px; /* Noticeably enlarged */
+      font-size: 38px; /* Prominently enlarged */
       letter-spacing: -0.03em;
       line-height: 1.1;
-      max-width: 520px;
+      max-width: 540px;
     }
 
     .card-desc {
-      font-size: 14.5px;
+      font-size: 16.5px;
       font-weight: 500;
       color: var(--color-graphite);
       line-height: 1.45;
@@ -265,22 +266,22 @@
 
     .card-hero-purple .card-desc {
       color: rgba(20, 20, 15, 0.88);
-      font-size: 16px;
+      font-size: 18px;
       max-width: 500px;
     }
 
     /* Bottom Technical Ticker */
     .perk-footer-ticker {
       position: absolute;
-      bottom: 30px;
-      left: 100px;
-      right: 100px;
+      bottom: 40px;
+      left: 154px;
+      right: 154px;
       height: 38px;
       border-top: 1px solid var(--color-ash);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
       color: var(--color-graphite);
       z-index: 20;
@@ -318,19 +319,19 @@
     </div>
 
     <!-- SVG Vector Flow Connectors (1 -> 2 -> 3) -->
-    <svg id="connecting-svg" viewBox="0 0 1720 620">
-      <!-- Track 1 to 2 (X: 480 to 520, Y: 310) -->
-      <path class="vector-track" d="M 480 310 L 520 310" />
-      <path id="vector-1-2" class="vector-active" d="M 480 310 L 520 310" />
+    <svg id="connecting-svg" viewBox="0 0 1612 500">
+      <!-- Track 1 to 2 (X: 440 to 476, Y: 250) -->
+      <path class="vector-track" d="M 440 250 L 476 250" />
+      <path id="vector-1-2" class="vector-active" d="M 440 250 L 476 250" />
       <circle id="pkt-1-2" class="vector-packet" r="4.5" />
 
-      <!-- Track 2 to 3 (X: 1200 to 1240, Y: 310) -->
-      <path class="vector-track" d="M 1200 310 L 1240 310" />
-      <path id="vector-2-3" class="vector-active-coral" d="M 1200 310 L 1240 310" />
+      <!-- Track 2 to 3 (X: 1136 to 1172, Y: 250) -->
+      <path class="vector-track" d="M 1136 250 L 1172 250" />
+      <path id="vector-2-3" class="vector-active-coral" d="M 1136 250 L 1172 250" />
       <circle id="pkt-2-3" class="vector-packet-coral" r="4.5" />
     </svg>
 
-    <!-- 3 LINEAR COLUMNS: 480px + 680px (Hero) + 480px (No filler badges, no redundant number tags) -->
+    <!-- 3 LINEAR COLUMNS: 440px + 660px (Hero) + 440px (Tailored Cards, Generous Air) -->
     <main class="columns-container">
 
       <!-- COLUMN 1: ESPECIFICACIÓN -->
@@ -439,11 +440,11 @@
       .to('#connecting-svg', { opacity: 1, duration: 0.4 }, 1.3)
 
       // Conduits
-      .fromTo('#vector-1-2', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power1.inOut' }, 2.0)
-      .fromTo('#pkt-1-2', { cx: 480, cy: 310, opacity: 1 }, { cx: 520, cy: 310, opacity: 0, duration: 0.8, ease: 'power1.inOut' }, 2.0)
+      .fromTo('#vector-1-2', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power1.inOut' }, 2.0)
+      .fromTo('#pkt-1-2', { cx: 440, cy: 250, opacity: 1 }, { cx: 476, cy: 250, opacity: 0, duration: 0.8, ease: 'power1.inOut' }, 2.0)
 
-      .fromTo('#vector-2-3', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power1.inOut' }, 4.5)
-      .fromTo('#pkt-2-3', { cx: 1200, cy: 310, opacity: 1 }, { cx: 1240, cy: 310, opacity: 0, duration: 0.8, ease: 'power1.inOut' }, 4.5)
+      .fromTo('#vector-2-3', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power1.inOut' }, 4.5)
+      .fromTo('#pkt-2-3', { cx: 1136, cy: 250, opacity: 1 }, { cx: 1172, cy: 250, opacity: 0, duration: 0.8, ease: 'power1.inOut' }, 4.5)
 
       .to('#progress-fill', { width: '100%', duration: 10, ease: 'none' }, 0);
 
