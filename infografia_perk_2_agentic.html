@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es" data-fps="30" data-duration="10" data-width="1920" data-height="1080">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>Infografía 2: Ciclo Agéntico // Perk Morado Sutil (3 Linear Columns)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <style>
+    /* Perk Design Tokens — Subtle Purple Edition (DESIGN (7).md) */
+    :root {
+      --color-primary-purple: #A78BFA;
+      --color-primary-purple-soft: #EDE9FE;
+      --color-primary-purple-deep: #7C3AED;
+      --color-off-black-ink: #14140f;
+      --color-off-white-canvas: #f5f5eb;
+      --color-pure-white: #ffffff;
+      --color-ash: #d2d2c8;
+      --color-graphite: #6e6e64;
+      --color-deep-charcoal: #30302a;
+      
+      --font-otsono: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--color-off-white-canvas);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-otsono);
+      color: var(--color-off-black-ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #stage-scaler {
+      position: absolute;
+      width: 1920px;
+      height: 1080px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      transform-origin: center center;
+      background: var(--color-off-white-canvas);
+      overflow: hidden;
+    }
+
+    /* Top Editorial Nav */
+    .perk-nav {
+      position: absolute;
+      top: 48px;
+      left: 100px;
+      right: 100px;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--color-ash);
+      padding-bottom: 16px;
+      z-index: 30;
+    }
+
+    .perk-logo-lockup {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .perk-logo {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--color-off-black-ink);
+    }
+
+    .perk-version-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      background: var(--color-pure-white);
+      border: 1px solid var(--color-ash);
+      border-radius: 9999px;
+      color: var(--color-graphite);
+    }
+
+    .perk-nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .perk-pill-active {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: var(--color-pure-white);
+      border: 1px solid var(--color-ash);
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .perk-live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--color-primary-purple-deep);
+    }
+
+    /* Subheader Title */
+    .header-bar {
+      position: absolute;
+      top: 124px;
+      left: 100px;
+      right: 100px;
+      height: 48px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      z-index: 20;
+    }
+
+    .header-bar h1 {
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--color-off-black-ink);
+    }
+
+    .eyebrow-tag {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-graphite);
+    }
+
+    /* 3 LINEAR COLUMNS CONTAINER */
+    .bento-container {
+      position: absolute;
+      top: 195px;
+      left: 120px;
+      width: 1680px;
+      height: 620px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+      z-index: 10;
+    }
+
+    /* SVG Connecting Vector Track between columns */
+    #connecting-svg {
+      position: absolute;
+      top: 195px;
+      left: 120px;
+      width: 1680px;
+      height: 620px;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .vector-track {
+      stroke: var(--color-ash);
+      stroke-width: 2px;
+      stroke-dasharray: 6 6;
+      fill: none;
+    }
+
+    .vector-active {
+      stroke: var(--color-primary-purple-deep);
+      stroke-width: 2.5px;
+      stroke-dasharray: 120;
+      stroke-dashoffset: 120;
+      fill: none;
+    }
+
+    .vector-packet {
+      fill: var(--color-primary-purple-deep);
+      opacity: 0;
+    }
+
+    /* PERK CARD BASE: 28px radius, ZERO SHADOWS */
+    .bento-card {
+      background: var(--color-pure-white);
+      border-radius: 28px;
+      border: 1px solid var(--color-ash);
+      box-shadow: none;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      padding: 60px 40px;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: border-color 0.3s ease;
+    }
+
+    /* CENTER HERO CARD: Dominant Subtle Purple */
+    .card-hero-purple {
+      background: var(--color-primary-purple);
+      border: 1px solid var(--color-primary-purple);
+      color: var(--color-off-black-ink);
+    }
+
+    .card-step-num {
+      position: absolute;
+      top: 28px;
+      left: 32px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--color-graphite);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--color-off-white-canvas);
+      border: 1px solid var(--color-ash);
+    }
+
+    .card-hero-purple .card-step-num {
+      background: rgba(20, 20, 15, 0.12);
+      border: 1px solid rgba(20, 20, 15, 0.2);
+      color: var(--color-off-black-ink);
+    }
+
+    .badge-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pulse-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 28px;
+      border: 2px solid var(--color-primary-purple-deep);
+      opacity: 0;
+      transform: scale(1);
+      pointer-events: none;
+    }
+
+    .icon-badge {
+      width: 120px;
+      height: 120px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+      background: var(--color-primary-purple-soft);
+      border: 1.5px solid rgba(124, 58, 237, 0.25);
+    }
+
+    .card-hero-purple .icon-badge {
+      background: var(--color-off-black-ink);
+      border: 1.5px solid var(--color-off-black-ink);
+    }
+
+    .icon-badge svg {
+      width: 54px;
+      height: 54px;
+      stroke-width: 2.2px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      stroke: var(--color-primary-purple-deep);
+    }
+
+    .card-hero-purple .icon-badge svg {
+      stroke: var(--color-primary-purple);
+    }
+
+    .card-title {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--color-off-black-ink);
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .card-subtext {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-graphite);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+    }
+
+    .card-hero-purple .card-subtext {
+      color: rgba(20, 20, 15, 0.75);
+    }
+
+    /* Bottom Technical Ticker */
+    .perk-footer-ticker {
+      position: absolute;
+      bottom: 30px;
+      left: 100px;
+      right: 100px;
+      height: 38px;
+      border-top: 1px solid var(--color-ash);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-graphite);
+      z-index: 20;
+    }
+
+    .ticker-left { display: flex; gap: 24px; }
+    .ticker-right { display: flex; gap: 16px; }
+
+    .editorial-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--color-ash);
+    }
+
+    .editorial-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--color-primary-purple-deep);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="stage-scaler">
+
+    <!-- Top Editorial Nav -->
+    <header class="perk-nav">
+      <div class="perk-logo-lockup">
+        <span class="perk-logo">Perk</span>
+        <span class="perk-version-pill">3 LINEAR COLUMNS // AGENTIC PIPELINE</span>
+      </div>
+      <div class="perk-nav-right">
+        <div class="perk-pill-active">
+          <span class="perk-live-dot"></span>
+          <span>MULTI-AGENT PIPELINE CONVERGED</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Subheader Title -->
+    <div class="header-bar" id="header-bar">
+      <h1>Ciclo de Desarrollo Agéntico</h1>
+      <span class="eyebrow-tag">[ 03 ETAPAS // FLUJO LINEAL SECUENCIAL ]</span>
+    </div>
+
+    <!-- SVG Vector Flow Connectors (1 -> 2 -> 3) -->
+    <svg id="connecting-svg" viewBox="0 0 1680 620">
+      <!-- Track 1 to 2 (X: 528 to 576, Y: 310) -->
+      <path class="vector-track" d="M 528 310 L 576 310" />
+      <path id="vector-1-2" class="vector-active" d="M 528 310 L 576 310" />
+      <circle id="pkt-1-2" class="vector-packet" r="5" />
+
+      <!-- Track 2 to 3 (X: 1104 to 1152, Y: 310) -->
+      <path class="vector-track" d="M 1104 310 L 1152 310" />
+      <path id="vector-2-3" class="vector-active" d="M 1104 310 L 1152 310" />
+      <circle id="pkt-2-3" class="vector-packet" r="5" />
+    </svg>
+
+    <!-- 3 LINEAR COLUMNS CONTAINER -->
+    <main class="bento-container">
+
+      <!-- COLUMN 1: ESPECIFICACIÓN -->
+      <div class="bento-card" id="card-1">
+        <span class="card-step-num">01 // ENTRADA</span>
+        <div class="badge-wrap">
+          <div class="pulse-ring" id="pulse-1"></div>
+          <div class="icon-badge">
+            <svg viewBox="0 0 24 24">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+        </div>
+        <h2 class="card-title">ESPECIFICACIÓN</h2>
+        <span class="card-subtext">Intención &amp; Esquema Formal</span>
+      </div>
+
+      <!-- COLUMN 2: ORQUESTACIÓN (Dominant Hero Purple) -->
+      <div class="bento-card card-hero-purple" id="card-2">
+        <span class="card-step-num">02 // COGNITIVE CORE</span>
+        <div class="badge-wrap">
+          <div class="pulse-ring" id="pulse-2"></div>
+          <div class="icon-badge">
+            <svg viewBox="0 0 24 24">
+              <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+              <rect x="9" y="9" width="6" height="6"></rect>
+              <line x1="9" y1="1" x2="9" y2="4"></line>
+              <line x1="15" y1="1" x2="15" y2="4"></line>
+              <line x1="9" y1="20" x2="9" y2="23"></line>
+              <line x1="15" y1="20" x2="15" y2="23"></line>
+              <line x1="20" y1="9" x2="23" y2="9"></line>
+              <line x1="20" y1="14" x2="23" y2="14"></line>
+              <line x1="1" y1="9" x2="4" y2="9"></line>
+              <line x1="1" y1="14" x2="4" y2="14"></line>
+            </svg>
+          </div>
+        </div>
+        <h2 class="card-title">ORQUESTACIÓN</h2>
+        <span class="card-subtext">Razonamiento Multi-Modelo</span>
+      </div>
+
+      <!-- COLUMN 3: DESPLIEGUE -->
+      <div class="bento-card" id="card-3">
+        <span class="card-step-num">03 // VERIFICACIÓN</span>
+        <div class="badge-wrap">
+          <div class="pulse-ring" id="pulse-3"></div>
+          <div class="icon-badge">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <polyline points="9 12 11 14 15 10"></polyline>
+            </svg>
+          </div>
+        </div>
+        <h2 class="card-title">DESPLIEGUE</h2>
+        <span class="card-subtext">Auditoría &amp; Sandbox Seguro</span>
+      </div>
+
+    </main>
+
+    <!-- Bottom Technical Ticker -->
+    <footer class="perk-footer-ticker">
+      <div class="ticker-left">
+        <span>PALETTE: #A78BFA SUBTLE PURPLE // #14140F INK // #F5F5EB CANVAS</span>
+        <span>FLOW: 3-STAGE LINEAR CONDUIT (ZERO SHADOWS)</span>
+      </div>
+      <div class="ticker-right">
+        <span>TIMELINE DETERMINISM: GSAP SEEK 30FPS</span>
+        <span>HYPERFRAME v2.0 CERTIFIED</span>
+      </div>
+    </footer>
+
+    <!-- Editorial Bottom Progress Bar -->
+    <div class="editorial-progress">
+      <div class="editorial-fill" id="progress-fill"></div>
+    </div>
+
+  </div>
+
+  <script>
+    function fitStage() {
+      const stage = document.getElementById('stage-scaler');
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const scale = Math.min(w / 1920, h / 1080);
+      stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    }
+    window.addEventListener('resize', fitStage);
+    fitStage();
+
+    window.__timelines = window.__timelines || [];
+    const tl = gsap.timeline({ paused: true });
+    window.__timelines.push(tl);
+
+    gsap.set('.perk-nav', { opacity: 0, y: -20 });
+    gsap.set('#header-bar', { opacity: 0, y: -15 });
+    gsap.set('.perk-footer-ticker', { opacity: 0 });
+    gsap.set(['#card-1', '#card-2', '#card-3'], { opacity: 0, y: 30 });
+    gsap.set('#connecting-svg', { opacity: 0 });
+
+    tl
+      .to('.perk-nav', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.2)
+      .to('#header-bar', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.4)
+      .to('.perk-footer-ticker', { opacity: 1, duration: 0.6, ease: 'power2.out' }, 0.6)
+
+      // Columns Entry
+      .to('#card-1', { opacity: 1, y: 0, duration: 0.8, ease: 'back.out(1.2)' }, 0.7)
+      .to('#card-2', { opacity: 1, y: 0, duration: 0.8, ease: 'back.out(1.2)' }, 1.0)
+      .to('#card-3', { opacity: 1, y: 0, duration: 0.8, ease: 'back.out(1.2)' }, 1.3)
+      .to('#connecting-svg', { opacity: 1, duration: 0.6 }, 1.5)
+
+      // Vector Flow 1 -> 2
+      .fromTo('#pulse-1', { scale: 0.9, opacity: 0.9 }, { scale: 1.45, opacity: 0, duration: 1.0, ease: 'power2.out' }, 2.0)
+      .fromTo('#vector-1-2', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power1.inOut' }, 2.5)
+      .fromTo('#pkt-1-2', { cx: 528, cy: 310, opacity: 1 }, { cx: 576, cy: 310, opacity: 0, duration: 0.8, ease: 'power1.inOut' }, 2.5)
+
+      // Pulse 2 (Hero Core)
+      .fromTo('#pulse-2', { scale: 0.9, opacity: 0.9 }, { scale: 1.45, opacity: 0, duration: 1.2, ease: 'power2.out' }, 4.0)
+
+      // Vector Flow 2 -> 3
+      .fromTo('#vector-2-3', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power1.inOut' }, 5.5)
+      .fromTo('#pkt-2-3', { cx: 1104, cy: 310, opacity: 1 }, { cx: 1152, cy: 310, opacity: 0, duration: 0.8, ease: 'power1.inOut' }, 5.5)
+
+      // Pulse 3
+      .fromTo('#pulse-3', { scale: 0.9, opacity: 0.9 }, { scale: 1.45, opacity: 0, duration: 1.0, ease: 'power2.out' }, 7.0)
+
+      .to('#progress-fill', { width: '100%', duration: 10, ease: 'none' }, 0);
+
+    tl.play();
+  </script>
+</body>
+</html>

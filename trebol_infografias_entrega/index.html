@@ -2,367 +2,404 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TV Broadcast Motion Infographics // Handover Hub</title>
+  <title>Podcast OBS Broadcast Suite &amp; Trebol Infographics Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Montserrat:wght@700;800;900&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Open+Sans:wght@400;600&family=Roboto:wght@700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #070B14;
-      --bg-card: rgba(15, 23, 42, 0.85);
-      --cyan: #00F0FF;
-      --cyan-glow: rgba(0, 240, 255, 0.4);
-      --emerald: #10B981;
-      --amber: #F59E0B;
-      --border-card: rgba(255, 255, 255, 0.12);
-      --text-white: #FFFFFF;
-      --text-muted: #94A3B8;
+      --trebol-green: #1AA83F;
+      --trebol-navy: #1A5084;
+      --trebol-coral: #FF7B50;
+      --surface: #FCF9F8;
+      --primary: #9A9CE4;
+      --dark: #0F172A;
+      --cyan: #06B6D4;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
-      background: #020408;
-      color: var(--text-white);
-      font-family: 'Outfit', sans-serif;
-      min-height: 100vh;
+      background: #0B1120;
+      color: #F8FAFC;
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 40px 24px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 40px 24px;
     }
-
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-image: 
-        radial-gradient(circle, rgba(0, 240, 255, 0.08) 1.5px, transparent 1.5px);
-      background-size: 32px 32px;
-      z-index: -1;
-      pointer-events: none;
-    }
-
     header {
-      width: 100%;
-      max-width: 1240px;
-      background: #0A0F1D;
-      border: 1px solid var(--border-card);
-      border-top: 4px solid var(--cyan);
-      padding: 30px 40px;
+      text-align: center;
       margin-bottom: 36px;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    p.subtitle {
+      color: #94A3B8;
+      font-size: 15px;
+    }
+    .section-title-wrap {
+      width: 100%;
+      max-width: 1200px;
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      margin: 28px 0 16px;
+      border-bottom: 1.5px solid #1E293B;
+      padding-bottom: 12px;
     }
-
-    .brand-wrap h1 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 26px;
-      font-weight: 900;
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
       letter-spacing: -0.01em;
-      color: #FFFFFF;
-      text-transform: uppercase;
-    }
-
-    .brand-wrap p {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .header-badges {
       display: flex;
       align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+      gap: 10px;
     }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      border-radius: 3px;
-    }
-
-    .badge-cyan {
-      background: rgba(0, 240, 255, 0.12);
-      color: var(--cyan);
-      border: 1px solid var(--cyan);
-      box-shadow: 0 0 15px var(--cyan-glow);
-    }
-
-    .badge-dark {
-      background: rgba(255, 255, 255, 0.06);
-      color: #94A3B8;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .grid-container {
-      width: 100%;
-      max-width: 1240px;
+    .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(580px, 1fr));
-      gap: 32px;
-      margin-bottom: 40px;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 24px;
+      width: 100%;
+      max-width: 1200px;
+      margin-bottom: 32px;
     }
-
-    @media (max-width: 680px) {
-      .grid-container {
-        grid-template-columns: 1fr;
-      }
-    }
-
     .card {
-      background: var(--bg-card);
-      border: 1.5px solid var(--border-card);
-      border-radius: 6px;
-      padding: 26px;
+      background: #0F172A;
+      border-radius: 8px;
+      border: 1.5px solid #334155;
+      padding: 24px;
       display: flex;
       flex-direction: column;
       gap: 16px;
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s, border-color 0.2s;
     }
-
     .card:hover {
-      border-color: var(--cyan);
-      box-shadow: 0 16px 40px rgba(0, 240, 255, 0.15);
+      border-color: #64748B;
       transform: translateY(-2px);
     }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .card.trebol-card {
+      background: #FFFFFF;
+      color: #111827;
+      border: 2px solid #E5E7EB;
+      border-radius: 0;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
     }
-
-    .card-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 21px;
-      font-weight: 800;
-      color: #FFFFFF;
+    .card.trebol-card:hover {
+      border-color: var(--trebol-green);
+      box-shadow: 0 12px 28px rgba(26, 168, 63, 0.15);
+    }
+    .card.memphis {
+      background: #FCF9F8;
+      color: #000000;
+      border: 4px solid #000000;
+      border-radius: 0;
+      box-shadow: 6px 6px 0px 0px #000000;
+    }
+    .badge {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
       text-transform: uppercase;
+      border-radius: 2px;
+      width: fit-content;
     }
+    .badge-trebol { background: #E8F7EC; color: #1AA83F; border: 1px solid rgba(26, 168, 63, 0.3); }
+    .badge-slate { background: rgba(6, 182, 212, 0.15); color: #06B6D4; border: 1px solid rgba(6, 182, 212, 0.3); }
+    .badge-memphis { background: #9A9CE4; color: #000000; border: 2px solid #000000; border-radius: 0; box-shadow: 2px 2px 0 #000; }
 
-    .card-desc {
-      font-size: 15px;
-      line-height: 1.5;
-      color: var(--text-muted);
-    }
+    .title { font-size: 20px; font-weight: 800; line-height: 1.25; }
+    .desc { font-size: 13.5px; line-height: 1.5; color: #94A3B8; }
+    .card.trebol-card .desc { color: #4B5563; }
+    .card.memphis .desc { color: #464650; }
 
-    .video-preview-box {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      background: #000000;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 4px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .video-preview-box video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .actions {
+    .links {
       display: flex;
-      gap: 12px;
       flex-wrap: wrap;
+      gap: 10px;
       margin-top: auto;
     }
-
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 11px 20px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      font-weight: 800;
+      padding: 8px 16px;
+      font-family: monospace;
+      font-size: 12px;
+      font-weight: 700;
       text-decoration: none;
       border-radius: 3px;
+      transition: all 0.15s;
       cursor: pointer;
-      transition: all 0.2s;
     }
-
-    .btn-primary {
-      background: var(--cyan);
-      color: #050B14;
-      box-shadow: 0 0 15px var(--cyan-glow);
+    .btn-trebol {
+      background: var(--trebol-green);
+      color: #FFFFFF;
+      border: 1px solid var(--trebol-green);
     }
-
-    .btn-primary:hover {
-      background: #38F8FF;
-      box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+    .btn-trebol:hover {
+      background: #148632;
     }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.08);
-      color: #E2E8F0;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+    .btn-trebol-outline {
+      background: #FFFFFF;
+      color: var(--trebol-navy);
+      border: 1.5px solid #CBD5E1;
     }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.3);
+    .btn-trebol-outline:hover {
+      background: #EEF4F9;
+      border-color: var(--trebol-navy);
     }
-
-    footer {
-      width: 100%;
-      max-width: 1240px;
-      background: #0A0F1D;
-      border: 1px solid var(--border-card);
-      padding: 24px 36px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      font-size: 14px;
-      color: var(--text-muted);
+    .btn-slate {
+      background: #1E293B;
+      color: #38BDF8;
+      border: 1px solid #475569;
     }
-
-    .doc-links {
-      display: flex;
-      gap: 20px;
+    .btn-slate:hover {
+      background: #06B6D4;
+      color: #0F172A;
     }
-
-    .doc-links a {
-      color: var(--cyan);
-      text-decoration: none;
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 13px;
+    .btn-memphis {
+      background: #9A9CE4;
+      color: #000000;
+      border: 3px solid #000000;
+      border-radius: 0;
+      box-shadow: 3px 3px 0px 0px #000000;
     }
-
-    .doc-links a:hover {
-      text-decoration: underline;
+    .btn-memphis:hover {
+      background: #C0C1FF;
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0px 0px #000000;
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header style="border-top: 4px solid #0284C7;">
-    <div class="brand-wrap">
-      <h1>TV Broadcast &amp; Editorial Motion Suite</h1>
-      <p>Infografías 2026 Bento Grid en Bright Light Mode: pure white cards (#FFFFFF), badges pasteles, tipografía dark slate (#0F172A) y 10.0s @ 30 FPS</p>
-    </div>
-    <div class="header-badges">
-      <a href="suite_transiciones_perk.html" class="badge badge-cyan" style="color: #14140F; background: #A78BFA; border: 1.5px solid #A78BFA; text-decoration: none; font-size: 13px; padding: 8px 16px;">💜 SUITE DE TRANSICIONES (PERK MORADO)</a>
-      <a href="showcase_estilos.html" class="badge badge-cyan" style="color: #A78BFA; background: rgba(167,139,250,0.15); border: 1.5px solid #A78BFA; text-decoration: none; font-size: 13px; padding: 8px 16px;">⚡ BENCHMARK 4 ESTILOS</a>
-      <span class="badge badge-cyan" style="color: #0284C7; background: rgba(2,132,199,0.15); border: 1px solid rgba(2,132,199,0.3);">● 2026 BENTO LIGHT MODE</span>
-      <span class="badge badge-dark">FULL HD 1920×1080</span>
-      <span class="badge badge-dark">APPLE KEYNOTE &amp; NOTION UI</span>
-    </div>
+  <header>
+    <h1>Podcast Broadcast &amp; Design Suite</h1>
+    <p class="subtitle">Infografías animadas Trebol de 10s, fuentes OBS y herramientas de streaming en vivo.</p>
   </header>
 
-  <!-- CARDS GRID -->
-  <div class="grid-container">
+  <!-- NEW HERO SECTION: PERK SUBTLE PURPLE SUITE -->
+  <div class="section-title-wrap" style="border-bottom: 2px solid #A78BFA;">
+    <div class="section-title">
+      <span style="color: #A78BFA;">💜 Sistema Perk (Morado Sutil) // 4 Infografías &amp; Suite de Transiciones</span>
+    </div>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <a href="suite_transiciones_perk.html" class="btn" style="background: #A78BFA; color: #14140F; font-weight: 800; text-decoration: none; border: 1px solid #A78BFA;">🎬 Abrir Suite con Transiciones</a>
+      <a href="showcase_estilos.html" class="btn" style="background: #1E293B; color: #A78BFA; border: 1px solid #A78BFA; text-decoration: none;">⊞ Benchmark 4 Estilos</a>
+      <span class="badge" style="background: rgba(167,139,250,0.15); color: #A78BFA; border: 1px solid #A78BFA;">PERK ON PARCHMENT &bull; SUBTLE PURPLE #A78BFA &bull; 10s GSAP</span>
+    </div>
+  </div>
 
-    <!-- Card 1: Stepped 2+3 Bento Grid -->
-    <div class="card" style="border-top: 3px solid #0284C7;">
-      <div class="card-header">
-        <span class="badge" style="background: rgba(2,132,199,0.15); color: #0284C7; border: 1px solid rgba(2,132,199,0.3);">STEPPED 2+3 // 10.0s</span>
-        <span class="badge badge-dark">513 KB MP4</span>
+  <div class="grid" style="margin-bottom: 36px;">
+    <!-- Perk Card 1: Proceso Editorial (Stepped 2+3) -->
+    <div class="card" style="border-top: 4px solid #A78BFA; background: #131A2B;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span class="badge" style="background: rgba(167,139,250,0.18); color: #A78BFA; border: 1px solid #A78BFA;">PERK // STEPPED 2+3</span>
+        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">5 ETAPAS ESCALONADAS</span>
       </div>
-      <div class="card-title">01. El Proceso Editorial (Bento Grid 2+3)</div>
-      <p class="card-desc">
-        Ultra-clean 2026 Bento Grid en Light Mode (#F8FAFC): 2 tarjetas superiores y 3 inferiores conectadas por conducto escalonado, con íconos Lucide de 2px en badges pasteles y títulos grandes (#0F172A).
+      <div class="title" style="color: #FFFFFF;">01. El Proceso Editorial (Stepped 2+3)</div>
+      <p class="desc" style="color: #94A3B8;">
+        Estructura escalonada de 5 etapas: 2 tarjetas superiores anchas (Investigación &amp; Redacción en hero morado) y 3 inferiores (Revisión, Edición, Publicación) sobre pergamino (#F5F5EB).
       </p>
-      <div class="video-preview-box">
-        <video src="renders/infografia_01_writing_process.mp4" controls preload="metadata" loop></video>
-      </div>
-      <div class="actions">
-        <a class="btn btn-primary" style="background: #0284C7; color: #FFF;" href="infografia_1_writing_process.html" target="_blank">Abrir Fuente HTML</a>
-        <a class="btn btn-secondary" href="renders/infografia_01_writing_process.mp4" download>Descargar Video MP4</a>
+      <div class="links">
+        <a class="btn" style="background: #A78BFA; color: #14140F; font-weight: 800; text-decoration: none;" href="infografia_perk_1_writing.html" target="_blank">Ver Infografía 1 ↗</a>
       </div>
     </div>
 
-    <!-- Card 2: 3 Linear Columns -->
-    <div class="card" style="border-top: 3px solid #7C3AED;">
-      <div class="card-header">
-        <span class="badge" style="background: rgba(124,58,237,0.15); color: #A78BFA; border: 1px solid rgba(124,58,237,0.3);">3 COLUMNS // 10.0s</span>
-        <span class="badge badge-dark">402 KB MP4</span>
+    <!-- Perk Card 2: Ciclo Agéntico (3 Linear Columns) -->
+    <div class="card" style="border-top: 4px solid #A78BFA; background: #131A2B;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span class="badge" style="background: rgba(167,139,250,0.18); color: #A78BFA; border: 1px solid #A78BFA;">PERK // 3 LINEAR COLUMNS</span>
+        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">FLUJO VECTORIAL CONTINUO</span>
       </div>
-      <div class="card-title">02. Ciclo de Desarrollo Agéntico</div>
-      <p class="card-desc">
-        Layout adaptado de 3 columnas lineales (Especificación &rarr; Orquestación &rarr; Despliegue) con flujo vectorizado horizontal, estética Apple Keynote y generoso espacio negativo.
+      <div class="title" style="color: #FFFFFF;">02. Ciclo de Desarrollo Agéntico (3 Columnas)</div>
+      <p class="desc" style="color: #94A3B8;">
+        Disposición de 3 columnas lineales (Especificación &rarr; Orquestación en hero morado &rarr; Despliegue) interconectadas por haces vectoriales continuos y paquetes de datos animados.
       </p>
-      <div class="video-preview-box">
-        <video src="renders/infografia_02_agentic_flow.mp4" controls preload="metadata" loop></video>
-      </div>
-      <div class="actions">
-        <a class="btn btn-primary" style="background: #7C3AED; color: #FFF;" href="infografia_2_agentic_flow.html" target="_blank">Abrir Fuente HTML</a>
-        <a class="btn btn-secondary" href="renders/infografia_02_agentic_flow.mp4" download>Descargar Video MP4</a>
+      <div class="links">
+        <a class="btn" style="background: #A78BFA; color: #14140F; font-weight: 800; text-decoration: none;" href="infografia_perk_2_agentic.html" target="_blank">Ver Infografía 2 ↗</a>
       </div>
     </div>
 
-    <!-- Card 3: Convergent Center Hero -->
-    <div class="card" style="border-top: 3px solid #7C3AED;">
-      <div class="card-header">
-        <span class="badge" style="background: rgba(124,58,237,0.15); color: #A78BFA; border: 1px solid rgba(124,58,237,0.3);">CENTER HERO // 10.0s</span>
-        <span class="badge badge-dark">MP4 FULL HD</span>
+    <!-- Perk Card 3: Refuerzo vs Imitación (Convergent Center Hero) -->
+    <div class="card" style="border-top: 4px solid #A78BFA; background: #131A2B;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span class="badge" style="background: rgba(167,139,250,0.18); color: #A78BFA; border: 1px solid #A78BFA;">PERK // CONVERGENT HERO</span>
+        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">CONVERGENCIA TRIPARTITA</span>
       </div>
-      <div class="card-title">03. Refuerzo vs. Imitación (Center Hero)</div>
-      <p class="card-desc">
-        Composición convergente donde el Agente Autónomo y el Experto Humano canalizan sus flujos vectoriales hacia el Núcleo de Aprendizaje heroico central dominante.
+      <div class="title" style="color: #FFFFFF;">03. Refuerzo vs. Imitación (Center Hero)</div>
+      <p class="desc" style="color: #94A3B8;">
+        Composición centrípeta con bloque hero central dominante (Núcleo de Aprendizaje en morado sutil) alimentado convergentemente por el Agente Autónomo y el Experto Humano.
       </p>
-      <div class="video-preview-box">
-        <video src="renders/infografia_03_rl_vs_imitation.mp4" controls preload="metadata" loop></video>
-      </div>
-      <div class="actions">
-        <a class="btn btn-primary" style="background: #7C3AED; color: #FFF;" href="infografia_3_rl_vs_imitation.html" target="_blank">Abrir Fuente HTML</a>
-        <a class="btn btn-secondary" href="renders/infografia_03_rl_vs_imitation.mp4" download>Descargar Video MP4</a>
+      <div class="links">
+        <a class="btn" style="background: #A78BFA; color: #14140F; font-weight: 800; text-decoration: none;" href="infografia_perk_3_rl_vs_imitation.html" target="_blank">Ver Infografía 3 ↗</a>
       </div>
     </div>
 
-    <!-- Card 4: Sequential 4 Stages -->
-    <div class="card" style="border-top: 3px solid #059669;">
-      <div class="card-header">
-        <span class="badge" style="background: rgba(5,150,105,0.15); color: #34D399; border: 1px solid rgba(5,150,105,0.3);">SEQUENTIAL 4 // 10.0s</span>
-        <span class="badge badge-dark">MP4 FULL HD</span>
+    <!-- Perk Card 4: Funnel de Conversión (Sequential 4 Columns) -->
+    <div class="card" style="border-top: 4px solid #A78BFA; background: #131A2B;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span class="badge" style="background: rgba(167,139,250,0.18); color: #A78BFA; border: 1px solid #A78BFA;">PERK // SEQUENTIAL 4</span>
+        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">PROGRESIÓN 4 ESTADIOS</span>
       </div>
-      <div class="card-title">04. Funnel de Conversión (4 Etapas)</div>
-      <p class="card-desc">
-        Embudo secuencial en 4 columnas puras (Atracción &rarr; Interés &rarr; Decisión &rarr; Conversión) con tarjetas blancas redondeadas, badges pasteles y títulos dark slate (#0F172A).
+      <div class="title" style="color: #FFFFFF;">04. Funnel de Conversión (4 Etapas)</div>
+      <p class="desc" style="color: #94A3B8;">
+        Flujo de embudo secuencial de 4 estadios (Atracción &rarr; Interés &rarr; Decisión &rarr; Conversión en hero morado) con pulsos escalonados y líneas vectoriales dinámicas.
       </p>
-      <div class="video-preview-box">
-        <video src="renders/infografia_04_funnel_marketing.mp4" controls preload="metadata" loop></video>
+      <div class="links">
+        <a class="btn" style="background: #A78BFA; color: #14140F; font-weight: 800; text-decoration: none;" href="infografia_perk_4_funnel.html" target="_blank">Ver Infografía 4 ↗</a>
       </div>
-      <div class="actions">
-        <a class="btn btn-primary" style="background: #059669; color: #FFF;" href="infografia_4_funnel_marketing.html" target="_blank">Abrir Fuente HTML</a>
-        <a class="btn btn-secondary" href="renders/infografia_04_funnel_marketing.mp4" download>Descargar Video MP4</a>
+    </div>
+  </div>
+
+  <!-- TV BROADCAST ANIMATED INFOGRAPHICS SECTION -->
+  <div class="section-title-wrap">
+    <div class="section-title">
+      <span style="color: #38BDF8;">⚡ Infografías Animadas 2026 Bento Grid // Bright Light Mode (10s)</span>
+    </div>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <a href="trebol_infografias_entrega/index.html" class="btn btn-navy" style="font-size: 11px; padding: 6px 12px; text-decoration: none; color: #38BDF8; border: 1px solid #38BDF8;">📺 Abrir Suite de TV</a>
+      <a href="trebol_infografias_entrega.zip" class="btn btn-navy" style="font-size: 11px; padding: 6px 12px; text-decoration: none;" download>💾 Descargar ZIP TV (4.2 MB)</a>
+      <span class="badge" style="background: rgba(56,189,248,0.15); color: #38BDF8; border: 1px solid #38BDF8;">1920&times;1080 &bull; 30 FPS &bull; LIGHT MODE 2026</span>
+    </div>
+  </div>
+
+  <div class="grid">
+    
+    <!-- Infografía 1: Stepped 2+3 Bento Grid -->
+    <div class="card" style="border-top: 4px solid #0284C7;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span class="badge" style="background: rgba(2,132,199,0.15); color: #0284C7; border: 1px solid rgba(2,132,199,0.3);">STEPPED 2+3 &bull; 10s</span>
+        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">MP4 FULL HD</span>
+      </div>
+      <div class="title" style="color: #FFFFFF;">01. El Proceso Editorial (Bento Grid 2+3)</div>
+      <p class="desc" style="color: #94A3B8;">
+        Ultra-clean 2026 Bento Grid en Light Mode (#F8FAFC) con tarjetas blancas (#FFFFFF), badges pasteles en Cobalt Blue, Indigo Violet y Emerald, íconos Lucide de 2px y títulos oscuros (#0F172A).
+      </p>
+      <div class="links" style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <a class="btn btn-trebol" style="background: #0284C7; color: #FFF; font-weight: 800;" href="infografia_1_writing_process.html" target="_blank">Ver HTML 16:9</a>
+        <a class="btn btn-navy" href="renders/infografia_01_writing_process.mp4" target="_blank" download>Descargar Video MP4</a>
+      </div>
+    </div>
+
+    <!-- Infografía 2: 3 Linear Columns -->
+    <div class="card" style="border-top: 4px solid #7C3AED;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span class="badge" style="background: rgba(124,58,237,0.15); color: #A78BFA; border: 1px solid rgba(124,58,237,0.3);">3 COLUMNS &bull; 10s</span>
+        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">MP4 FULL HD</span>
+      </div>
+      <div class="title" style="color: #FFFFFF;">02. Ciclo de Desarrollo Agéntico (3 Columnas)</div>
+      <p class="desc" style="color: #94A3B8;">
+        Layout adaptado de 3 columnas lineales (Especificación &rarr; Orquestación &rarr; Despliegue) con flujo vectorizado horizontal, estética Notion &amp; Apple Keynote y cero ruido visual.
+      </p>
+      <div class="links" style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <a class="btn btn-trebol" style="background: #7C3AED; color: #FFF; font-weight: 800;" href="infografia_2_agentic_flow.html" target="_blank">Ver HTML 16:9</a>
+        <a class="btn btn-navy" href="renders/infografia_02_agentic_flow.mp4" target="_blank" download>Descargar Video MP4</a>
+      </div>
+    </div>
+
+    <!-- Infografía 3: Convergent Center Hero -->
+    <div class="card" style="border-top: 4px solid #7C3AED;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span class="badge" style="background: rgba(124,58,237,0.15); color: #A78BFA; border: 1px solid rgba(124,58,237,0.3);">CENTER HERO &bull; 10s</span>
+        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">MP4 FULL HD</span>
+      </div>
+      <div class="title" style="color: #FFFFFF;">03. Refuerzo vs. Imitación (Center Hero)</div>
+      <p class="desc" style="color: #94A3B8;">
+        Composición convergente con tarjeta hero central dominante ("Núcleo de Aprendizaje") alimentada por haces vectoriales desde el Agente Autónomo y el Experto Humano.
+      </p>
+      <div class="links" style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <a class="btn btn-trebol" style="background: #7C3AED; color: #FFF; font-weight: 800;" href="infografia_3_rl_vs_imitation.html" target="_blank">Ver HTML 16:9</a>
+        <a class="btn btn-navy" href="renders/infografia_03_rl_vs_imitation.mp4" target="_blank" download>Descargar Video MP4</a>
+      </div>
+    </div>
+
+    <!-- Infografía 4: 4-Stage Sequential Funnel -->
+    <div class="card" style="border-top: 4px solid #059669;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span class="badge" style="background: rgba(5,150,105,0.15); color: #34D399; border: 1px solid rgba(5,150,105,0.3);">SEQUENTIAL 4 &bull; 10s</span>
+        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">MP4 FULL HD</span>
+      </div>
+      <div class="title" style="color: #FFFFFF;">04. Funnel de Conversión (4 Etapas)</div>
+      <p class="desc" style="color: #94A3B8;">
+        Flujo secuencial Bento de 4 etapas (Atracción &rarr; Interés &rarr; Decisión &rarr; Conversión) con íconos vectoriales Lucide de 2px en badges pasteles y títulos contundentes.
+      </p>
+      <div class="links" style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <a class="btn btn-trebol" style="background: #059669; color: #FFF; font-weight: 800;" href="infografia_4_funnel_marketing.html" target="_blank">Ver HTML 16:9</a>
+        <a class="btn btn-navy" href="renders/infografia_04_funnel_marketing.mp4" target="_blank" download>Descargar Video MP4</a>
+      </div>
+    </div>
+
+    <!-- Infografía 5: Bento Grid Workflow 2026 -->
+    <div class="card" style="border-top: 4px solid #A855F7; grid-column: 1 / -1;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span class="badge" style="background: rgba(168,85,247,0.18); color: #A855F7; border: 1px solid #A855F7;">BENTO-05 &bull; 10s &bull; NEOFUTURISTIC 2026</span>
+        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">1.8 MB MP4 &bull; 16:9 IMAGE</span>
+      </div>
+      <div class="title" style="color: #FFFFFF;">Bento Grid AI Workflow (Linear &amp; Apple Style 2026)</div>
+      <p class="desc" style="color: #94A3B8;">
+        Diseño Bento Grid neofuturista asimétrico en Midnight Navy (#0B0F19): Cabecera superior, 3 bloques conectados (Human Inception en Cyan #38BDF8 &rarr; Chip Isométrico 3D en Purple #A855F7 &rarr; Human Review en Emerald #10B981) y fila inferior de entregables con tags mono.
+      </p>
+      <div class="links" style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <a class="btn btn-trebol" style="background: #A855F7; color: #000; font-weight: 800;" href="infografia_bento_workflow.html" target="_blank">Ver HTML Interactivo</a>
+        <a class="btn btn-trebol" style="background: #38BDF8; color: #000; font-weight: 800;" href="bento_grid_ai_workflow.jpg" target="_blank">Ver Imagen 16:9</a>
+        <a class="btn btn-navy" href="renders/infografia_05_bento_workflow.mp4" target="_blank" download>Descargar Video MP4</a>
       </div>
     </div>
 
   </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div>
-      <strong>TV Broadcast Motion Graphics Handoff</strong> — Optimizado para pantallas de televisión y transmisiones en vivo.
+  <!-- OBS & BROADCAST OVERLAYS SECTION -->
+  <div class="section-title-wrap">
+    <div class="section-title">
+      <span>🎬 Overlays de Transmisión y Transiciones OBS</span>
     </div>
-    <div class="doc-links">
-      <a href="DESIGN.md" target="_blank">📄 DESIGN.md</a>
-      <a href="README.md" target="_blank">📘 README.md</a>
+  </div>
+
+  <div class="grid">
+    
+    <!-- Camera Transitions Stinger Suite -->
+    <div class="card" style="grid-column: 1 / -1; background: #131E38; border-color: #38BDF8;">
+      <span class="badge" style="background: #2563EB; color: #fff;">🎬 Herramienta en Vivo</span>
+      <div class="title" style="color: #38BDF8;">Transiciones de Cámara (Stinger Transition Suite)</div>
+      <p class="desc" style="color: #CBD5E1;">
+        Simulador interactivo en tiempo real para cambios de cámara (Host, Invitado, Plano General). Incluye 3 variantes de Stingers: <b>Persianas Brutalistas Neo-Memphis</b>, <b>Corte Diagonal 45°</b> y <b>Obturador Neón Cyan</b>.
+      </p>
+      <div class="links">
+        <a class="btn btn-slate" style="background: #0284C7; color: #fff;" href="transitions.html" target="_blank">Abrir Probador de Transiciones</a>
+      </div>
     </div>
-  </footer>
+    
+    <!-- Option 1: Dark Slate & Cyan -->
+    <div class="card">
+      <span class="badge badge-slate">Original Style System</span>
+      <div class="title">Cyber-Dark Slate &amp; Cyan</div>
+      <p class="desc">
+        Modern high-tech broadcast UI with 1px neon cyan inner glow, dark slate #0F172A chassis, cool grey borders, and integrated live VU audio telemetry.
+      </p>
+      <div class="links">
+        <a class="btn btn-slate" href="obs_cam_16x9.html" target="_blank">Open OBS Source</a>
+        <a class="btn btn-slate" href="obs_cam_16x9.html?clean=true" target="_blank">Clean Overlay (No UI)</a>
+      </div>
+    </div>
+
+    <!-- Option 2: Ethical Neo-Memphis -->
+    <div class="card memphis">
+      <span class="badge badge-memphis">DESIGN Specification</span>
+      <div class="title">Ethical Neo-Memphis</div>
+      <p class="desc">
+        Ethical Neo-Brutalist fused with Memphis Group geometry. Raw structural 4px black borders, Lavender #9A9CE4 accents, Bone #FCF9F8 background, hard 6px shadows, and 0px sharp corners.
+      </p>
+      <div class="links">
+        <a class="btn btn-memphis" href="obs_cam_memphis.html" target="_blank">Open OBS Source</a>
+        <a class="btn btn-memphis" href="obs_cam_memphis.html?clean=true" target="_blank">Clean Overlay (No UI)</a>
+        <a class="btn btn-memphis" href="matriz_botones.html" target="_blank">Matriz de Botones (Vertical)</a>
+      </div>
+    </div>
+
+  </div>
 
 </body>
 </html>

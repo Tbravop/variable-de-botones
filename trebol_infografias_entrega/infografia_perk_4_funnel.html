@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
-  <title>Infografía 4: Funnel de Crecimiento // Perk Morado Sutil</title>
+  <title>Infografía 4: Funnel de Conversión // Perk Morado Sutil (Sequential 4 Columns)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <style>
+    /* Perk Design Tokens — Subtle Purple Edition (DESIGN (7).md) */
     :root {
       --color-primary-purple: #A78BFA;
       --color-primary-purple-soft: #EDE9FE;
@@ -51,17 +52,18 @@
       overflow: hidden;
     }
 
+    /* Top Editorial Nav */
     .perk-nav {
       position: absolute;
       top: 48px;
-      left: 80px;
-      right: 80px;
-      height: 56px;
+      left: 100px;
+      right: 100px;
+      height: 54px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--color-ash);
-      padding-bottom: 20px;
+      padding-bottom: 16px;
       z-index: 30;
     }
 
@@ -73,7 +75,7 @@
 
     .perk-logo {
       font-size: 26px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: -0.04em;
       color: var(--color-off-black-ink);
     }
@@ -81,7 +83,7 @@
     .perk-version-pill {
       font-family: var(--font-mono);
       font-size: 11px;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       padding: 4px 12px;
@@ -94,18 +96,10 @@
     .perk-nav-right {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 20px;
     }
 
-    .perk-ghost-link {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--color-graphite);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .perk-nav-pill-active {
+    .perk-pill-active {
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -125,345 +119,207 @@
       background: var(--color-primary-purple-deep);
     }
 
-    .perk-subheader {
+    /* Subheader Title */
+    .header-bar {
       position: absolute;
-      top: 130px;
-      left: 80px;
-      right: 80px;
+      top: 124px;
+      left: 100px;
+      right: 100px;
+      height: 48px;
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
       z-index: 20;
     }
 
-    .eyebrow-tech {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-graphite);
-      margin-bottom: 8px;
-    }
-
-    .headline-main {
-      font-size: 48px;
-      font-weight: 600;
+    .header-bar h1 {
+      font-size: 38px;
+      font-weight: 700;
       letter-spacing: -0.03em;
-      line-height: 1.05;
+      line-height: 1;
       color: var(--color-off-black-ink);
     }
 
-    .headline-stat-group {
-      display: flex;
-      gap: 32px;
-      align-items: center;
-    }
-
-    .headline-stat-item {
-      text-align: right;
-    }
-
-    .stat-label {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--color-graphite);
-    }
-
-    .stat-val {
+    .eyebrow-tag {
       font-family: var(--font-mono);
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--color-off-black-ink);
-    }
-
-    .perk-command-center {
-      position: absolute;
-      top: 228px;
-      left: 80px;
-      width: 1760px;
-      height: 720px;
-      display: grid;
-      grid-template-columns: 1080px 1fr;
-      gap: 28px;
-      z-index: 20;
-    }
-
-    .command-card {
-      border-radius: 28px;
-      position: relative;
-      box-shadow: none;
-      overflow: hidden;
-    }
-
-    .hero-purple-block {
-      background: var(--color-primary-purple);
-      border: 1px solid var(--color-primary-purple);
-      padding: 60px 56px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      opacity: 0;
-      transform: translateY(30px);
-    }
-
-    .hero-top-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .tag-ink-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--color-off-black-ink);
-      color: var(--color-primary-purple);
-      padding: 6px 16px;
-      border-radius: 9999px;
-      font-size: 11px;
-      font-weight: 700;
+      font-size: 12px;
+      font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      color: var(--color-graphite);
     }
 
-    .hero-badge-latency {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      font-weight: 600;
+    /* 4 SEQUENTIAL COLUMNS CONTAINER */
+    .bento-container {
+      position: absolute;
+      top: 195px;
+      left: 100px;
+      width: 1720px;
+      height: 620px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 36px;
+      z-index: 10;
+    }
+
+    /* SVG Connecting Vector Tracks (1 -> 2 -> 3 -> 4) */
+    #connecting-svg {
+      position: absolute;
+      top: 195px;
+      left: 100px;
+      width: 1720px;
+      height: 620px;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .vector-track {
+      stroke: var(--color-ash);
+      stroke-width: 2px;
+      stroke-dasharray: 6 6;
+      fill: none;
+    }
+
+    .vector-active {
+      stroke: var(--color-primary-purple-deep);
+      stroke-width: 2.5px;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      fill: none;
+    }
+
+    .vector-packet {
+      fill: var(--color-primary-purple-deep);
+      opacity: 0;
+    }
+
+    /* PERK CARD BASE: 28px radius, ZERO SHADOWS */
+    .bento-card {
+      background: var(--color-pure-white);
+      border-radius: 28px;
+      border: 1px solid var(--color-ash);
+      box-shadow: none;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      padding: 50px 24px;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: border-color 0.3s ease;
+    }
+
+    /* FINAL STAGE HERO CARD: Dominant Subtle Purple */
+    .card-hero-purple {
+      background: var(--color-primary-purple);
+      border: 1px solid var(--color-primary-purple);
       color: var(--color-off-black-ink);
-      opacity: 0.85;
-      border: 1px solid rgba(20, 20, 15, 0.22);
+    }
+
+    .card-step-num {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--color-graphite);
       padding: 4px 12px;
       border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.3);
-    }
-
-    .hero-body-content {
-      margin-top: 24px;
-    }
-
-    .hero-huge-title {
-      font-size: 72px;
-      font-weight: 600;
-      letter-spacing: -0.04em;
-      line-height: 0.95;
-      color: var(--color-off-black-ink);
-      margin-bottom: 24px;
-      max-width: 920px;
-    }
-
-    .hero-desc {
-      font-size: 20px;
-      line-height: 1.45;
-      font-weight: 400;
-      color: rgba(20, 20, 15, 0.88);
-      max-width: 840px;
-    }
-
-    .hero-telemetry-deck {
-      margin-top: 36px;
-      background: rgba(255, 255, 255, 0.45);
-      border: 1px solid rgba(20, 20, 15, 0.12);
-      border-radius: 20px;
-      padding: 24px 30px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .telem-col-item {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .telem-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(20, 20, 15, 0.65);
-    }
-
-    .telem-val {
-      font-family: var(--font-mono);
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--color-off-black-ink);
-    }
-
-    .hero-action-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 32px;
-      padding-top: 24px;
-      border-top: 1px solid rgba(20, 20, 15, 0.15);
-    }
-
-    .hero-cta-btn {
-      padding: 14px 32px;
-      background: var(--color-off-black-ink);
-      color: var(--color-pure-white);
-      border: none;
-      border-radius: 28px;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-    }
-
-    .hero-cta-btn svg {
-      width: 16px;
-      height: 16px;
-      stroke: var(--color-pure-white);
-    }
-
-    .hero-pipeline-state {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--color-off-black-ink);
-      letter-spacing: 0.04em;
-    }
-
-    .right-stack-col {
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-      height: 100%;
-    }
-
-    .card-mod-input {
-      flex: 1;
-      background: var(--color-pure-white);
-      border: 1px solid var(--color-ash);
-      padding: 40px 44px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      opacity: 0;
-      transform: translateY(30px);
-    }
-
-    .card-mod-verify {
-      flex: 1;
-      background: var(--color-deep-charcoal);
-      border: 1px solid var(--color-deep-charcoal);
-      color: var(--color-off-white-canvas);
-      padding: 40px 44px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      opacity: 0;
-      transform: translateY(30px);
-    }
-
-    .mod-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .mod-eyebrow {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-graphite);
-    }
-
-    .card-mod-verify .mod-eyebrow {
-      color: #919183;
-    }
-
-    .mod-num {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      font-weight: 700;
-      padding: 2px 10px;
       background: var(--color-off-white-canvas);
-      border-radius: 9999px;
+      border: 1px solid var(--color-ash);
+    }
+
+    .card-hero-purple .card-step-num {
+      background: rgba(20, 20, 15, 0.12);
+      border: 1px solid rgba(20, 20, 15, 0.2);
       color: var(--color-off-black-ink);
     }
 
-    .card-mod-verify .mod-num {
-      background: rgba(255, 255, 255, 0.12);
-      color: var(--color-pure-white);
-    }
-
-    .mod-title {
-      font-size: 30px;
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      line-height: 1.15;
-      margin: 12px 0 8px 0;
-    }
-
-    .mod-desc {
-      font-size: 15px;
-      line-height: 1.5;
-      color: var(--color-graphite);
-    }
-
-    .card-mod-verify .mod-desc {
-      color: #b9b9b7;
-    }
-
-    .mod-footer-row {
-      padding-top: 18px;
-      border-top: 1px solid var(--color-ash);
+    .badge-wrap {
+      position: relative;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
     }
 
-    .card-mod-verify .mod-footer-row {
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    .pulse-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 26px;
+      border: 2px solid var(--color-primary-purple-deep);
+      opacity: 0;
+      transform: scale(1);
+      pointer-events: none;
     }
 
-    .mod-tag {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--color-off-black-ink);
-    }
-
-    .card-mod-verify .mod-tag {
-      color: var(--color-primary-purple);
-    }
-
-    .mod-status-indicator {
-      display: inline-flex;
+    .icon-badge {
+      width: 104px;
+      height: 104px;
+      border-radius: 26px;
+      display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 12px;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+      background: var(--color-primary-purple-soft);
+      border: 1.5px solid rgba(124, 58, 237, 0.25);
+    }
+
+    .card-hero-purple .icon-badge {
+      background: var(--color-off-black-ink);
+      border: 1.5px solid var(--color-off-black-ink);
+    }
+
+    .icon-badge svg {
+      width: 48px;
+      height: 48px;
+      stroke-width: 2.2px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      stroke: var(--color-primary-purple-deep);
+    }
+
+    .card-hero-purple .icon-badge svg {
+      stroke: var(--color-primary-purple);
+    }
+
+    .card-title {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--color-off-black-ink);
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .card-subtext {
+      font-size: 13px;
       font-weight: 500;
+      color: var(--color-graphite);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
     }
 
-    .dot-status {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--color-primary-purple-deep);
+    .card-hero-purple .card-subtext {
+      color: rgba(20, 20, 15, 0.75);
     }
 
-    .card-mod-verify .dot-status {
-      background: var(--color-primary-purple);
-    }
-
+    /* Bottom Technical Ticker */
     .perk-footer-ticker {
       position: absolute;
       bottom: 30px;
-      left: 80px;
-      right: 80px;
-      height: 36px;
+      left: 100px;
+      right: 100px;
+      height: 38px;
       border-top: 1px solid var(--color-ash);
       display: flex;
       align-items: center;
@@ -474,156 +330,158 @@
       z-index: 20;
     }
 
-    .ticker-left {
-      display: flex;
-      gap: 24px;
+    .ticker-left { display: flex; gap: 24px; }
+    .ticker-right { display: flex; gap: 16px; }
+
+    .editorial-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--color-ash);
     }
 
-    .ticker-right {
-      display: flex;
-      gap: 16px;
+    .editorial-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--color-primary-purple-deep);
     }
   </style>
 </head>
 <body>
+
   <div id="stage-scaler">
 
+    <!-- Top Editorial Nav -->
     <header class="perk-nav">
       <div class="perk-logo-lockup">
         <span class="perk-logo">Perk</span>
-        <span class="perk-version-pill">04 // FUNNEL &amp; CONVERSIÓN DE CRECIMIENTO</span>
+        <span class="perk-version-pill">SEQUENTIAL 4 COLUMNS // REVENUE FUNNEL</span>
       </div>
       <div class="perk-nav-right">
-        <span class="perk-ghost-link">Revenue Analytics</span>
-        <span class="perk-ghost-link">Attribution Model</span>
-        <div class="perk-nav-pill-active">
+        <div class="perk-pill-active">
           <span class="perk-live-dot"></span>
-          <span>REVENUE ENGINE LIVE</span>
+          <span>REVENUE CONVERSION MAXIMIZED</span>
         </div>
       </div>
     </header>
 
-    <div class="perk-subheader" id="perk-header">
-      <div>
-        <p class="eyebrow-tech">High-Velocity Acquisition // Lifecycle Matrix</p>
-        <h1 class="headline-main">Funnel de Conversión &amp; Crecimiento</h1>
-      </div>
-      <div class="headline-stat-group">
-        <div class="headline-stat-item">
-          <p class="stat-label">Velocidad de Cierre</p>
-          <p class="stat-val" id="stat-velocity">3.8x Faster</p>
-        </div>
-        <div class="headline-stat-item">
-          <p class="stat-label">Conversión a Pago</p>
-          <p class="stat-val" id="stat-conversion">24.6% Avg</p>
-        </div>
-      </div>
+    <!-- Subheader Title -->
+    <div class="header-bar" id="header-bar">
+      <h1>Funnel de Conversión &amp; Crecimiento</h1>
+      <span class="eyebrow-tag">[ 04 ETAPAS // PROGRESIÓN SECUENCIAL ]</span>
     </div>
 
-    <main class="perk-command-center">
+    <!-- SVG Connecting Vectors (1 -> 2 -> 3 -> 4) -->
+    <svg id="connecting-svg" viewBox="0 0 1720 620">
+      <!-- 1 to 2 (X: 388 to 424, Y: 310) -->
+      <path class="vector-track" d="M 388 310 L 424 310" />
+      <path id="vector-1-2" class="vector-active" d="M 388 310 L 424 310" />
+      <circle id="pkt-1-2" class="vector-packet" r="5" />
 
-      <!-- LEFT: Hero Purple Block (Decisión & Cualificación) -->
-      <section class="command-card hero-purple-block" id="hero-card">
-        <div class="hero-top-row">
-          <div class="tag-ink-pill">
-            <span>● NÚCLEO</span>
-            <span>Motor Predictivo de Decisión</span>
-          </div>
-          <span class="hero-badge-latency">INTENCIÓN: 96.4% ALTA PRECISIÓN</span>
-        </div>
+      <!-- 2 to 3 (X: 828 to 864, Y: 310) -->
+      <path class="vector-track" d="M 828 310 L 864 310" />
+      <path id="vector-2-3" class="vector-active" d="M 828 310 L 864 310" />
+      <circle id="pkt-2-3" class="vector-packet" r="5" />
 
-        <div class="hero-body-content">
-          <h2 class="hero-huge-title">Cualificación Algorítmica &amp; Decisión</h2>
-          <p class="hero-desc">
-            Clasifica la intención del usuario en tiempo real mediante puntuación predictiva ICP, orquestando trayectorias personalizadas que reducen la fricción y multiplican la tasa de cierre comercial.
-          </p>
-        </div>
+      <!-- 3 to 4 (X: 1268 to 1304, Y: 310) -->
+      <path class="vector-track" d="M 1268 310 L 1304 310" />
+      <path id="vector-3-4" class="vector-active" d="M 1268 310 L 1304 310" />
+      <circle id="pkt-3-4" class="vector-packet" r="5" />
+    </svg>
 
-        <div class="hero-telemetry-deck">
-          <div class="telem-col-item">
-            <span class="telem-label">Fricción de Registro</span>
-            <span class="telem-val">-48% Zero-Form</span>
-          </div>
-          <div class="telem-col-item">
-            <span class="telem-label">Tiempo de Decisión</span>
-            <span class="telem-val">1.4 Días Prom</span>
-          </div>
-          <div class="telem-col-item">
-            <span class="telem-label">Retención neta NRR</span>
-            <span class="telem-val">138% Expand</span>
-          </div>
-        </div>
+    <!-- 4 SEQUENTIAL COLUMNS CONTAINER -->
+    <main class="bento-container">
 
-        <div class="hero-action-footer">
-          <div class="hero-cta-btn">
-            <span>EXPLORAR PIPELINE DE INGRESOS</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
+      <!-- STAGE 1: ATRACCIÓN -->
+      <div class="bento-card" id="card-1">
+        <span class="card-step-num">01 // TOFU</span>
+        <div class="badge-wrap">
+          <div class="pulse-ring" id="pulse-1"></div>
+          <div class="icon-badge">
+            <svg viewBox="0 0 24 24">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
             </svg>
           </div>
-          <span class="hero-pipeline-state">STATE: REVENUE CONVERSION OPTIMIZED</span>
         </div>
-      </section>
-
-      <!-- RIGHT: Stacked Cards (Top of Funnel vs Bottom of Funnel) -->
-      <div class="right-stack-col">
-
-        <!-- Module 1: Atracción & Tráfico -->
-        <section class="command-card card-mod-input" id="card-input">
-          <div class="mod-header">
-            <span class="mod-eyebrow">[ 01 // TOFU ]</span>
-            <span class="mod-num">ATTRACT</span>
-          </div>
-          <div>
-            <h3 class="mod-title">Atracción &amp; Captación de Demanda</h3>
-            <p class="mod-desc">
-              Adquisición multicanal orientada a intención alta (SEO técnico, APIs públicas y viralidad de producto).
-            </p>
-          </div>
-          <div class="mod-footer-row">
-            <span class="mod-tag">VOLUMEN: +140K VISITAS/M</span>
-            <div class="mod-status-indicator">
-              <span class="dot-status"></span>
-              <span>INBOUND SCALING</span>
-            </div>
-          </div>
-        </section>
-
-        <!-- Module 2: Conversión & Retención -->
-        <section class="command-card card-mod-verify" id="card-verify">
-          <div class="mod-header">
-            <span class="mod-eyebrow">[ 03 // BOFU ]</span>
-            <span class="mod-num">RETAIN</span>
-          </div>
-          <div>
-            <h3 class="mod-title">Activación, Conversión &amp; LTV</h3>
-            <p class="mod-desc">
-              Onboarding instantáneo guiado por agentes autónomos, soporte proactivo y expansión recurrente de cuentas.
-            </p>
-          </div>
-          <div class="mod-footer-row">
-            <span class="mod-tag">CHURN: 0.8% ULTRA-BAJO</span>
-            <div class="mod-status-indicator">
-              <span class="dot-status"></span>
-              <span>EXPANSION LOCKED</span>
-            </div>
-          </div>
-        </section>
-
+        <h2 class="card-title">ATRACCIÓN</h2>
+        <span class="card-subtext">Tráfico Orgánico &amp; Alcance</span>
       </div>
+
+      <!-- STAGE 2: INTERÉS -->
+      <div class="bento-card" id="card-2">
+        <span class="card-step-num">02 // MOFU</span>
+        <div class="badge-wrap">
+          <div class="pulse-ring" id="pulse-2"></div>
+          <div class="icon-badge">
+            <svg viewBox="0 0 24 24">
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+            </svg>
+          </div>
+        </div>
+        <h2 class="card-title">INTERÉS</h2>
+        <span class="card-subtext">Cualificación Semántica</span>
+      </div>
+
+      <!-- STAGE 3: DECISIÓN -->
+      <div class="bento-card" id="card-3">
+        <span class="card-step-num">03 // EVAL</span>
+        <div class="badge-wrap">
+          <div class="pulse-ring" id="pulse-3"></div>
+          <div class="icon-badge">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"></circle>
+              <circle cx="12" cy="12" r="6"></circle>
+              <circle cx="12" cy="12" r="2"></circle>
+            </svg>
+          </div>
+        </div>
+        <h2 class="card-title">DECISIÓN</h2>
+        <span class="card-subtext">Demostración de Valor</span>
+      </div>
+
+      <!-- STAGE 4: CONVERSIÓN (Hero Purple Card) -->
+      <div class="bento-card card-hero-purple" id="card-4">
+        <span class="card-step-num">04 // BOFU</span>
+        <div class="badge-wrap">
+          <div class="pulse-ring" id="pulse-4"></div>
+          <div class="icon-badge">
+            <svg viewBox="0 0 24 24">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+              <path d="M4 22h16"></path>
+              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+            </svg>
+          </div>
+        </div>
+        <h2 class="card-title">CONVERSIÓN</h2>
+        <span class="card-subtext">Cierre &amp; Retención LTV</span>
+      </div>
+
     </main>
 
+    <!-- Bottom Technical Ticker -->
     <footer class="perk-footer-ticker">
       <div class="ticker-left">
-        <span>PALETTE: #A78BFA SUBTLE PURPLE // #14140F INK // #F5F5EB PARCHMENT</span>
-        <span>GROWTH: EDITORIAL PRODUCT-LED CONVERSION SYSTEM</span>
+        <span>PALETTE: #A78BFA SUBTLE PURPLE // #14140F INK // #F5F5EB CANVAS</span>
+        <span>FLOW: 4-STAGE SEQUENTIAL FUNNEL (ZERO SHADOWS)</span>
       </div>
       <div class="ticker-right">
-        <span>TIMELINE: GSAP DETERMINISTIC 30FPS</span>
+        <span>TIMELINE DETERMINISM: GSAP SEEK 30FPS</span>
         <span>HYPERFRAME v2.0 CERTIFIED</span>
       </div>
     </footer>
+
+    <!-- Editorial Bottom Progress Bar -->
+    <div class="editorial-progress">
+      <div class="editorial-fill" id="progress-fill"></div>
+    </div>
 
   </div>
 
@@ -643,24 +501,42 @@
     window.__timelines.push(tl);
 
     gsap.set('.perk-nav', { opacity: 0, y: -20 });
-    gsap.set('#perk-header', { opacity: 0, y: -15 });
-    gsap.set('#hero-card', { opacity: 0, y: 40 });
-    gsap.set('#card-input', { opacity: 0, x: 40 });
-    gsap.set('#card-verify', { opacity: 0, x: 40 });
-    gsap.set('.hero-telemetry-deck', { opacity: 0, y: 15 });
+    gsap.set('#header-bar', { opacity: 0, y: -15 });
     gsap.set('.perk-footer-ticker', { opacity: 0 });
+    gsap.set(['#card-1', '#card-2', '#card-3', '#card-4'], { opacity: 0, y: 30 });
+    gsap.set('#connecting-svg', { opacity: 0 });
 
     tl
-      .to('.perk-nav', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 0.2)
-      .to('#perk-header', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 0.5)
-      .to('#hero-card', { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }, 0.8)
-      .to('.hero-telemetry-deck', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 1.3)
-      .to('#card-input', { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 1.4)
-      .to('#card-verify', { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 1.7)
-      .to('.perk-footer-ticker', { opacity: 1, duration: 0.8, ease: 'power2.out' }, 2.0)
-      .to('#stat-velocity', { innerText: "4.5x Faster", duration: 2.5, ease: 'power1.inOut' }, 3.0)
-      .to('#hero-card', { backgroundColor: '#9877F7', duration: 1.5, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 4.0)
-      .to('#card-verify', { borderColor: '#A78BFA', duration: 1.0, ease: 'power2.out' }, 7.5);
+      .to('.perk-nav', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.2)
+      .to('#header-bar', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.4)
+      .to('.perk-footer-ticker', { opacity: 1, duration: 0.6, ease: 'power2.out' }, 0.6)
+
+      // Sequential Columns Entry
+      .to('#card-1', { opacity: 1, y: 0, duration: 0.7, ease: 'back.out(1.2)' }, 0.7)
+      .to('#card-2', { opacity: 1, y: 0, duration: 0.7, ease: 'back.out(1.2)' }, 0.9)
+      .to('#card-3', { opacity: 1, y: 0, duration: 0.7, ease: 'back.out(1.2)' }, 1.1)
+      .to('#card-4', { opacity: 1, y: 0, duration: 0.7, ease: 'back.out(1.2)' }, 1.3)
+      .to('#connecting-svg', { opacity: 1, duration: 0.5 }, 1.5)
+
+      // Pulse 1 & Conduit 1 -> 2
+      .fromTo('#pulse-1', { scale: 0.9, opacity: 0.9 }, { scale: 1.45, opacity: 0, duration: 1.0, ease: 'power2.out' }, 2.0)
+      .fromTo('#vector-1-2', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.7, ease: 'power1.inOut' }, 2.5)
+      .fromTo('#pkt-1-2', { cx: 388, cy: 310, opacity: 1 }, { cx: 424, cy: 310, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 2.5)
+
+      // Pulse 2 & Conduit 2 -> 3
+      .fromTo('#pulse-2', { scale: 0.9, opacity: 0.9 }, { scale: 1.45, opacity: 0, duration: 1.0, ease: 'power2.out' }, 4.0)
+      .fromTo('#vector-2-3', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.7, ease: 'power1.inOut' }, 4.5)
+      .fromTo('#pkt-2-3', { cx: 828, cy: 310, opacity: 1 }, { cx: 864, cy: 310, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 4.5)
+
+      // Pulse 3 & Conduit 3 -> 4
+      .fromTo('#pulse-3', { scale: 0.9, opacity: 0.9 }, { scale: 1.45, opacity: 0, duration: 1.0, ease: 'power2.out' }, 6.0)
+      .fromTo('#vector-3-4', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.7, ease: 'power1.inOut' }, 6.5)
+      .fromTo('#pkt-3-4', { cx: 1268, cy: 310, opacity: 1 }, { cx: 1304, cy: 310, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 6.5)
+
+      // Final Hero Conversion Pulse
+      .fromTo('#pulse-4', { scale: 0.9, opacity: 0.9 }, { scale: 1.5, opacity: 0, duration: 1.3, ease: 'power2.out' }, 7.5)
+
+      .to('#progress-fill', { width: '100%', duration: 10, ease: 'none' }, 0);
 
     tl.play();
   </script>
