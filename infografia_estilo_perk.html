@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
-  <title>Ciclo Agéntico // Estilo Perk (Electric Lime on Parchment)</title>
+  <title>Ciclo Agéntico // Estilo Perk (Asymmetric Command Center)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -50,403 +50,660 @@
       overflow: hidden;
     }
 
-    /* Top Perk Nav Bar */
+    /* Top Editorial Nav Bar */
     .perk-nav {
       position: absolute;
-      top: 50px;
-      left: 100px;
-      right: 100px;
-      height: 60px;
+      top: 48px;
+      left: 80px;
+      right: 80px;
+      height: 56px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--color-ash);
-      padding-bottom: 24px;
+      padding-bottom: 20px;
       z-index: 30;
+    }
+
+    .perk-logo-lockup {
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
 
     .perk-logo {
       font-size: 26px;
       font-weight: 700;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
       color: var(--color-off-black-ink);
+    }
+
+    .perk-version-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      background: var(--color-pure-white);
+      border: 1px solid var(--color-ash);
+      border-radius: 9999px;
+      color: var(--color-graphite);
     }
 
     .perk-nav-right {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 24px;
     }
 
     .perk-ghost-link {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
       color: var(--color-graphite);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
     }
 
-    .perk-lime-btn {
-      padding: 10px 24px;
-      background: var(--color-electric-lime);
-      color: var(--color-off-black-ink);
-      border-radius: 9999px; /* pill */
-      font-size: 13px;
+    .perk-nav-pill-active {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: var(--color-pure-white);
+      border: 1px solid var(--color-ash);
+      border-radius: 9999px;
+      font-size: 12px;
       font-weight: 600;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      border: none;
+      letter-spacing: 0.04em;
     }
 
-    /* Headline Section with Clean Modernist Tracking */
-    .headline-perk-wrap {
+    .perk-live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+
+    /* Subheader Telemetry Row */
+    .perk-subheader {
       position: absolute;
-      top: 140px;
-      left: 100px;
-      right: 100px;
+      top: 130px;
+      left: 80px;
+      right: 80px;
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
       z-index: 20;
     }
 
-    .headline-eyebrow {
-      font-size: 12px;
+    .eyebrow-tech {
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--color-graphite);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
-    .headline-perk {
-      font-size: 64px;
+    .headline-main {
+      font-size: 48px;
       font-weight: 600;
       letter-spacing: -0.03em;
-      line-height: 1;
+      line-height: 1.05;
       color: var(--color-off-black-ink);
     }
 
-    .pill-status-tag {
-      padding: 8px 18px;
-      background: var(--color-pure-white);
-      border: 1px solid var(--color-ash);
-      border-radius: 9999px;
-      font-size: 12px;
-      font-weight: 600;
+    .headline-stat-group {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .headline-stat-item {
+      text-align: right;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 500;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      color: var(--color-graphite);
+    }
+
+    .stat-val {
+      font-family: var(--font-mono);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
       color: var(--color-off-black-ink);
     }
 
-    /* 3 Bento Cards Container (28px Radius, Tonal Hierarchy, NO Shadows) */
-    .perk-cards-grid {
+    /* ASYMMETRIC COMMAND CENTER: 62% Hero on Left, 38% Stacked on Right */
+    .perk-command-center {
       position: absolute;
-      top: 250px;
-      left: 100px;
-      width: 1720px;
-      height: 660px;
+      top: 228px;
+      left: 80px;
+      width: 1760px;
+      height: 720px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 36px;
+      grid-template-columns: 1080px 1fr;
+      gap: 28px;
       z-index: 20;
     }
 
-    .perk-card {
-      border-radius: 28px; /* STRICT Perk: 28px */
+    /* ZERO SHADOWS rule from DESIGN (7).md */
+    .command-card {
+      border-radius: 28px;
       position: relative;
+      box-shadow: none;
+      overflow: hidden;
+    }
+
+    /* DOMINANT HERO LIME CARD (Left) */
+    .hero-lime-block {
+      background: var(--color-electric-lime);
+      border: 1px solid var(--color-electric-lime);
+      padding: 60px 56px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 56px 44px;
       opacity: 0;
-      transform: translateY(32px);
-      box-shadow: none; /* STRICT Perk: NO SHADOWS */
-      transition: transform 0.4s ease;
+      transform: translateY(30px);
     }
 
-    /* Card 1 & 3: Pure White on Warm Parchment */
-    .card-parchment-white {
-      background: var(--color-pure-white);
-      border: 1px solid var(--color-ash);
-    }
-
-    /* Card 2: Electric Lime HERO Card */
-    .card-lime-hero {
-      background: var(--color-electric-lime);
-      border: 1px solid var(--color-electric-lime);
-      color: var(--color-off-black-ink);
-    }
-
-    .card-top-eyebrow {
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--color-graphite);
-    }
-
-    .card-lime-hero .card-top-eyebrow {
-      color: rgba(20, 20, 15, 0.7);
-    }
-
-    /* Center Graphic Icon Area */
-    .perk-icon-wrap {
-      width: 72px;
-      height: 72px;
-      border-radius: 20px;
-      background: var(--color-off-white-canvas);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 24px;
-    }
-
-    .card-lime-hero .perk-icon-wrap {
-      background: var(--color-pure-white);
-    }
-
-    .perk-icon-wrap svg {
-      width: 36px;
-      height: 36px;
-      stroke: var(--color-off-black-ink);
-      stroke-width: 2px;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      fill: none;
-    }
-
-    /* Card Title */
-    .perk-card-title {
-      font-size: 38px;
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      color: var(--color-off-black-ink);
-      text-transform: uppercase;
-    }
-
-    .perk-card-desc {
-      font-size: 15px;
-      line-height: 1.5;
-      color: var(--color-graphite);
-      margin-top: 12px;
-    }
-
-    .card-lime-hero .perk-card-desc {
-      color: rgba(20, 20, 15, 0.8);
-    }
-
-    /* Card Bottom Action Pill */
-    .perk-bottom-action {
+    .hero-top-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-top: 1px solid var(--color-ash);
-      padding-top: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
+    }
+
+    .tag-ink-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-off-black-ink);
+      color: var(--color-electric-lime);
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
     }
 
-    .card-lime-hero .perk-bottom-action {
-      border-top-color: rgba(20, 20, 15, 0.2);
+    .hero-badge-latency {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-off-black-ink);
+      opacity: 0.8;
+      border: 1px solid rgba(20, 20, 15, 0.2);
+      padding: 4px 12px;
+      border-radius: 9999px;
     }
 
-    /* Connecting Ash Divider & Lime Beam */
-    #connecting-svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
+    .hero-body-content {
+      margin-top: 24px;
+    }
+
+    .hero-huge-title {
+      font-size: 72px;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      color: var(--color-off-black-ink);
+      margin-bottom: 24px;
+      max-width: 900px;
+    }
+
+    .hero-desc {
+      font-size: 20px;
+      line-height: 1.45;
+      font-weight: 400;
+      color: rgba(20, 20, 15, 0.88);
+      max-width: 820px;
+    }
+
+    /* Inner Technical Telemetry Deck */
+    .hero-telemetry-deck {
+      margin-top: 36px;
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(20, 20, 15, 0.12);
+      border-radius: 20px;
+      padding: 24px 30px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .telem-col-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .telem-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(20, 20, 15, 0.65);
+    }
+
+    .telem-val {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-off-black-ink);
+    }
+
+    .hero-action-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(20, 20, 15, 0.15);
+    }
+
+    .hero-cta-btn {
+      padding: 14px 32px;
+      background: var(--color-off-black-ink);
+      color: var(--color-pure-white);
+      border: none;
+      border-radius: 28px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-cta-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--color-pure-white);
+    }
+
+    .hero-pipeline-state {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-off-black-ink);
+      letter-spacing: 0.04em;
+    }
+
+    /* RIGHT COLUMN: Stacked Technical Modules */
+    .right-stack-col {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
       height: 100%;
-      pointer-events: none;
-      z-index: 10;
     }
 
-    .ash-wire {
-      stroke: var(--color-ash);
-      stroke-width: 1.5px;
-      fill: none;
+    /* MODULE 1: Human Input (Pure White Card) */
+    .card-mod-input {
+      flex: 1;
+      background: var(--color-pure-white);
+      border: 1px solid var(--color-ash);
+      padding: 40px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0;
+      transform: translateY(30px);
     }
 
-    .lime-beam {
-      stroke: var(--color-electric-lime);
-      stroke-width: 3px;
-      fill: none;
+    /* MODULE 2: Deterministic Verification (Deep Charcoal/Dark Island Card) */
+    .card-mod-verify {
+      flex: 1;
+      background: var(--color-deep-charcoal);
+      border: 1px solid var(--color-deep-charcoal);
+      color: var(--color-off-white-canvas);
+      padding: 40px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0;
+      transform: translateY(30px);
     }
 
-    /* Bottom Linear Progress Track */
-    .perk-progress {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
+    .mod-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mod-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-graphite);
+    }
+
+    .card-mod-verify .mod-eyebrow {
+      color: #919183;
+    }
+
+    .mod-num {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 2px 10px;
+      background: var(--color-off-white-canvas);
+      border-radius: 9999px;
+      color: var(--color-off-black-ink);
+    }
+
+    .card-mod-verify .mod-num {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--color-pure-white);
+    }
+
+    .mod-title {
+      font-size: 30px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin: 12px 0 8px 0;
+    }
+
+    .mod-desc {
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--color-graphite);
+    }
+
+    .card-mod-verify .mod-desc {
+      color: #b9b9b7;
+    }
+
+    .mod-footer-row {
+      padding-top: 18px;
+      border-top: 1px solid var(--color-ash);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-mod-verify .mod-footer-row {
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .mod-tag {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-off-black-ink);
+    }
+
+    .card-mod-verify .mod-tag {
+      color: var(--color-electric-lime);
+    }
+
+    .mod-status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .dot-status {
+      width: 6px;
       height: 6px;
-      background: var(--color-ash);
-      z-index: 50;
+      border-radius: 50%;
+      background: #0284c7;
     }
 
-    .perk-progress-fill {
-      height: 100%;
-      width: 0%;
+    .card-mod-verify .dot-status {
       background: var(--color-electric-lime);
+    }
+
+    /* Bottom Technical Rule Ticker */
+    .perk-footer-ticker {
+      position: absolute;
+      bottom: 30px;
+      left: 80px;
+      right: 80px;
+      height: 36px;
+      border-top: 1px solid var(--color-ash);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-graphite);
+      z-index: 20;
+    }
+
+    .ticker-left {
+      display: flex;
+      gap: 24px;
+    }
+
+    .ticker-right {
+      display: flex;
+      gap: 16px;
     }
   </style>
 </head>
 <body>
+  <div id="stage-scaler">
 
-  <div id="stage-scaler" class="clip" data-composition-id="perk_agentic" data-width="1920" data-height="1080" data-duration="10" data-start="0">
-    
-    <!-- Top Nav -->
-    <header class="perk-nav" id="perk-nav">
-      <div class="perk-logo">Perk // Agentic</div>
+    <!-- Top Editorial Nav -->
+    <header class="perk-nav">
+      <div class="perk-logo-lockup">
+        <span class="perk-logo">Perk</span>
+        <span class="perk-version-pill">SYSTEM ARCHITECTURE v2.4</span>
+      </div>
       <div class="perk-nav-right">
-        <span class="perk-ghost-link">Architecture</span>
-        <span class="perk-ghost-link">Validation</span>
-        <div class="perk-lime-btn">Launch System →</div>
+        <span class="perk-ghost-link">Telemetry Console</span>
+        <span class="perk-ghost-link">Deterministic Logs</span>
+        <div class="perk-nav-pill-active">
+          <span class="perk-live-dot"></span>
+          <span>AUTONOMOUS ENGINE ACTIVE</span>
+        </div>
       </div>
     </header>
 
-    <!-- Headline Section -->
-    <div class="headline-perk-wrap" id="headline-perk-wrap">
+    <!-- Subheader Telemetry Row -->
+    <div class="perk-subheader" id="perk-header">
       <div>
-        <div class="headline-eyebrow">[ 01-03 // SYSTEM PIPELINE ]</div>
-        <h1 class="headline-perk">Ciclo de Desarrollo Agéntico</h1>
+        <p class="eyebrow-tech">Core Pipeline // Orchestration Matrix</p>
+        <h1 class="headline-main">Arquitectura Agéntica Autónoma</h1>
       </div>
-      <div class="pill-status-tag">TONAL PARCHMENT ARCHITECTURE</div>
+      <div class="headline-stat-group">
+        <div class="headline-stat-item">
+          <p class="stat-label">Model Throughput</p>
+          <p class="stat-val" id="stat-val-tokens">1,420 tps</p>
+        </div>
+        <div class="headline-stat-item">
+          <p class="stat-label">Convergence Rate</p>
+          <p class="stat-val" id="stat-val-rate">99.8%</p>
+        </div>
+      </div>
     </div>
 
-    <!-- Connecting Wires -->
-    <svg id="connecting-svg" viewBox="0 0 1920 1080">
-      <line class="ash-wire" x1="649" y1="580" x2="685" y2="580" />
-      <line id="lime-wire-1" class="lime-beam" x1="649" y1="580" x2="685" y2="580" stroke-dasharray="36" stroke-dashoffset="36" />
+    <!-- ASYMMETRIC COMMAND CENTER: 62% Hero Lime + 38% Stacked Cards -->
+    <main class="perk-command-center">
 
-      <line class="ash-wire" x1="1235" y1="580" x2="1271" y2="580" />
-      <line id="lime-wire-2" class="lime-beam" x1="1235" y1="580" x2="1271" y2="580" stroke-dasharray="36" stroke-dashoffset="36" />
-    </svg>
+      <!-- LEFT: Massive Electric Lime Hero Block -->
+      <section class="command-card hero-lime-block" id="hero-card">
+        <div class="hero-top-row">
+          <div class="tag-ink-pill">
+            <span>● 02</span>
+            <span>Motor Cognitivo Principal</span>
+          </div>
+          <span class="hero-badge-latency">LATENCY: 14ms DETERMINISTIC</span>
+        </div>
 
-    <!-- 3 Bento Cards -->
-    <div class="perk-cards-grid">
+        <div class="hero-body-content">
+          <h2 class="hero-huge-title">Orquestación Multi-Modelo & Razonamiento</h2>
+          <p class="hero-desc">
+            Sintetiza la intención humana mediante árboles de búsqueda MCTS, invoca herramientas aisladas vía MCP y computa planes de ejecución recursivos con autocorrección en tiempo real.
+          </p>
+        </div>
 
-      <!-- CARD 1: ESPECIFICACIÓN -->
-      <div class="perk-card card-parchment-white" id="card-1">
-        <div>
-          <div class="card-top-eyebrow">[ 01 // HUMAN INPUT ]</div>
-          <div style="margin-top: 36px;">
-            <div class="perk-icon-wrap">
-              <svg viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
-            </div>
-            <h2 class="perk-card-title">ESPECIFICACIÓN</h2>
-            <p class="perk-card-desc">Definición canónica de requisitos y diseño guiado por especificaciones (SDD).</p>
+        <!-- Inner Telemetry Deck -->
+        <div class="hero-telemetry-deck">
+          <div class="telem-col-item">
+            <span class="telem-label">Inference Context</span>
+            <span class="telem-val">128k Tokens</span>
+          </div>
+          <div class="telem-col-item">
+            <span class="telem-label">Branch Exploration</span>
+            <span class="telem-val">4 Parallel Paths</span>
+          </div>
+          <div class="telem-col-item">
+            <span class="telem-label">Tool Verification</span>
+            <span class="telem-val">100% Zero-Trust</span>
           </div>
         </div>
-        <div class="perk-bottom-action">
-          <span>INPUT PHASE</span>
-          <span>● ACTIVE</span>
-        </div>
-      </div>
 
-      <!-- CARD 2: ORQUESTACIÓN (ELECTRIC LIME HERO CARD) -->
-      <div class="perk-card card-lime-hero" id="card-2">
-        <div>
-          <div class="card-top-eyebrow">[ 02 // COGNITIVE CORE ]</div>
-          <div style="margin-top: 36px;">
-            <div class="perk-icon-wrap">
-              <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path></svg>
-            </div>
-            <h2 class="perk-card-title">ORQUESTACIÓN</h2>
-            <p class="perk-card-desc">Síntesis multi-agente, razonamiento contextual y generación de código.</p>
+        <div class="hero-action-footer">
+          <div class="hero-cta-btn">
+            <span>EXPLORAR MATRIZ DE DECISIÓN</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
           </div>
+          <span class="hero-pipeline-state">STATE: RECURSIVE EVALUATION RUNNING</span>
         </div>
-        <div class="perk-bottom-action">
-          <span>NEURAL ENGINE</span>
-          <span>⚡ CORE CHARGE</span>
-        </div>
-      </div>
+      </section>
 
-      <!-- CARD 3: DESPLIEGUE -->
-      <div class="perk-card card-parchment-white" id="card-3">
-        <div>
-          <div class="card-top-eyebrow">[ 03 // VERIFICATION ]</div>
-          <div style="margin-top: 36px;">
-            <div class="perk-icon-wrap">
-              <svg viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M6 21V9a9 9 0 0 0 9 9"></path></svg>
-            </div>
-            <h2 class="perk-card-title">DESPLIEGUE</h2>
-            <p class="perk-card-desc">Validación determinista, merge automatizado y renderizado final.</p>
+      <!-- RIGHT: Stacked Technical Modules -->
+      <div class="right-stack-col">
+
+        <!-- Module 1: Human Intent -->
+        <section class="command-card card-mod-input" id="card-input">
+          <div class="mod-header">
+            <span class="mod-eyebrow">[ 01 // CAPTURA INICIAL ]</span>
+            <span class="mod-num">INPUT</span>
           </div>
-        </div>
-        <div class="perk-bottom-action">
-          <span>DELIVERY</span>
-          <span>✓ VERIFIED</span>
-        </div>
+          <div>
+            <h3 class="mod-title">Intención & Especificación</h3>
+            <p class="mod-desc">
+              Normalización de directivas en lenguaje natural hacia esquemas de restricciones estrictas y contextos limpios.
+            </p>
+          </div>
+          <div class="mod-footer-row">
+            <span class="mod-tag">CLI / PROMPT / API</span>
+            <div class="mod-status-indicator">
+              <span class="dot-status"></span>
+              <span>SYNCHRONIZED</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Module 2: Deterministic Verification (Dark Island Card) -->
+        <section class="command-card card-mod-verify" id="card-verify">
+          <div class="mod-header">
+            <span class="mod-eyebrow">[ 03 // AUDITORÍA TÉCNICA ]</span>
+            <span class="mod-num">SANDBOX</span>
+          </div>
+          <div>
+            <h3 class="mod-title">Verificación & Compilación</h3>
+            <p class="mod-desc">
+              Ejecución aislada de código, chequeo de tipos estático y benchmarking visual determinista sin artefactos.
+            </p>
+          </div>
+          <div class="mod-footer-row">
+            <span class="mod-tag">PASS: ZERO-ERROR SPEC</span>
+            <div class="mod-status-indicator">
+              <span class="dot-status"></span>
+              <span>ISOLATED VM READY</span>
+            </div>
+          </div>
+        </section>
+
       </div>
+    </main>
 
-    </div>
-
-    <!-- Bottom Progress -->
-    <div class="perk-progress">
-      <div class="perk-progress-fill" id="progress-fill"></div>
-    </div>
+    <!-- Bottom Technical Rule Ticker -->
+    <footer class="perk-footer-ticker">
+      <div class="ticker-left">
+        <span>PALETTE: #BEFF50 ELECTRIC LIME // #14140F INK // #F5F5EB PARCHMENT</span>
+        <span>ELEVATION: TONAL CONTRAST ONLY (ZERO SHADOWS)</span>
+      </div>
+      <div class="ticker-right">
+        <span>TIMELINE DETERMINISM: GSAP SEEK 30FPS</span>
+        <span>HYPERFRAME v2.0 CERTIFIED</span>
+      </div>
+    </footer>
 
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Responsive stage scaler
-      function handleResize() {
-        const stage = document.getElementById("stage-scaler");
-        const scaleX = window.innerWidth / 1920;
-        const scaleY = window.innerHeight / 1080;
-        const scale = Math.min(scaleX, scaleY);
-        stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
-      }
-      window.addEventListener('resize', handleResize);
-      handleResize();
+    // Responsive Stage Scaler (1920x1080)
+    function fitStage() {
+      const stage = document.getElementById('stage-scaler');
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const scale = Math.min(w / 1920, h / 1080);
+      stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    }
+    window.addEventListener('resize', fitStage);
+    fitStage();
 
-      // GSAP Master Timeline (10.0s strict)
-      const tl = gsap.timeline({ paused: true });
-      window.__timelines = window.__timelines || {};
-      window.__timelines["perk_agentic"] = tl;
+    // Deterministic GSAP Timeline for Hyperframe
+    window.__timelines = window.__timelines || [];
+    const tl = gsap.timeline({ paused: true });
+    window.__timelines.push(tl);
 
-      // Bottom progress bar
-      tl.to("#progress-fill", { width: "100%", duration: 10, ease: "none" }, 0);
+    // Initial state setup
+    gsap.set('.perk-nav', { opacity: 0, y: -20 });
+    gsap.set('#perk-header', { opacity: 0, y: -15 });
+    gsap.set('#hero-card', { opacity: 0, y: 40 });
+    gsap.set('#card-input', { opacity: 0, x: 40 });
+    gsap.set('#card-verify', { opacity: 0, x: 40 });
+    gsap.set('.hero-telemetry-deck', { opacity: 0, y: 15 });
+    gsap.set('.perk-footer-ticker', { opacity: 0 });
 
-      // Initial visual states
-      gsap.set(["#perk-nav", "#headline-perk-wrap"], { opacity: 0, y: -16 });
-      gsap.set(".perk-card", { opacity: 0, y: 35 });
+    // Timeline Sequence (Total 10.0 seconds)
+    tl
+      // 0.0s - 0.8s: Header & Nav reveal
+      .to('.perk-nav', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 0.2)
+      .to('#perk-header', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 0.5)
 
-      // 1. Entrance (0.2s - 0.6s)
-      tl.to("#perk-nav", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.2);
-      tl.to("#headline-perk-wrap", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.4);
+      // 0.8s - 2.0s: Dominant Hero Lime Block Entry
+      .to('#hero-card', { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }, 0.8)
+      .to('.hero-telemetry-deck', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 1.3)
 
-      // 2. Card 1 Activation (0.8s)
-      tl.to("#card-1", { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, 0.8);
+      // 1.5s - 2.8s: Right Stack Modules Entry
+      .to('#card-input', { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 1.4)
+      .to('#card-verify', { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 1.7)
+      .to('.perk-footer-ticker', { opacity: 1, duration: 0.8, ease: 'power2.out' }, 2.0)
 
-      // Lime Wire 1 -> 2 Stream (2.6s)
-      tl.to("#lime-wire-1", { strokeDashoffset: 0, duration: 0.4, ease: "power2.inOut" }, 2.6);
+      // 3.0s - 7.5s: Living Telemetry Data Updates
+      .to('#stat-val-tokens', {
+        innerText: 2840,
+        snap: { innerText: 1 },
+        duration: 2.5,
+        ease: 'power1.inOut'
+      }, 3.0)
+      .to('#hero-card', {
+        backgroundColor: '#b5fa41',
+        duration: 1.5,
+        yoyo: true,
+        repeat: 1,
+        ease: 'sine.inOut'
+      }, 4.0)
 
-      // 3. Card 2 (Electric Lime Hero) Activation (3.0s)
-      tl.to("#card-2", { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, 3.0);
+      // 8.0s - 10.0s: Loop settling
+      .to('#card-verify', {
+        borderColor: '#beff50',
+        duration: 1.0,
+        ease: 'power2.out'
+      }, 7.5);
 
-      // Lime Wire 2 -> 3 Stream (5.0s)
-      tl.to("#lime-wire-2", { strokeDashoffset: 0, duration: 0.4, ease: "power2.inOut" }, 5.0);
-
-      // 4. Card 3 Activation (5.4s)
-      tl.to("#card-3", { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, 5.4);
-
-      // 5. Final Hold State (7.6s - 10.0s)
-      tl.to(".perk-card", { scale: 1.01, duration: 0.6, ease: "power1.inOut", yoyo: true, repeat: 1 }, 7.6);
-
-      // Keyboard playback shortcuts
-      window.addEventListener('keydown', (e) => {
-        if (e.code === 'Space') tl.paused(!tl.paused());
-        if (e.code === 'KeyR') tl.restart();
-      });
-
-      tl.play();
-    });
+    // Hyperframe seek trigger / live playback
+    tl.play();
   </script>
 </body>
 </html>
