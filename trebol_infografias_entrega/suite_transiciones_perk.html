@@ -167,6 +167,45 @@
       border-color: #10B981;
     }
 
+    /* Download Button in Controls Header */
+    .btn-action.btn-download {
+      background: rgba(167, 139, 250, 0.12);
+      color: var(--color-primary-purple);
+      border: 1px solid var(--color-primary-purple);
+      text-decoration: none;
+      font-weight: 700;
+      gap: 8px;
+    }
+
+    .btn-action.btn-download:hover {
+      background: var(--color-primary-purple);
+      color: #14140F;
+      border-color: var(--color-primary-purple);
+    }
+
+    /* Tab Download Link Pill */
+    .tab-dl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: #94A3B8;
+      background: #1C263B;
+      border: 1px solid #334155;
+      padding: 4px 8px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .tab-dl-btn:hover {
+      background: var(--color-primary-purple);
+      color: #14140F;
+      border-color: var(--color-primary-purple);
+    }
+
     /* Infographic Switcher Navigation Bar (Perk Pills) */
     .infographic-nav {
       width: 100%;
@@ -410,6 +449,17 @@
       <button class="btn-action btn-primary" id="btn-autoplay" onclick="toggleAutoPlay()">
         ▶ Iniciar Auto-Play (10s)
       </button>
+
+      <div style="width: 1px; height: 28px; background: #2E3A52; margin: 0 4px;"></div>
+
+      <a class="btn-action btn-download" id="btn-download" href="renders/infografia_perk_1_writing.mp4" download="infografia_perk_1_writing.mp4" title="Descargar video MP4 de la infografía actual">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        <span id="btn-download-text">Descargar MP4</span>
+      </a>
     </div>
   </header>
 
@@ -420,7 +470,13 @@
         <span class="tab-index">STEPPED 2+3</span>
         <span class="tab-title">Producción Editorial</span>
       </div>
-      <div class="tab-dot"></div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <a href="renders/infografia_perk_1_writing.mp4" download="infografia_perk_1_writing.mp4" class="tab-dl-btn" title="Descargar MP4 (Producción Editorial)" onclick="event.stopPropagation()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          MP4
+        </a>
+        <div class="tab-dot"></div>
+      </div>
     </div>
 
     <div class="infographic-tab" id="tab-1" onclick="goToSlide(1)">
@@ -428,7 +484,13 @@
         <span class="tab-index">3 COLUMNAS LINEALES</span>
         <span class="tab-title">Ciclo Agéntico Autónomo</span>
       </div>
-      <div class="tab-dot"></div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <a href="renders/infografia_perk_2_agentic.mp4" download="infografia_perk_2_agentic.mp4" class="tab-dl-btn" title="Descargar MP4 (Ciclo Agéntico)" onclick="event.stopPropagation()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          MP4
+        </a>
+        <div class="tab-dot"></div>
+      </div>
     </div>
 
     <div class="infographic-tab" id="tab-2" onclick="goToSlide(2)">
@@ -436,7 +498,13 @@
         <span class="tab-index">CONVERGENTE NEURONAL</span>
         <span class="tab-title">Refuerzo vs. Imitación</span>
       </div>
-      <div class="tab-dot"></div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <a href="renders/infografia_perk_3_rl_vs_imitation.mp4" download="infografia_perk_3_rl_vs_imitation.mp4" class="tab-dl-btn" title="Descargar MP4 (Refuerzo vs Imitación)" onclick="event.stopPropagation()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          MP4
+        </a>
+        <div class="tab-dot"></div>
+      </div>
     </div>
 
     <div class="infographic-tab" id="tab-3" onclick="goToSlide(3)">
@@ -444,7 +512,13 @@
         <span class="tab-index">EMBUDO 4 ETAPAS</span>
         <span class="tab-title">Funnel de Conversión</span>
       </div>
-      <div class="tab-dot"></div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <a href="renders/infografia_perk_4_funnel.mp4" download="infografia_perk_4_funnel.mp4" class="tab-dl-btn" title="Descargar MP4 (Funnel de Conversión)" onclick="event.stopPropagation()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          MP4
+        </a>
+        <div class="tab-dot"></div>
+      </div>
     </div>
   </nav>
 
@@ -486,10 +560,34 @@
 
   <script>
     const slides = [
-      { url: 'infografia_perk_1_writing.html', title: '01 // EL PROCESO EDITORIAL (STEPPED 2+3)' },
-      { url: 'infografia_perk_2_agentic.html', title: '02 // CICLO AGÉNTICO (3 COLUMNAS LINEALES)' },
-      { url: 'infografia_perk_3_rl_vs_imitation.html', title: '03 // REFUERZO VS. IMITACIÓN (CONVERGENTE HERO)' },
-      { url: 'infografia_perk_4_funnel.html', title: '04 // FUNNEL DE CRECIMIENTO (4 ETAPAS)' }
+      { 
+        url: 'infografia_perk_1_writing.html', 
+        title: 'EL PROCESO EDITORIAL (STEPPED 2+3)',
+        mp4: 'renders/infografia_perk_1_writing.mp4',
+        name: 'infografia_perk_1_writing.mp4',
+        label: 'Descargar MP4 (Editorial)'
+      },
+      { 
+        url: 'infografia_perk_2_agentic.html', 
+        title: 'CICLO AGÉNTICO (3 COLUMNAS LINEALES)',
+        mp4: 'renders/infografia_perk_2_agentic.mp4',
+        name: 'infografia_perk_2_agentic.mp4',
+        label: 'Descargar MP4 (Agéntico)'
+      },
+      { 
+        url: 'infografia_perk_3_rl_vs_imitation.html', 
+        title: 'REFUERZO VS. IMITACIÓN (CONVERGENTE HERO)',
+        mp4: 'renders/infografia_perk_3_rl_vs_imitation.mp4',
+        name: 'infografia_perk_3_rl_vs_imitation.mp4',
+        label: 'Descargar MP4 (Refuerzo)'
+      },
+      { 
+        url: 'infografia_perk_4_funnel.html', 
+        title: 'FUNNEL DE CRECIMIENTO (4 ETAPAS)',
+        mp4: 'renders/infografia_perk_4_funnel.mp4',
+        name: 'infografia_perk_4_funnel.mp4',
+        label: 'Descargar MP4 (Funnel)'
+      }
     ];
 
     let currentIndex = 0;
@@ -500,16 +598,30 @@
     const secondaryFrame = document.getElementById('secondary-frame');
     const selectTransition = document.getElementById('select-transition');
     const btnAutoPlay = document.getElementById('btn-autoplay');
+    const btnDownload = document.getElementById('btn-download');
+    const btnDownloadText = document.getElementById('btn-download-text');
     const stingerCurtain = document.getElementById('stinger-curtain');
     const stingerText = document.getElementById('stinger-text');
     const shutterTop = document.getElementById('shutter-top');
     const shutterBottom = document.getElementById('shutter-bottom');
     const crossfadeMask = document.getElementById('crossfade-mask');
 
+    function updateDownloadButton(idx) {
+      const slide = slides[idx];
+      if (btnDownload && slide) {
+        btnDownload.href = slide.mp4;
+        btnDownload.setAttribute('download', slide.name);
+        if (btnDownloadText) {
+          btnDownloadText.innerText = slide.label;
+        }
+      }
+    }
+
     function updateTabs(idx) {
       document.querySelectorAll('.infographic-tab').forEach((tab, i) => {
         tab.classList.toggle('active', i === idx);
       });
+      updateDownloadButton(idx);
     }
 
     function goToSlide(targetIndex) {
@@ -661,6 +773,9 @@
         toggleAutoPlay();
       }
     });
+
+    // Initialize download button for initial slide
+    updateDownloadButton(0);
   </script>
 </body>
 </html>

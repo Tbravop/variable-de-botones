@@ -306,7 +306,7 @@
 </head>
 <body>
 
-  <div id="stage-scaler">
+  <div id="stage-scaler" class="clip" data-composition-id="infografia_perk_4_funnel" data-width="1920" data-height="1080" data-duration="10" data-start="0">
 
     <!-- Top Editorial Nav: Clean and unembellished -->
     <header class="perk-nav">
@@ -428,9 +428,13 @@
     window.addEventListener('resize', fitStage);
     fitStage();
 
-    window.__timelines = window.__timelines || [];
+    window.__timelines = window.__timelines || {};
     const tl = gsap.timeline({ paused: true });
-    window.__timelines.push(tl);
+    if (Array.isArray(window.__timelines)) {
+      window.__timelines.push(tl);
+    } else {
+      window.__timelines["infografia_perk_4_funnel"] = tl;
+    }
 
     gsap.set('.perk-nav', { opacity: 0, y: -16 });
     gsap.set('#header-bar', { opacity: 0, y: -12 });
