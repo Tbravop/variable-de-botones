@@ -26,7 +26,6 @@
       --font-otsono: 'Inter', system-ui, -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
 
-      /* Snappy UX-Motion Timing Tokens (Skills 10 & 11) */
       --ease-snappy-out: cubic-bezier(0.16, 1, 0.3, 1);
       --ease-snappy-in: cubic-bezier(0.4, 0, 1, 1);
       --ease-elastic-out: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -60,7 +59,6 @@
       overflow: hidden;
     }
 
-    /* Top Editorial Header */
     .perk-nav {
       position: absolute;
       top: 48px;
@@ -89,7 +87,6 @@
       letter-spacing: 0.01em;
     }
 
-    /* Subheader Title */
     .header-bar {
       position: absolute;
       top: 122px;
@@ -111,7 +108,6 @@
       text-wrap: balance;
     }
 
-    /* STEPPED 2+3 CONTAINER: 3D Perspective (Skill 19) */
     .stepped-container {
       position: absolute;
       top: 212px;
@@ -125,7 +121,6 @@
       perspective: 1200px;
     }
 
-    /* ROW 1: 2 WIDE CARDS */
     .row-top {
       width: 100%;
       height: 276px;
@@ -134,7 +129,6 @@
       gap: 24px;
     }
 
-    /* ROW 2: 3 EQUAL CARDS */
     .row-bottom {
       width: 100%;
       height: 276px;
@@ -143,7 +137,6 @@
       gap: 24px;
     }
 
-    /* CARD BASE: Concentric Inner Radii & Tactile Cursor */
     .card-item {
       background: var(--color-pure-white);
       border-radius: 26px;
@@ -163,7 +156,6 @@
       transition: opacity 0.35s ease, transform 0.35s var(--ease-snappy-out), border-color 0.3s ease, box-shadow 0.35s ease;
     }
 
-    /* Staging the Focus (Skill 09) */
     .stepped-container.staged .card-item:not(.active-focus) {
       opacity: 0.52 !important;
       transform: scale(0.985);
@@ -178,7 +170,6 @@
       box-shadow: 0 16px 36px rgba(167, 139, 250, 0.22);
     }
 
-    /* ENLARGED HERO FEATURE (REDACCIÓN) */
     .card-hero-purple {
       background: var(--color-primary-purple);
       border: 1px solid var(--color-primary-purple);
@@ -191,23 +182,6 @@
       box-shadow: 0 20px 48px rgba(124, 58, 237, 0.32);
     }
 
-    /* Shockwave for Exaggerated Feedback (Skill 18) */
-    #hero-shockwave {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 120px;
-      height: 120px;
-      margin-top: -60px;
-      margin-left: -60px;
-      border-radius: 50%;
-      border: 3.5px solid var(--color-accent-coral);
-      pointer-events: none;
-      opacity: 0;
-      z-index: 1;
-    }
-
-    /* Icon Container */
     .icon-container {
       width: 80px;
       height: 80px;
@@ -217,7 +191,6 @@
       justify-content: center;
       background: var(--color-primary-purple-soft);
       border: 1px solid rgba(124, 58, 237, 0.2);
-      transition: transform 0.2s var(--ease-snappy-out);
     }
 
     .card-hero-purple .icon-container {
@@ -285,7 +258,6 @@
       max-width: 500px;
     }
 
-    /* Bottom Technical Ticker */
     .perk-footer-ticker {
       position: absolute;
       bottom: 36px;
@@ -333,10 +305,8 @@
 
     <main class="stepped-container" id="stepped-wrap">
 
-      <!-- ROW 1: 2 WIDE CARDS -->
       <div class="row-top">
 
-        <!-- CARD 1: INVESTIGACIÓN -->
         <div class="card-item" id="card-1" onclick="focusCard(1)">
           <div class="icon-container" id="icon-1">
             <svg viewBox="0 0 24 24" id="svg-1">
@@ -350,9 +320,7 @@
           </div>
         </div>
 
-        <!-- CARD 2: REDACCIÓN HERO -->
         <div class="card-item card-hero-purple" id="card-2" onclick="focusCard(2)">
-          <div id="hero-shockwave"></div>
           <div class="icon-container" id="icon-2">
             <svg viewBox="0 0 24 24" id="svg-2">
               <path d="M12 20h9"></path>
@@ -367,10 +335,8 @@
 
       </div>
 
-      <!-- ROW 2: 3 EQUAL CARDS -->
       <div class="row-bottom">
 
-        <!-- CARD 3: REVISIÓN -->
         <div class="card-item" id="card-3" onclick="focusCard(3)">
           <div class="icon-container" id="icon-3">
             <svg viewBox="0 0 24 24" id="svg-3">
@@ -384,7 +350,6 @@
           </div>
         </div>
 
-        <!-- CARD 4: EDICIÓN -->
         <div class="card-item" id="card-4" onclick="focusCard(4)">
           <div class="icon-container" id="icon-4">
             <svg viewBox="0 0 24 24" id="svg-4">
@@ -405,7 +370,6 @@
           </div>
         </div>
 
-        <!-- CARD 5: PUBLICACIÓN -->
         <div class="card-item" id="card-5" onclick="focusCard(5)">
           <div class="icon-container" id="icon-5">
             <svg viewBox="0 0 24 24" id="svg-5">
@@ -477,29 +441,24 @@
     gsap.set('.perk-footer-ticker', { opacity: 0 });
     gsap.set(['#card-1', '#card-3', '#card-4', '#card-5'], { opacity: 0, y: 32, rotateX: 6, scale: 0.96 });
     gsap.set('#card-2', { opacity: 0, scale: 0.92, y: 36, rotateX: 8 });
-    gsap.set('#hero-shockwave', { opacity: 0, scale: 0.6 });
 
     tl
-      // Nav & Header Entrance with Snappy Timing (Skills 10 & 11)
       .to('.perk-nav', { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0.2)
       .to('#header-bar', { opacity: 1, y: 0, duration: 0.5, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.35)
       .to('.perk-footer-ticker', { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.5)
 
-      // Staggered Entry with 3D Solid Drawing (Skill 19) & Follow-Through (Skill 16)
+      // Staggered Entrance
       .to('#card-1', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.7, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.55)
       .fromTo('#icon-1', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 0.65)
       
-      // Hero Card 2 Elastic Landing with Squash & Stretch (Skill 15)
       .to('#card-2', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.85, ease: 'back.out(1.4)' }, 0.75)
       .fromTo('#icon-2', { scale: 0.8, opacity: 0.5 }, { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(2.5)' }, 0.85)
 
-      // Bottom Row Sequential Entrance
       .to('#card-3', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.65, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.95)
       .to('#card-4', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.65, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 1.1)
       .to('#card-5', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.65, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 1.25)
 
-      // --- EDITORIAL EXECUTION PULSES (SKILLS 09, 13, 17, 18) ---
-      // 1. Staging Focus on Card 1 (Investigación) + Anticipation Recoil (Skill 13)
+      // 1. Stage Focus on Card 1
       .call(() => {
         steppedWrap.classList.add('staged');
         document.getElementById('card-1').classList.add('active-focus');
@@ -508,19 +467,15 @@
       .to('#card-1', { y: 0, scale: 1.02, duration: 0.2, ease: 'back.out(2)' }, 2.15)
       .to('#svg-1', { rotation: 10, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 2.2)
 
-      // 2. Cascade into Hero Card 2 (Redacción) + Exaggerated Shockwave (Skill 18)
+      // 2. Cascade into Hero Card 2
       .call(() => {
         document.getElementById('card-1').classList.remove('active-focus');
         document.getElementById('card-2').classList.add('active-focus');
       }, null, 3.2)
       .to('#card-2', { scaleX: 1.03, scaleY: 0.97, duration: 0.12, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 3.2)
-      .fromTo('#hero-shockwave', 
-        { opacity: 0.9, scale: 0.7 }, 
-        { opacity: 0, scale: 2.2, duration: 0.75, ease: 'power2.out' }, 3.2
-      )
       .to('#svg-2', { rotation: -8, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 3.25)
 
-      // 3. Step Down to Card 3 (Revisión)
+      // 3. Step Down to Card 3
       .call(() => {
         document.getElementById('card-2').classList.remove('active-focus');
         document.getElementById('card-3').classList.add('active-focus');
@@ -528,7 +483,7 @@
       .to('#card-3', { scaleX: 1.03, scaleY: 0.97, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 4.8)
       .to('#svg-3', { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 4.85)
 
-      // 4. Step to Card 4 (Edición)
+      // 4. Step to Card 4
       .call(() => {
         document.getElementById('card-3').classList.remove('active-focus');
         document.getElementById('card-4').classList.add('active-focus');
@@ -536,7 +491,7 @@
       .to('#card-4', { scaleX: 1.03, scaleY: 0.97, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 6.2)
       .to('#svg-4', { rotation: 8, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 6.25)
 
-      // 5. Step to Card 5 (Publicación / Entrega)
+      // 5. Step to Card 5
       .call(() => {
         document.getElementById('card-4').classList.remove('active-focus');
         document.getElementById('card-5').classList.add('active-focus');
@@ -544,7 +499,7 @@
       .to('#card-5', { scaleX: 1.035, scaleY: 0.965, duration: 0.12, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 7.5)
       .to('#svg-5', { x: 4, y: -4, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 7.55)
 
-      // 6. Overall Appeal Restoration (Skill 20)
+      // 6. Overall Appeal Restoration
       .call(() => {
         steppedWrap.classList.remove('staged');
         document.querySelectorAll('.card-item').forEach(c => c.classList.remove('active-focus'));

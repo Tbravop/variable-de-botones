@@ -468,19 +468,7 @@
       max-width: 500px;
     }
 
-    /* Exaggerated Climax Shockwave (Skill 18) */
-    #hero-shockwave {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100px;
-      height: 100px;
-      border-radius: 9999px;
-      border: 3px solid var(--color-accent-coral);
-      transform: translate(-50%, -50%) scale(0.6);
-      opacity: 0;
-      pointer-events: none;
-    }
+    /* Exaggerated Climax Shockwave (Skill 18) - Removed per user design review */
 
     /* Bottom Technical Ticker */
     .perk-footer-ticker {
@@ -627,16 +615,16 @@
         <h1>Ciclo de Desarrollo Agéntico Autónomo</h1>
       </div>
 
-      <!-- Arced Vector Conduits (Skill 14: Moving in Arcs) -->
+      <!-- Straight Vector Conduits -->
       <svg id="connecting-svg" viewBox="0 0 1612 500">
-        <!-- Conduit 1 -> 2: Gentle Arc (X: 440 to 476, with subtle curvature) -->
-        <path class="vector-track" d="M 440 250 Q 458 240 476 250" />
-        <path id="vector-1-2" class="vector-active" d="M 440 250 Q 458 240 476 250" />
+        <!-- Conduit 1 -> 2: Straight horizontal line (Y: 250) -->
+        <path class="vector-track" d="M 440 250 L 476 250" />
+        <path id="vector-1-2" class="vector-active" d="M 440 250 L 476 250" />
         <circle id="pkt-1-2" class="vector-packet" r="5" />
 
-        <!-- Conduit 2 -> 3: Gentle Arc (X: 1136 to 1172, with subtle curvature) -->
-        <path class="vector-track" d="M 1136 250 Q 1154 240 1172 250" />
-        <path id="vector-2-3" class="vector-active-coral" d="M 1136 250 Q 1154 240 1172 250" />
+        <!-- Conduit 2 -> 3: Straight horizontal line (Y: 250) -->
+        <path class="vector-track" d="M 1136 250 L 1172 250" />
+        <path id="vector-2-3" class="vector-active-coral" d="M 1136 250 L 1172 250" />
         <circle id="pkt-2-3" class="vector-packet-coral" r="5.5" />
       </svg>
 
@@ -662,7 +650,6 @@
 
         <!-- COLUMN 2: ORQUESTACIÓN (ENLARGED HERO FEATURE) -->
         <div class="col-card card-hero-purple" id="card-2" onclick="focusCard(2)">
-          <div id="hero-shockwave"></div>
           <div class="icon-container" id="icon-box-2">
             <svg viewBox="0 0 24 24" id="svg-2">
               <rect x="4" y="4" width="16" height="16" rx="2"></rect>
@@ -860,7 +847,6 @@
       gsap.set(['#card-1', '#card-3'], { opacity: 0, y: 32, rotateX: motionMode === 'ux-motion' ? 6 : 0, scale: 0.96 });
       gsap.set('#card-2', { opacity: 0, scale: 0.92, y: 36, rotateX: motionMode === 'ux-motion' ? 8 : 0 });
       gsap.set('#connecting-svg', { opacity: 0 });
-      gsap.set('#hero-shockwave', { opacity: 0, scale: 0.6 });
       columnsWrap.classList.remove('staged');
       document.querySelectorAll('.col-card').forEach(c => c.classList.remove('active-focus'));
 
@@ -935,15 +921,10 @@
             setPill('pill-staging', true);
             setPill('pill-feedback', true);
             setPill('pill-secondary', true);
-            livePhase.innerText = 'FASE: Impacto en Hero Central + Shockwave Coral Exagerado';
+            livePhase.innerText = 'FASE: Impacto en Hero Central + Reacción Elástica';
           }, null, 3.0)
           // Elastic impact squash on Hero
           .to('#card-2', { scaleX: 1.03, scaleY: 0.97, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 3.0)
-          // Coral shockwave burst (Skill 18)
-          .fromTo('#hero-shockwave', 
-            { opacity: 0.9, scale: 0.7 }, 
-            { opacity: 0, scale: 2.2, duration: 0.7, ease: 'power2.out' }, 3.0
-          )
           // Secondary Icon Reaction (Skill 17)
           .to('#svg-2', { rotation: 8, duration: 0.15, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 3.05)
 

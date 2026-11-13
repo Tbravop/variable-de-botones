@@ -108,7 +108,6 @@
       text-wrap: balance;
     }
 
-    /* 4 SEQUENTIAL COLUMNS: 3D Perspective (Skill 19) */
     .funnel-container {
       position: absolute;
       top: 220px;
@@ -116,7 +115,7 @@
       width: 1640px;
       height: 560px;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1.38fr; /* ENLARGED HERO CONVERSIÓN */
+      grid-template-columns: 1fr 1fr 1fr 1.38fr;
       gap: 28px;
       z-index: 10;
       perspective: 1200px;
@@ -141,7 +140,6 @@
       transition: opacity 0.35s ease, transform 0.35s var(--ease-snappy-out), border-color 0.3s ease, box-shadow 0.35s ease;
     }
 
-    /* Staging Focus (Skill 09) */
     .funnel-container.staged .funnel-card:not(.active-focus) {
       opacity: 0.52 !important;
       transform: scale(0.985);
@@ -156,7 +154,6 @@
       box-shadow: 0 16px 36px rgba(167, 139, 250, 0.22);
     }
 
-    /* HERO FEATURE: CONVERSIÓN */
     .card-hero-feature {
       background: var(--color-primary-purple);
       border: 1px solid var(--color-primary-purple);
@@ -166,21 +163,6 @@
 
     .card-hero-feature.active-focus {
       box-shadow: 0 20px 50px rgba(124, 58, 237, 0.32);
-    }
-
-    #hero-shockwave {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 120px;
-      height: 120px;
-      margin-top: -60px;
-      margin-left: -60px;
-      border-radius: 50%;
-      border: 3.5px solid var(--color-accent-coral);
-      pointer-events: none;
-      opacity: 0;
-      z-index: 1;
     }
 
     .icon-container {
@@ -259,7 +241,7 @@
       max-width: 380px;
     }
 
-    /* Arced Conduits Connecting 4 Stages (Skill 14) */
+    /* STRAIGHT Vector Conduits */
     #connecting-svg {
       position: absolute;
       top: 220px;
@@ -272,14 +254,14 @@
 
     .vector-track {
       stroke: var(--color-ash);
-      stroke-width: 2.5px;
+      stroke-width: 2px;
       fill: none;
       stroke-dasharray: 6 6;
     }
 
     .vector-active {
       stroke: var(--color-primary-purple-deep);
-      stroke-width: 4px;
+      stroke-width: 2.5px;
       fill: none;
       stroke-linecap: round;
       stroke-dasharray: 80;
@@ -288,7 +270,7 @@
 
     .vector-active-coral {
       stroke: var(--color-accent-coral);
-      stroke-width: 4px;
+      stroke-width: 2.5px;
       fill: none;
       stroke-linecap: round;
       stroke-dasharray: 80;
@@ -350,21 +332,21 @@
       <h1>Embudo de Conversión &amp; Activación</h1>
     </div>
 
-    <!-- Arced Vector Conduits Between 4 Stages (Skill 14) -->
+    <!-- Straight Horizontal Lines (M x1 y L x2 y) -->
     <svg id="connecting-svg" viewBox="0 0 1640 560">
-      <!-- 1 -> 2: X ~350 to 390 -->
-      <path class="vector-track" d="M 335 280 Q 360 268 385 280" />
-      <path id="vector-1-2" class="vector-active" d="M 335 280 Q 360 268 385 280" />
+      <!-- 1 -> 2: Straight horizontal line (Y: 280) -->
+      <path class="vector-track" d="M 335 280 L 385 280" />
+      <path id="vector-1-2" class="vector-active" d="M 335 280 L 385 280" />
       <circle id="pkt-1-2" class="vector-packet" r="5" />
 
-      <!-- 2 -> 3: X ~730 to 770 -->
-      <path class="vector-track" d="M 725 280 Q 750 268 775 280" />
-      <path id="vector-2-3" class="vector-active" d="M 725 280 Q 750 268 775 280" />
+      <!-- 2 -> 3: Straight horizontal line (Y: 280) -->
+      <path class="vector-track" d="M 725 280 L 775 280" />
+      <path id="vector-2-3" class="vector-active" d="M 725 280 L 775 280" />
       <circle id="pkt-2-3" class="vector-packet" r="5" />
 
-      <!-- 3 -> 4: X ~1120 to 1160 -->
-      <path class="vector-track" d="M 1115 280 Q 1140 268 1165 280" />
-      <path id="vector-3-4" class="vector-active-coral" d="M 1115 280 Q 1140 268 1165 280" />
+      <!-- 3 -> 4: Straight horizontal line (Y: 280) -->
+      <path class="vector-track" d="M 1115 280 L 1165 280" />
+      <path id="vector-3-4" class="vector-active-coral" d="M 1115 280 L 1165 280" />
       <circle id="pkt-3-4" class="vector-packet-coral" r="5.5" />
     </svg>
 
@@ -411,9 +393,8 @@
         </div>
       </div>
 
-      <!-- STAGE 4: CONVERSIÓN HERO -->
+      <!-- STAGE 4: CONVERSIÓN HERO (NO CIRCLE SHOCKWAVE) -->
       <div class="funnel-card card-hero-feature" id="card-4" onclick="focusCard(4)">
-        <div id="hero-shockwave"></div>
         <div class="icon-container" id="icon-4">
           <svg viewBox="0 0 24 24" id="svg-4">
             <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
@@ -487,14 +468,13 @@
     gsap.set(['#card-1', '#card-2', '#card-3'], { opacity: 0, y: 32, rotateX: 6, scale: 0.96 });
     gsap.set('#card-4', { opacity: 0, scale: 0.92, y: 36, rotateX: 8 });
     gsap.set('#connecting-svg', { opacity: 0 });
-    gsap.set('#hero-shockwave', { opacity: 0, scale: 0.6 });
 
     tl
       .to('.perk-nav', { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0.2)
       .to('#header-bar', { opacity: 1, y: 0, duration: 0.5, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.35)
       .to('.perk-footer-ticker', { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.5)
 
-      // Sequential 4-Stage Entry (Skill 16 & 19)
+      // Sequential Entrance
       .to('#card-1', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.65, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.55)
       .fromTo('#icon-1', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 0.65)
 
@@ -504,54 +484,50 @@
       .to('#card-3', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.65, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.95)
       .fromTo('#icon-3', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 1.05)
 
-      // Hero Card 4 Elastic Landing (Skill 15)
+      // Hero Card 4 Entrance
       .to('#card-4', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.85, ease: 'back.out(1.4)' }, 1.15)
       .fromTo('#icon-4', { scale: 0.8, opacity: 0.5 }, { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(2.5)' }, 1.25)
       .to('#connecting-svg', { opacity: 1, duration: 0.4 }, 1.4)
 
-      // 1. Stage 1 (Atracción) -> Stage 2 (Interés)
+      // 1. Stage 1 -> Stage 2 (Straight horizontal line)
       .call(() => {
         funnelWrap.classList.add('staged');
         document.getElementById('card-1').classList.add('active-focus');
       }, null, 2.0)
       .to('#card-1', { x: -3, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 2.05)
       .to('#card-1', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 2.15)
-      .fromTo('#vector-1-2', { strokeDashoffset: 80 }, { strokeDashoffset: 0, duration: 0.65, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 2.2)
-      .fromTo('#pkt-1-2', { cx: 335, cy: 280, opacity: 1 }, { cx: 385, cy: 280, opacity: 0, duration: 0.65, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 2.2)
+      .fromTo('#vector-1-2', { strokeDashoffset: 80 }, { strokeDashoffset: 0, duration: 0.65, ease: 'power1.inOut' }, 2.2)
+      .fromTo('#pkt-1-2', { cx: 335, cy: 280, opacity: 1 }, { cx: 385, cy: 280, opacity: 0, duration: 0.65, ease: 'power1.inOut' }, 2.2)
 
-      // 2. Stage 2 (Interés) -> Stage 3 (Decisión)
+      // 2. Stage 2 -> Stage 3 (Straight horizontal line)
       .call(() => {
         document.getElementById('card-1').classList.remove('active-focus');
         document.getElementById('card-2').classList.add('active-focus');
       }, null, 3.2)
       .to('#card-2', { x: -2, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 3.25)
       .to('#card-2', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 3.35)
-      .fromTo('#vector-2-3', { strokeDashoffset: 80 }, { strokeDashoffset: 0, duration: 0.65, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 3.4)
-      .fromTo('#pkt-2-3', { cx: 725, cy: 280, opacity: 1 }, { cx: 775, cy: 280, opacity: 0, duration: 0.65, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 3.4)
+      .fromTo('#vector-2-3', { strokeDashoffset: 80 }, { strokeDashoffset: 0, duration: 0.65, ease: 'power1.inOut' }, 3.4)
+      .fromTo('#pkt-2-3', { cx: 725, cy: 280, opacity: 1 }, { cx: 775, cy: 280, opacity: 0, duration: 0.65, ease: 'power1.inOut' }, 3.4)
 
-      // 3. Stage 3 (Decisión) -> Hero Stage 4 (Conversión)
+      // 3. Stage 3 -> Hero Stage 4 (Straight horizontal line)
       .call(() => {
         document.getElementById('card-2').classList.remove('active-focus');
         document.getElementById('card-3').classList.add('active-focus');
       }, null, 4.4)
       .to('#card-3', { x: -2, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 4.45)
       .to('#card-3', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 4.55)
-      .fromTo('#vector-3-4', { strokeDashoffset: 80 }, { strokeDashoffset: 0, duration: 0.65, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 4.6)
-      .fromTo('#pkt-3-4', { cx: 1115, cy: 280, opacity: 1 }, { cx: 1165, cy: 280, opacity: 0, duration: 0.65, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 4.6)
+      .fromTo('#vector-3-4', { strokeDashoffset: 80 }, { strokeDashoffset: 0, duration: 0.65, ease: 'power1.inOut' }, 4.6)
+      .fromTo('#pkt-3-4', { cx: 1115, cy: 280, opacity: 1 }, { cx: 1165, cy: 280, opacity: 0, duration: 0.65, ease: 'power1.inOut' }, 4.6)
 
-      // 4. Hero Stage 4 Climax (Skills 15, 17, 18)
+      // 4. Hero Stage 4 Climax (Elastic bounce without circle shockwave)
       .call(() => {
         document.getElementById('card-3').classList.remove('active-focus');
         document.getElementById('card-4').classList.add('active-focus');
       }, null, 5.5)
       .to('#card-4', { scaleX: 1.035, scaleY: 0.965, duration: 0.12, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 5.5)
-      .fromTo('#hero-shockwave', 
-        { opacity: 0.9, scale: 0.7 }, 
-        { opacity: 0, scale: 2.3, duration: 0.8, ease: 'power2.out' }, 5.5
-      )
       .to('#svg-4', { rotation: -12, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 5.55)
 
-      // 5. Overall Appeal Stabilization (Skill 20)
+      // 5. Overall Appeal Stabilization
       .call(() => {
         funnelWrap.classList.remove('staged');
         document.querySelectorAll('.funnel-card').forEach(c => c.classList.remove('active-focus'));

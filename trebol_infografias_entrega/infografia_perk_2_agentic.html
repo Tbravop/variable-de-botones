@@ -108,7 +108,6 @@
       text-wrap: balance;
     }
 
-    /* 3 COLUMNS CONTAINER: 3D Perspective (Skill 19) */
     .columns-container {
       position: absolute;
       top: 220px;
@@ -141,7 +140,6 @@
       transition: opacity 0.35s ease, transform 0.35s var(--ease-snappy-out), border-color 0.3s ease, box-shadow 0.35s ease;
     }
 
-    /* Staging the Focus (Skill 09) */
     .columns-container.staged .col-card:not(.active-focus) {
       opacity: 0.52 !important;
       transform: scale(0.985);
@@ -165,21 +163,6 @@
 
     .card-hero-purple.active-focus {
       box-shadow: 0 20px 50px rgba(124, 58, 237, 0.32);
-    }
-
-    #hero-shockwave {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 120px;
-      height: 120px;
-      margin-top: -60px;
-      margin-left: -60px;
-      border-radius: 50%;
-      border: 3.5px solid var(--color-accent-coral);
-      pointer-events: none;
-      opacity: 0;
-      z-index: 1;
     }
 
     .icon-container {
@@ -258,40 +241,40 @@
       max-width: 460px;
     }
 
-    /* Arced Vector Conduits (Skill 14: Moving in Arcs) */
+    /* STRAIGHT Vector Conduits */
     #connecting-svg {
       position: absolute;
-      top: 250px;
+      top: 220px;
       left: 140px;
       width: 1640px;
-      height: 500px;
+      height: 560px;
       pointer-events: none;
       z-index: 5;
     }
 
     .vector-track {
       stroke: var(--color-ash);
-      stroke-width: 2.5px;
+      stroke-width: 2px;
       fill: none;
       stroke-dasharray: 6 6;
     }
 
     .vector-active {
       stroke: var(--color-primary-purple-deep);
-      stroke-width: 4px;
+      stroke-width: 2.5px;
       fill: none;
       stroke-linecap: round;
-      stroke-dasharray: 120;
-      stroke-dashoffset: 120;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
     }
 
     .vector-active-coral {
       stroke: var(--color-accent-coral);
-      stroke-width: 4px;
+      stroke-width: 2.5px;
       fill: none;
       stroke-linecap: round;
-      stroke-dasharray: 120;
-      stroke-dashoffset: 120;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
     }
 
     .vector-packet {
@@ -349,20 +332,19 @@
       <h1>Ciclo de Desarrollo Agéntico Autónomo</h1>
     </div>
 
-    <!-- Arced Vector Conduits (Skill 14) -->
-    <svg id="connecting-svg" viewBox="0 0 1640 500">
-      <!-- Arc 1 -> 2: X ~435 to 495 -->
-      <path class="vector-track" d="M 430 250 Q 460 236 490 250" />
-      <path id="vector-1-2" class="vector-active" d="M 430 250 Q 460 236 490 250" />
-      <circle id="pkt-1-2" class="vector-packet" r="5.5" />
+    <!-- Straight Horizontal Lines (M x1 y L x2 y) -->
+    <svg id="connecting-svg" viewBox="0 0 1640 560">
+      <!-- Straight line 1 to 2 (Y: 280) -->
+      <path class="vector-track" d="M 430 280 L 490 280" />
+      <path id="vector-1-2" class="vector-active" d="M 430 280 L 490 280" />
+      <circle id="pkt-1-2" class="vector-packet" r="5" />
 
-      <!-- Arc 2 -> 3: X ~1150 to 1210 -->
-      <path class="vector-track" d="M 1150 250 Q 1180 236 1210 250" />
-      <path id="vector-2-3" class="vector-active-coral" d="M 1150 250 Q 1180 236 1210 250" />
-      <circle id="pkt-2-3" class="vector-packet-coral" r="6" />
+      <!-- Straight line 2 to 3 (Y: 280) -->
+      <path class="vector-track" d="M 1150 280 L 1210 280" />
+      <path id="vector-2-3" class="vector-active-coral" d="M 1150 280 L 1210 280" />
+      <circle id="pkt-2-3" class="vector-packet-coral" r="5.5" />
     </svg>
 
-    <!-- 3 COLUMNS -->
     <main class="columns-container" id="columns-wrap">
 
       <!-- COLUMN 1: ESPECIFICACIÓN -->
@@ -384,7 +366,6 @@
 
       <!-- COLUMN 2: ORQUESTACIÓN (HERO FEATURE) -->
       <div class="col-card card-hero-purple" id="card-2" onclick="focusCard(2)">
-        <div id="hero-shockwave"></div>
         <div class="icon-container" id="icon-2">
           <svg viewBox="0 0 24 24" id="svg-2">
             <rect x="4" y="4" width="16" height="16" rx="2"></rect>
@@ -476,18 +457,17 @@
     gsap.set(['#card-1', '#card-3'], { opacity: 0, y: 32, rotateX: 6, scale: 0.96 });
     gsap.set('#card-2', { opacity: 0, scale: 0.92, y: 36, rotateX: 8 });
     gsap.set('#connecting-svg', { opacity: 0 });
-    gsap.set('#hero-shockwave', { opacity: 0, scale: 0.6 });
 
     tl
       .to('.perk-nav', { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0.2)
       .to('#header-bar', { opacity: 1, y: 0, duration: 0.5, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.35)
       .to('.perk-footer-ticker', { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.5)
 
-      // Card 1 Entrance with Follow-Through (Skill 16)
+      // Card 1 Entrance
       .to('#card-1', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.7, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.6)
       .fromTo('#icon-1', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 0.7)
 
-      // Hero Card 2 Entrance with Elastic Landing (Skill 15)
+      // Hero Card 2 Entrance
       .to('#card-2', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.85, ease: 'back.out(1.4)' }, 0.85)
       .fromTo('#icon-2', { scale: 0.8, opacity: 0.5 }, { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(2.5)' }, 0.95)
 
@@ -496,7 +476,7 @@
       .fromTo('#icon-3', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 1.2)
       .to('#connecting-svg', { opacity: 1, duration: 0.4 }, 1.3)
 
-      // Staging on Card 1 + Anticipation Wind-up (Skills 09, 13)
+      // Staging on Card 1 + Anticipation Wind-up
       .call(() => {
         columnsWrap.classList.add('staged');
         document.getElementById('card-1').classList.add('active-focus');
@@ -504,27 +484,23 @@
       .to('#card-1', { x: -3, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 2.05)
       .to('#card-1', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 2.15)
 
-      // Arced Vector 1->2 (Skill 14)
-      .fromTo('#vector-1-2', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 2.2)
-      .fromTo('#pkt-1-2', { cx: 430, cy: 250, opacity: 1 }, { cx: 490, cy: 250, opacity: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 2.2)
+      // Straight Vector 1->2
+      .fromTo('#vector-1-2', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.7, ease: 'power1.inOut' }, 2.2)
+      .fromTo('#pkt-1-2', { cx: 430, cy: 280, opacity: 1 }, { cx: 490, cy: 280, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 2.2)
 
-      // Impact on Hero Card 2: Exaggerated Feedback (Skill 18) & Secondary Spin (Skill 17)
+      // Impact on Hero Card 2
       .call(() => {
         document.getElementById('card-1').classList.remove('active-focus');
         document.getElementById('card-2').classList.add('active-focus');
       }, null, 3.0)
       .to('#card-2', { scaleX: 1.03, scaleY: 0.97, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 3.0)
-      .fromTo('#hero-shockwave', 
-        { opacity: 0.9, scale: 0.7 }, 
-        { opacity: 0, scale: 2.2, duration: 0.7, ease: 'power2.out' }, 3.0
-      )
       .to('#svg-2', { rotation: 8, duration: 0.15, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 3.05)
 
-      // Hero Card 2 Anticipation & Emits Coral Conduit to Card 3
+      // Hero Card 2 Emits to Card 3 along straight line
       .to('#card-2', { x: 2, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 4.6)
       .to('#card-2', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 4.7)
-      .fromTo('#vector-2-3', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 4.75)
-      .fromTo('#pkt-2-3', { cx: 1150, cy: 250, opacity: 1 }, { cx: 1210, cy: 250, opacity: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 4.75)
+      .fromTo('#vector-2-3', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.7, ease: 'power1.inOut' }, 4.75)
+      .fromTo('#pkt-2-3', { cx: 1150, cy: 280, opacity: 1 }, { cx: 1210, cy: 280, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 4.75)
 
       // Impact on Card 3
       .call(() => {
@@ -534,7 +510,7 @@
       .to('#card-3', { scaleX: 1.025, scaleY: 0.975, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 5.5)
       .to('#svg-3', { scale: 1.15, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 5.55)
 
-      // Overall Appeal Restoration (Skill 20)
+      // Overall Appeal Restoration
       .call(() => {
         columnsWrap.classList.remove('staged');
         document.querySelectorAll('.col-card').forEach(c => c.classList.remove('active-focus'));

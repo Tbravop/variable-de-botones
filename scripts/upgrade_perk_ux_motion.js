@@ -1,7 +1,6 @@
 const fs = require('fs');
-const path = require('path');
 
-console.log('Building 4 Perk UX-Motion Infographics & Unified Dashboard...');
+console.log('Upgrading Perk Infographics: Removing shockwave circles & restoring straight lines...');
 
 // =========================================================================
 // 1. INFOGRAFÍA 1: PROCESO EDITORIAL (STEPPED 2+3)
@@ -34,7 +33,6 @@ const perk1Html = `<!DOCTYPE html>
       --font-otsono: 'Inter', system-ui, -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
 
-      /* Snappy UX-Motion Timing Tokens (Skills 10 & 11) */
       --ease-snappy-out: cubic-bezier(0.16, 1, 0.3, 1);
       --ease-snappy-in: cubic-bezier(0.4, 0, 1, 1);
       --ease-elastic-out: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -68,7 +66,6 @@ const perk1Html = `<!DOCTYPE html>
       overflow: hidden;
     }
 
-    /* Top Editorial Header */
     .perk-nav {
       position: absolute;
       top: 48px;
@@ -97,7 +94,6 @@ const perk1Html = `<!DOCTYPE html>
       letter-spacing: 0.01em;
     }
 
-    /* Subheader Title */
     .header-bar {
       position: absolute;
       top: 122px;
@@ -119,7 +115,6 @@ const perk1Html = `<!DOCTYPE html>
       text-wrap: balance;
     }
 
-    /* STEPPED 2+3 CONTAINER: 3D Perspective (Skill 19) */
     .stepped-container {
       position: absolute;
       top: 212px;
@@ -133,7 +128,6 @@ const perk1Html = `<!DOCTYPE html>
       perspective: 1200px;
     }
 
-    /* ROW 1: 2 WIDE CARDS */
     .row-top {
       width: 100%;
       height: 276px;
@@ -142,7 +136,6 @@ const perk1Html = `<!DOCTYPE html>
       gap: 24px;
     }
 
-    /* ROW 2: 3 EQUAL CARDS */
     .row-bottom {
       width: 100%;
       height: 276px;
@@ -151,7 +144,6 @@ const perk1Html = `<!DOCTYPE html>
       gap: 24px;
     }
 
-    /* CARD BASE: Concentric Inner Radii & Tactile Cursor */
     .card-item {
       background: var(--color-pure-white);
       border-radius: 26px;
@@ -171,7 +163,6 @@ const perk1Html = `<!DOCTYPE html>
       transition: opacity 0.35s ease, transform 0.35s var(--ease-snappy-out), border-color 0.3s ease, box-shadow 0.35s ease;
     }
 
-    /* Staging the Focus (Skill 09) */
     .stepped-container.staged .card-item:not(.active-focus) {
       opacity: 0.52 !important;
       transform: scale(0.985);
@@ -186,7 +177,6 @@ const perk1Html = `<!DOCTYPE html>
       box-shadow: 0 16px 36px rgba(167, 139, 250, 0.22);
     }
 
-    /* ENLARGED HERO FEATURE (REDACCIÓN) */
     .card-hero-purple {
       background: var(--color-primary-purple);
       border: 1px solid var(--color-primary-purple);
@@ -199,23 +189,6 @@ const perk1Html = `<!DOCTYPE html>
       box-shadow: 0 20px 48px rgba(124, 58, 237, 0.32);
     }
 
-    /* Shockwave for Exaggerated Feedback (Skill 18) */
-    #hero-shockwave {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 120px;
-      height: 120px;
-      margin-top: -60px;
-      margin-left: -60px;
-      border-radius: 50%;
-      border: 3.5px solid var(--color-accent-coral);
-      pointer-events: none;
-      opacity: 0;
-      z-index: 1;
-    }
-
-    /* Icon Container */
     .icon-container {
       width: 80px;
       height: 80px;
@@ -225,7 +198,6 @@ const perk1Html = `<!DOCTYPE html>
       justify-content: center;
       background: var(--color-primary-purple-soft);
       border: 1px solid rgba(124, 58, 237, 0.2);
-      transition: transform 0.2s var(--ease-snappy-out);
     }
 
     .card-hero-purple .icon-container {
@@ -293,7 +265,6 @@ const perk1Html = `<!DOCTYPE html>
       max-width: 500px;
     }
 
-    /* Bottom Technical Ticker */
     .perk-footer-ticker {
       position: absolute;
       bottom: 36px;
@@ -341,10 +312,8 @@ const perk1Html = `<!DOCTYPE html>
 
     <main class="stepped-container" id="stepped-wrap">
 
-      <!-- ROW 1: 2 WIDE CARDS -->
       <div class="row-top">
 
-        <!-- CARD 1: INVESTIGACIÓN -->
         <div class="card-item" id="card-1" onclick="focusCard(1)">
           <div class="icon-container" id="icon-1">
             <svg viewBox="0 0 24 24" id="svg-1">
@@ -358,9 +327,7 @@ const perk1Html = `<!DOCTYPE html>
           </div>
         </div>
 
-        <!-- CARD 2: REDACCIÓN HERO -->
         <div class="card-item card-hero-purple" id="card-2" onclick="focusCard(2)">
-          <div id="hero-shockwave"></div>
           <div class="icon-container" id="icon-2">
             <svg viewBox="0 0 24 24" id="svg-2">
               <path d="M12 20h9"></path>
@@ -375,10 +342,8 @@ const perk1Html = `<!DOCTYPE html>
 
       </div>
 
-      <!-- ROW 2: 3 EQUAL CARDS -->
       <div class="row-bottom">
 
-        <!-- CARD 3: REVISIÓN -->
         <div class="card-item" id="card-3" onclick="focusCard(3)">
           <div class="icon-container" id="icon-3">
             <svg viewBox="0 0 24 24" id="svg-3">
@@ -392,7 +357,6 @@ const perk1Html = `<!DOCTYPE html>
           </div>
         </div>
 
-        <!-- CARD 4: EDICIÓN -->
         <div class="card-item" id="card-4" onclick="focusCard(4)">
           <div class="icon-container" id="icon-4">
             <svg viewBox="0 0 24 24" id="svg-4">
@@ -413,7 +377,6 @@ const perk1Html = `<!DOCTYPE html>
           </div>
         </div>
 
-        <!-- CARD 5: PUBLICACIÓN -->
         <div class="card-item" id="card-5" onclick="focusCard(5)">
           <div class="icon-container" id="icon-5">
             <svg viewBox="0 0 24 24" id="svg-5">
@@ -485,29 +448,24 @@ const perk1Html = `<!DOCTYPE html>
     gsap.set('.perk-footer-ticker', { opacity: 0 });
     gsap.set(['#card-1', '#card-3', '#card-4', '#card-5'], { opacity: 0, y: 32, rotateX: 6, scale: 0.96 });
     gsap.set('#card-2', { opacity: 0, scale: 0.92, y: 36, rotateX: 8 });
-    gsap.set('#hero-shockwave', { opacity: 0, scale: 0.6 });
 
     tl
-      // Nav & Header Entrance with Snappy Timing (Skills 10 & 11)
       .to('.perk-nav', { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0.2)
       .to('#header-bar', { opacity: 1, y: 0, duration: 0.5, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.35)
       .to('.perk-footer-ticker', { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.5)
 
-      // Staggered Entry with 3D Solid Drawing (Skill 19) & Follow-Through (Skill 16)
+      // Staggered Entrance
       .to('#card-1', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.7, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.55)
       .fromTo('#icon-1', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 0.65)
       
-      // Hero Card 2 Elastic Landing with Squash & Stretch (Skill 15)
       .to('#card-2', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.85, ease: 'back.out(1.4)' }, 0.75)
       .fromTo('#icon-2', { scale: 0.8, opacity: 0.5 }, { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(2.5)' }, 0.85)
 
-      // Bottom Row Sequential Entrance
       .to('#card-3', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.65, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.95)
       .to('#card-4', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.65, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 1.1)
       .to('#card-5', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.65, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 1.25)
 
-      // --- EDITORIAL EXECUTION PULSES (SKILLS 09, 13, 17, 18) ---
-      // 1. Staging Focus on Card 1 (Investigación) + Anticipation Recoil (Skill 13)
+      // 1. Stage Focus on Card 1
       .call(() => {
         steppedWrap.classList.add('staged');
         document.getElementById('card-1').classList.add('active-focus');
@@ -516,19 +474,15 @@ const perk1Html = `<!DOCTYPE html>
       .to('#card-1', { y: 0, scale: 1.02, duration: 0.2, ease: 'back.out(2)' }, 2.15)
       .to('#svg-1', { rotation: 10, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 2.2)
 
-      // 2. Cascade into Hero Card 2 (Redacción) + Exaggerated Shockwave (Skill 18)
+      // 2. Cascade into Hero Card 2
       .call(() => {
         document.getElementById('card-1').classList.remove('active-focus');
         document.getElementById('card-2').classList.add('active-focus');
       }, null, 3.2)
       .to('#card-2', { scaleX: 1.03, scaleY: 0.97, duration: 0.12, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 3.2)
-      .fromTo('#hero-shockwave', 
-        { opacity: 0.9, scale: 0.7 }, 
-        { opacity: 0, scale: 2.2, duration: 0.75, ease: 'power2.out' }, 3.2
-      )
       .to('#svg-2', { rotation: -8, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 3.25)
 
-      // 3. Step Down to Card 3 (Revisión)
+      // 3. Step Down to Card 3
       .call(() => {
         document.getElementById('card-2').classList.remove('active-focus');
         document.getElementById('card-3').classList.add('active-focus');
@@ -536,7 +490,7 @@ const perk1Html = `<!DOCTYPE html>
       .to('#card-3', { scaleX: 1.03, scaleY: 0.97, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 4.8)
       .to('#svg-3', { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 4.85)
 
-      // 4. Step to Card 4 (Edición)
+      // 4. Step to Card 4
       .call(() => {
         document.getElementById('card-3').classList.remove('active-focus');
         document.getElementById('card-4').classList.add('active-focus');
@@ -544,7 +498,7 @@ const perk1Html = `<!DOCTYPE html>
       .to('#card-4', { scaleX: 1.03, scaleY: 0.97, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 6.2)
       .to('#svg-4', { rotation: 8, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 6.25)
 
-      // 5. Step to Card 5 (Publicación / Entrega)
+      // 5. Step to Card 5
       .call(() => {
         document.getElementById('card-4').classList.remove('active-focus');
         document.getElementById('card-5').classList.add('active-focus');
@@ -552,7 +506,7 @@ const perk1Html = `<!DOCTYPE html>
       .to('#card-5', { scaleX: 1.035, scaleY: 0.965, duration: 0.12, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 7.5)
       .to('#svg-5', { x: 4, y: -4, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 7.55)
 
-      // 6. Overall Appeal Restoration (Skill 20)
+      // 6. Overall Appeal Restoration
       .call(() => {
         steppedWrap.classList.remove('staged');
         document.querySelectorAll('.card-item').forEach(c => c.classList.remove('active-focus'));
@@ -566,10 +520,10 @@ const perk1Html = `<!DOCTYPE html>
 </html>`;
 
 fs.writeFileSync('infografia_perk_1_writing.html', perk1Html);
-console.log('✔ infografia_perk_1_writing.html upgraded');
+console.log('✔ infografia_perk_1_writing.html: shockwave removed');
 
 // =========================================================================
-// 2. INFOGRAFÍA 2: CICLO AGÉNTICO (3 LINEAR COLUMNS)
+// 2. INFOGRAFÍA 2: CICLO AGÉNTICO (3 LINEAR COLUMNS) - STRAIGHT LINES & NO SHOCKWAVE
 // =========================================================================
 const perk2Html = `<!DOCTYPE html>
 <html lang="es" data-fps="30" data-duration="10" data-width="1920" data-height="1080">
@@ -681,7 +635,6 @@ const perk2Html = `<!DOCTYPE html>
       text-wrap: balance;
     }
 
-    /* 3 COLUMNS CONTAINER: 3D Perspective (Skill 19) */
     .columns-container {
       position: absolute;
       top: 220px;
@@ -714,7 +667,6 @@ const perk2Html = `<!DOCTYPE html>
       transition: opacity 0.35s ease, transform 0.35s var(--ease-snappy-out), border-color 0.3s ease, box-shadow 0.35s ease;
     }
 
-    /* Staging the Focus (Skill 09) */
     .columns-container.staged .col-card:not(.active-focus) {
       opacity: 0.52 !important;
       transform: scale(0.985);
@@ -738,21 +690,6 @@ const perk2Html = `<!DOCTYPE html>
 
     .card-hero-purple.active-focus {
       box-shadow: 0 20px 50px rgba(124, 58, 237, 0.32);
-    }
-
-    #hero-shockwave {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 120px;
-      height: 120px;
-      margin-top: -60px;
-      margin-left: -60px;
-      border-radius: 50%;
-      border: 3.5px solid var(--color-accent-coral);
-      pointer-events: none;
-      opacity: 0;
-      z-index: 1;
     }
 
     .icon-container {
@@ -831,40 +768,40 @@ const perk2Html = `<!DOCTYPE html>
       max-width: 460px;
     }
 
-    /* Arced Vector Conduits (Skill 14: Moving in Arcs) */
+    /* STRAIGHT Vector Conduits */
     #connecting-svg {
       position: absolute;
-      top: 250px;
+      top: 220px;
       left: 140px;
       width: 1640px;
-      height: 500px;
+      height: 560px;
       pointer-events: none;
       z-index: 5;
     }
 
     .vector-track {
       stroke: var(--color-ash);
-      stroke-width: 2.5px;
+      stroke-width: 2px;
       fill: none;
       stroke-dasharray: 6 6;
     }
 
     .vector-active {
       stroke: var(--color-primary-purple-deep);
-      stroke-width: 4px;
+      stroke-width: 2.5px;
       fill: none;
       stroke-linecap: round;
-      stroke-dasharray: 120;
-      stroke-dashoffset: 120;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
     }
 
     .vector-active-coral {
       stroke: var(--color-accent-coral);
-      stroke-width: 4px;
+      stroke-width: 2.5px;
       fill: none;
       stroke-linecap: round;
-      stroke-dasharray: 120;
-      stroke-dashoffset: 120;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
     }
 
     .vector-packet {
@@ -922,20 +859,19 @@ const perk2Html = `<!DOCTYPE html>
       <h1>Ciclo de Desarrollo Agéntico Autónomo</h1>
     </div>
 
-    <!-- Arced Vector Conduits (Skill 14) -->
-    <svg id="connecting-svg" viewBox="0 0 1640 500">
-      <!-- Arc 1 -> 2: X ~435 to 495 -->
-      <path class="vector-track" d="M 430 250 Q 460 236 490 250" />
-      <path id="vector-1-2" class="vector-active" d="M 430 250 Q 460 236 490 250" />
-      <circle id="pkt-1-2" class="vector-packet" r="5.5" />
+    <!-- Straight Horizontal Lines (M x1 y L x2 y) -->
+    <svg id="connecting-svg" viewBox="0 0 1640 560">
+      <!-- Straight line 1 to 2 (Y: 280) -->
+      <path class="vector-track" d="M 430 280 L 490 280" />
+      <path id="vector-1-2" class="vector-active" d="M 430 280 L 490 280" />
+      <circle id="pkt-1-2" class="vector-packet" r="5" />
 
-      <!-- Arc 2 -> 3: X ~1150 to 1210 -->
-      <path class="vector-track" d="M 1150 250 Q 1180 236 1210 250" />
-      <path id="vector-2-3" class="vector-active-coral" d="M 1150 250 Q 1180 236 1210 250" />
-      <circle id="pkt-2-3" class="vector-packet-coral" r="6" />
+      <!-- Straight line 2 to 3 (Y: 280) -->
+      <path class="vector-track" d="M 1150 280 L 1210 280" />
+      <path id="vector-2-3" class="vector-active-coral" d="M 1150 280 L 1210 280" />
+      <circle id="pkt-2-3" class="vector-packet-coral" r="5.5" />
     </svg>
 
-    <!-- 3 COLUMNS -->
     <main class="columns-container" id="columns-wrap">
 
       <!-- COLUMN 1: ESPECIFICACIÓN -->
@@ -957,7 +893,6 @@ const perk2Html = `<!DOCTYPE html>
 
       <!-- COLUMN 2: ORQUESTACIÓN (HERO FEATURE) -->
       <div class="col-card card-hero-purple" id="card-2" onclick="focusCard(2)">
-        <div id="hero-shockwave"></div>
         <div class="icon-container" id="icon-2">
           <svg viewBox="0 0 24 24" id="svg-2">
             <rect x="4" y="4" width="16" height="16" rx="2"></rect>
@@ -1049,18 +984,17 @@ const perk2Html = `<!DOCTYPE html>
     gsap.set(['#card-1', '#card-3'], { opacity: 0, y: 32, rotateX: 6, scale: 0.96 });
     gsap.set('#card-2', { opacity: 0, scale: 0.92, y: 36, rotateX: 8 });
     gsap.set('#connecting-svg', { opacity: 0 });
-    gsap.set('#hero-shockwave', { opacity: 0, scale: 0.6 });
 
     tl
       .to('.perk-nav', { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0.2)
       .to('#header-bar', { opacity: 1, y: 0, duration: 0.5, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.35)
       .to('.perk-footer-ticker', { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.5)
 
-      // Card 1 Entrance with Follow-Through (Skill 16)
+      // Card 1 Entrance
       .to('#card-1', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.7, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.6)
       .fromTo('#icon-1', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 0.7)
 
-      // Hero Card 2 Entrance with Elastic Landing (Skill 15)
+      // Hero Card 2 Entrance
       .to('#card-2', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.85, ease: 'back.out(1.4)' }, 0.85)
       .fromTo('#icon-2', { scale: 0.8, opacity: 0.5 }, { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(2.5)' }, 0.95)
 
@@ -1069,7 +1003,7 @@ const perk2Html = `<!DOCTYPE html>
       .fromTo('#icon-3', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 1.2)
       .to('#connecting-svg', { opacity: 1, duration: 0.4 }, 1.3)
 
-      // Staging on Card 1 + Anticipation Wind-up (Skills 09, 13)
+      // Staging on Card 1 + Anticipation Wind-up
       .call(() => {
         columnsWrap.classList.add('staged');
         document.getElementById('card-1').classList.add('active-focus');
@@ -1077,27 +1011,23 @@ const perk2Html = `<!DOCTYPE html>
       .to('#card-1', { x: -3, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 2.05)
       .to('#card-1', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 2.15)
 
-      // Arced Vector 1->2 (Skill 14)
-      .fromTo('#vector-1-2', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 2.2)
-      .fromTo('#pkt-1-2', { cx: 430, cy: 250, opacity: 1 }, { cx: 490, cy: 250, opacity: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 2.2)
+      // Straight Vector 1->2
+      .fromTo('#vector-1-2', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.7, ease: 'power1.inOut' }, 2.2)
+      .fromTo('#pkt-1-2', { cx: 430, cy: 280, opacity: 1 }, { cx: 490, cy: 280, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 2.2)
 
-      // Impact on Hero Card 2: Exaggerated Feedback (Skill 18) & Secondary Spin (Skill 17)
+      // Impact on Hero Card 2
       .call(() => {
         document.getElementById('card-1').classList.remove('active-focus');
         document.getElementById('card-2').classList.add('active-focus');
       }, null, 3.0)
       .to('#card-2', { scaleX: 1.03, scaleY: 0.97, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 3.0)
-      .fromTo('#hero-shockwave', 
-        { opacity: 0.9, scale: 0.7 }, 
-        { opacity: 0, scale: 2.2, duration: 0.7, ease: 'power2.out' }, 3.0
-      )
       .to('#svg-2', { rotation: 8, duration: 0.15, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 3.05)
 
-      // Hero Card 2 Anticipation & Emits Coral Conduit to Card 3
+      // Hero Card 2 Emits to Card 3 along straight line
       .to('#card-2', { x: 2, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 4.6)
       .to('#card-2', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 4.7)
-      .fromTo('#vector-2-3', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 4.75)
-      .fromTo('#pkt-2-3', { cx: 1150, cy: 250, opacity: 1 }, { cx: 1210, cy: 250, opacity: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 4.75)
+      .fromTo('#vector-2-3', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.7, ease: 'power1.inOut' }, 4.75)
+      .fromTo('#pkt-2-3', { cx: 1150, cy: 280, opacity: 1 }, { cx: 1210, cy: 280, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 4.75)
 
       // Impact on Card 3
       .call(() => {
@@ -1107,7 +1037,7 @@ const perk2Html = `<!DOCTYPE html>
       .to('#card-3', { scaleX: 1.025, scaleY: 0.975, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 5.5)
       .to('#svg-3', { scale: 1.15, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 5.55)
 
-      // Overall Appeal Restoration (Skill 20)
+      // Overall Appeal Restoration
       .call(() => {
         columnsWrap.classList.remove('staged');
         document.querySelectorAll('.col-card').forEach(c => c.classList.remove('active-focus'));
@@ -1121,10 +1051,10 @@ const perk2Html = `<!DOCTYPE html>
 </html>`;
 
 fs.writeFileSync('infografia_perk_2_agentic.html', perk2Html);
-console.log('✔ infografia_perk_2_agentic.html upgraded');
+console.log('✔ infografia_perk_2_agentic.html: straight lines restored, shockwave removed');
 
 // =========================================================================
-// 3. INFOGRAFÍA 3: REFUERZO VS IMITACIÓN (CONVERGENT CENTER HERO)
+// 3. INFOGRAFÍA 3: REFUERZO VS IMITACIÓN - STRAIGHT LINES & NO SHOCKWAVE
 // =========================================================================
 const perk3Html = `<!DOCTYPE html>
 <html lang="es" data-fps="30" data-duration="10" data-width="1920" data-height="1080">
@@ -1236,7 +1166,6 @@ const perk3Html = `<!DOCTYPE html>
       text-wrap: balance;
     }
 
-    /* CONVERGENT HERO CONTAINER: 3D Perspective (Skill 19) */
     .convergent-container {
       position: absolute;
       top: 220px;
@@ -1274,7 +1203,6 @@ const perk3Html = `<!DOCTYPE html>
       height: 480px;
     }
 
-    /* Staging Focus (Skill 09) */
     .convergent-container.staged .bento-card:not(.active-focus) {
       opacity: 0.52 !important;
       transform: scale(0.985);
@@ -1289,7 +1217,6 @@ const perk3Html = `<!DOCTYPE html>
       box-shadow: 0 16px 36px rgba(167, 139, 250, 0.22);
     }
 
-    /* CENTER DOMINANT HERO */
     .card-hero-purple {
       background: var(--color-primary-purple);
       border: 1px solid var(--color-primary-purple);
@@ -1300,21 +1227,6 @@ const perk3Html = `<!DOCTYPE html>
 
     .card-hero-purple.active-focus {
       box-shadow: 0 20px 50px rgba(124, 58, 237, 0.32);
-    }
-
-    #hero-shockwave {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 140px;
-      height: 140px;
-      margin-top: -70px;
-      margin-left: -70px;
-      border-radius: 50%;
-      border: 4px solid var(--color-accent-coral);
-      pointer-events: none;
-      opacity: 0;
-      z-index: 1;
     }
 
     .icon-container {
@@ -1393,7 +1305,7 @@ const perk3Html = `<!DOCTYPE html>
       max-width: 460px;
     }
 
-    /* Converging Vector Arcs (Skill 14) */
+    /* STRAIGHT Vector Conduits */
     #connecting-svg {
       position: absolute;
       top: 220px;
@@ -1406,27 +1318,27 @@ const perk3Html = `<!DOCTYPE html>
 
     .vector-track {
       stroke: var(--color-ash);
-      stroke-width: 2.5px;
+      stroke-width: 2px;
       fill: none;
       stroke-dasharray: 6 6;
     }
 
     .vector-active-left {
       stroke: var(--color-primary-purple-deep);
-      stroke-width: 4px;
+      stroke-width: 2.5px;
       fill: none;
       stroke-linecap: round;
-      stroke-dasharray: 120;
-      stroke-dashoffset: 120;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
     }
 
     .vector-active-right {
       stroke: var(--color-accent-coral);
-      stroke-width: 4px;
+      stroke-width: 2.5px;
       fill: none;
       stroke-linecap: round;
-      stroke-dasharray: 120;
-      stroke-dashoffset: 120;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
     }
 
     .vector-packet {
@@ -1484,22 +1396,21 @@ const perk3Html = `<!DOCTYPE html>
       <h1>Refuerzo Autónomo vs. Imitación Guiada</h1>
     </div>
 
-    <!-- Converging Vector Arcs (Skill 14) -->
+    <!-- Straight Horizontal Lines (M x1 y L x2 y) -->
     <svg id="connecting-svg" viewBox="0 0 1640 560">
-      <!-- Left to Center Arc: 440,280 -> 500,280 -->
-      <path class="vector-track" d="M 430 280 Q 465 260 500 280" />
-      <path id="vector-left" class="vector-active-left" d="M 430 280 Q 465 260 500 280" />
-      <circle id="pkt-left" class="vector-packet" r="6" />
+      <!-- Straight Left to Center (Y: 280) -->
+      <path class="vector-track" d="M 430 280 L 500 280" />
+      <path id="vector-left" class="vector-active-left" d="M 430 280 L 500 280" />
+      <circle id="pkt-left" class="vector-packet" r="5" />
 
-      <!-- Right to Center Arc: 1210,280 -> 1140,280 -->
-      <path class="vector-track" d="M 1210 280 Q 1175 260 1140 280" />
-      <path id="vector-right" class="vector-active-right" d="M 1210 280 Q 1175 260 1140 280" />
-      <circle id="pkt-right" class="vector-packet-coral" r="6" />
+      <!-- Straight Right to Center (Y: 280) -->
+      <path class="vector-track" d="M 1210 280 L 1140 280" />
+      <path id="vector-right" class="vector-active-right" d="M 1210 280 L 1140 280" />
+      <circle id="pkt-right" class="vector-packet-coral" r="5" />
     </svg>
 
     <main class="convergent-container" id="convergent-wrap">
 
-      <!-- LEFT SATELLITE: APRENDIZAJE POR REFUERZO -->
       <div class="bento-card card-satellite" id="card-left" onclick="focusCard('left')">
         <div class="icon-container" id="icon-left">
           <svg viewBox="0 0 24 24" id="svg-left">
@@ -1512,9 +1423,7 @@ const perk3Html = `<!DOCTYPE html>
         </div>
       </div>
 
-      <!-- CENTER HERO: NÚCLEO DE APRENDIZAJE HÍBRIDO -->
       <div class="bento-card card-hero-purple" id="card-center" onclick="focusCard('center')">
-        <div id="hero-shockwave"></div>
         <div class="icon-container" id="icon-center">
           <svg viewBox="0 0 24 24" id="svg-center">
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
@@ -1526,7 +1435,6 @@ const perk3Html = `<!DOCTYPE html>
         </div>
       </div>
 
-      <!-- RIGHT SATELLITE: IMITACIÓN HUMANA -->
       <div class="bento-card card-satellite" id="card-right" onclick="focusCard('right')">
         <div class="icon-container" id="icon-right">
           <svg viewBox="0 0 24 24" id="svg-right">
@@ -1598,58 +1506,53 @@ const perk3Html = `<!DOCTYPE html>
     gsap.set(['#card-left', '#card-right'], { opacity: 0, y: 32, rotateX: 6, scale: 0.96 });
     gsap.set('#card-center', { opacity: 0, scale: 0.92, y: 36, rotateX: 8 });
     gsap.set('#connecting-svg', { opacity: 0 });
-    gsap.set('#hero-shockwave', { opacity: 0, scale: 0.6 });
 
     tl
       .to('.perk-nav', { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0.2)
       .to('#header-bar', { opacity: 1, y: 0, duration: 0.5, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.35)
       .to('.perk-footer-ticker', { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.5)
 
-      // Satellites Entrance with Follow-Through (Skill 16)
+      // Satellites Entrance
       .to('#card-left', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.7, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.55)
       .fromTo('#icon-left', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 0.65)
       
       .to('#card-right', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.7, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.7)
       .fromTo('#icon-right', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 0.8)
 
-      // Dominant Center Hero Elastic Landing (Skill 15 & 19)
+      // Center Hero Elastic Landing
       .to('#card-center', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.85, ease: 'back.out(1.4)' }, 0.85)
       .fromTo('#icon-center', { scale: 0.8, opacity: 0.5 }, { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(2.5)' }, 0.95)
       .to('#connecting-svg', { opacity: 1, duration: 0.4 }, 1.3)
 
-      // 1. Stage Left Exploration Activation (RL) + Anticipation Recoil (Skill 13)
+      // 1. Stage Left Exploration (RL)
       .call(() => {
         convergentWrap.classList.add('staged');
         document.getElementById('card-left').classList.add('active-focus');
       }, null, 2.0)
       .to('#card-left', { x: -3, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 2.05)
       .to('#card-left', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 2.15)
-      .fromTo('#vector-left', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 2.2)
-      .fromTo('#pkt-left', { cx: 430, cy: 280, opacity: 1 }, { cx: 500, cy: 280, opacity: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 2.2)
+      .fromTo('#vector-left', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.7, ease: 'power1.inOut' }, 2.2)
+      .fromTo('#pkt-left', { cx: 430, cy: 280, opacity: 1 }, { cx: 500, cy: 280, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 2.2)
 
-      // 2. Stage Right Human Demonstrations Activation (Imitation) + Anticipation Recoil (Skill 13)
+      // 2. Stage Right Demonstrations (Imitation)
       .call(() => {
         document.getElementById('card-left').classList.remove('active-focus');
         document.getElementById('card-right').classList.add('active-focus');
       }, null, 3.4)
       .to('#card-right', { x: 3, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 3.45)
       .to('#card-right', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 3.55)
-      .fromTo('#vector-right', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 3.6)
-      .fromTo('#pkt-right', { cx: 1210, cy: 280, opacity: 1 }, { cx: 1140, cy: 280, opacity: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 3.6)
+      .fromTo('#vector-right', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.7, ease: 'power1.inOut' }, 3.6)
+      .fromTo('#pkt-right', { cx: 1210, cy: 280, opacity: 1 }, { cx: 1140, cy: 280, opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 3.6)
 
-      // 3. Convergent Collision into Center Hero (Skills 15, 17, 18)
+      // 3. Collision into Center Hero
       .call(() => {
         document.getElementById('card-right').classList.remove('active-focus');
         document.getElementById('card-center').classList.add('active-focus');
       }, null, 4.8)
       .to('#card-center', { scaleX: 1.035, scaleY: 0.965, duration: 0.12, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 4.8)
-      .fromTo('#hero-shockwave', 
-        { opacity: 1, scale: 0.7 }, 
-        { opacity: 0, scale: 2.3, duration: 0.85, ease: 'power2.out' }, 4.8
-      )
       .to('#svg-center', { rotation: 18, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 4.85)
 
-      // 4. Synergistic Harmonic Pulse (Skill 20)
+      // 4. Harmonic Pulse
       .to('#card-center', { scale: 1.02, duration: 0.8, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 6.2)
       .call(() => {
         convergentWrap.classList.remove('staged');
@@ -1664,10 +1567,10 @@ const perk3Html = `<!DOCTYPE html>
 </html>`;
 
 fs.writeFileSync('infografia_perk_3_rl_vs_imitation.html', perk3Html);
-console.log('✔ infografia_perk_3_rl_vs_imitation.html upgraded');
+console.log('✔ infografia_perk_3_rl_vs_imitation.html: straight lines restored, shockwave removed');
 
 // =========================================================================
-// 4. INFOGRAFÍA 4: FUNNEL DE CONVERSIÓN (SEQUENTIAL 4 COLUMNS)
+// 4. INFOGRAFÍA 4: FUNNEL DE CONVERSIÓN - STRAIGHT LINES & NO SHOCKWAVE
 // =========================================================================
 const perk4Html = `<!DOCTYPE html>
 <html lang="es" data-fps="30" data-duration="10" data-width="1920" data-height="1080">
@@ -1779,7 +1682,6 @@ const perk4Html = `<!DOCTYPE html>
       text-wrap: balance;
     }
 
-    /* 4 SEQUENTIAL COLUMNS: 3D Perspective (Skill 19) */
     .funnel-container {
       position: absolute;
       top: 220px;
@@ -1787,7 +1689,7 @@ const perk4Html = `<!DOCTYPE html>
       width: 1640px;
       height: 560px;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1.38fr; /* ENLARGED HERO CONVERSIÓN */
+      grid-template-columns: 1fr 1fr 1fr 1.38fr;
       gap: 28px;
       z-index: 10;
       perspective: 1200px;
@@ -1812,7 +1714,6 @@ const perk4Html = `<!DOCTYPE html>
       transition: opacity 0.35s ease, transform 0.35s var(--ease-snappy-out), border-color 0.3s ease, box-shadow 0.35s ease;
     }
 
-    /* Staging Focus (Skill 09) */
     .funnel-container.staged .funnel-card:not(.active-focus) {
       opacity: 0.52 !important;
       transform: scale(0.985);
@@ -1827,7 +1728,6 @@ const perk4Html = `<!DOCTYPE html>
       box-shadow: 0 16px 36px rgba(167, 139, 250, 0.22);
     }
 
-    /* HERO FEATURE: CONVERSIÓN */
     .card-hero-feature {
       background: var(--color-primary-purple);
       border: 1px solid var(--color-primary-purple);
@@ -1837,21 +1737,6 @@ const perk4Html = `<!DOCTYPE html>
 
     .card-hero-feature.active-focus {
       box-shadow: 0 20px 50px rgba(124, 58, 237, 0.32);
-    }
-
-    #hero-shockwave {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 120px;
-      height: 120px;
-      margin-top: -60px;
-      margin-left: -60px;
-      border-radius: 50%;
-      border: 3.5px solid var(--color-accent-coral);
-      pointer-events: none;
-      opacity: 0;
-      z-index: 1;
     }
 
     .icon-container {
@@ -1930,7 +1815,7 @@ const perk4Html = `<!DOCTYPE html>
       max-width: 380px;
     }
 
-    /* Arced Conduits Connecting 4 Stages (Skill 14) */
+    /* STRAIGHT Vector Conduits */
     #connecting-svg {
       position: absolute;
       top: 220px;
@@ -1943,14 +1828,14 @@ const perk4Html = `<!DOCTYPE html>
 
     .vector-track {
       stroke: var(--color-ash);
-      stroke-width: 2.5px;
+      stroke-width: 2px;
       fill: none;
       stroke-dasharray: 6 6;
     }
 
     .vector-active {
       stroke: var(--color-primary-purple-deep);
-      stroke-width: 4px;
+      stroke-width: 2.5px;
       fill: none;
       stroke-linecap: round;
       stroke-dasharray: 80;
@@ -1959,7 +1844,7 @@ const perk4Html = `<!DOCTYPE html>
 
     .vector-active-coral {
       stroke: var(--color-accent-coral);
-      stroke-width: 4px;
+      stroke-width: 2.5px;
       fill: none;
       stroke-linecap: round;
       stroke-dasharray: 80;
@@ -2021,21 +1906,21 @@ const perk4Html = `<!DOCTYPE html>
       <h1>Embudo de Conversión &amp; Activación</h1>
     </div>
 
-    <!-- Arced Vector Conduits Between 4 Stages (Skill 14) -->
+    <!-- Straight Horizontal Lines (M x1 y L x2 y) -->
     <svg id="connecting-svg" viewBox="0 0 1640 560">
-      <!-- 1 -> 2: X ~350 to 390 -->
-      <path class="vector-track" d="M 335 280 Q 360 268 385 280" />
-      <path id="vector-1-2" class="vector-active" d="M 335 280 Q 360 268 385 280" />
+      <!-- 1 -> 2: Straight horizontal line (Y: 280) -->
+      <path class="vector-track" d="M 335 280 L 385 280" />
+      <path id="vector-1-2" class="vector-active" d="M 335 280 L 385 280" />
       <circle id="pkt-1-2" class="vector-packet" r="5" />
 
-      <!-- 2 -> 3: X ~730 to 770 -->
-      <path class="vector-track" d="M 725 280 Q 750 268 775 280" />
-      <path id="vector-2-3" class="vector-active" d="M 725 280 Q 750 268 775 280" />
+      <!-- 2 -> 3: Straight horizontal line (Y: 280) -->
+      <path class="vector-track" d="M 725 280 L 775 280" />
+      <path id="vector-2-3" class="vector-active" d="M 725 280 L 775 280" />
       <circle id="pkt-2-3" class="vector-packet" r="5" />
 
-      <!-- 3 -> 4: X ~1120 to 1160 -->
-      <path class="vector-track" d="M 1115 280 Q 1140 268 1165 280" />
-      <path id="vector-3-4" class="vector-active-coral" d="M 1115 280 Q 1140 268 1165 280" />
+      <!-- 3 -> 4: Straight horizontal line (Y: 280) -->
+      <path class="vector-track" d="M 1115 280 L 1165 280" />
+      <path id="vector-3-4" class="vector-active-coral" d="M 1115 280 L 1165 280" />
       <circle id="pkt-3-4" class="vector-packet-coral" r="5.5" />
     </svg>
 
@@ -2082,9 +1967,8 @@ const perk4Html = `<!DOCTYPE html>
         </div>
       </div>
 
-      <!-- STAGE 4: CONVERSIÓN HERO -->
+      <!-- STAGE 4: CONVERSIÓN HERO (NO CIRCLE SHOCKWAVE) -->
       <div class="funnel-card card-hero-feature" id="card-4" onclick="focusCard(4)">
-        <div id="hero-shockwave"></div>
         <div class="icon-container" id="icon-4">
           <svg viewBox="0 0 24 24" id="svg-4">
             <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
@@ -2158,14 +2042,13 @@ const perk4Html = `<!DOCTYPE html>
     gsap.set(['#card-1', '#card-2', '#card-3'], { opacity: 0, y: 32, rotateX: 6, scale: 0.96 });
     gsap.set('#card-4', { opacity: 0, scale: 0.92, y: 36, rotateX: 8 });
     gsap.set('#connecting-svg', { opacity: 0 });
-    gsap.set('#hero-shockwave', { opacity: 0, scale: 0.6 });
 
     tl
       .to('.perk-nav', { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0.2)
       .to('#header-bar', { opacity: 1, y: 0, duration: 0.5, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.35)
       .to('.perk-footer-ticker', { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.5)
 
-      // Sequential 4-Stage Entry (Skill 16 & 19)
+      // Sequential Entrance
       .to('#card-1', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.65, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.55)
       .fromTo('#icon-1', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 0.65)
 
@@ -2175,54 +2058,50 @@ const perk4Html = `<!DOCTYPE html>
       .to('#card-3', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.65, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.95)
       .fromTo('#icon-3', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 1.05)
 
-      // Hero Card 4 Elastic Landing (Skill 15)
+      // Hero Card 4 Entrance
       .to('#card-4', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.85, ease: 'back.out(1.4)' }, 1.15)
       .fromTo('#icon-4', { scale: 0.8, opacity: 0.5 }, { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(2.5)' }, 1.25)
       .to('#connecting-svg', { opacity: 1, duration: 0.4 }, 1.4)
 
-      // 1. Stage 1 (Atracción) -> Stage 2 (Interés)
+      // 1. Stage 1 -> Stage 2 (Straight horizontal line)
       .call(() => {
         funnelWrap.classList.add('staged');
         document.getElementById('card-1').classList.add('active-focus');
       }, null, 2.0)
       .to('#card-1', { x: -3, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 2.05)
       .to('#card-1', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 2.15)
-      .fromTo('#vector-1-2', { strokeDashoffset: 80 }, { strokeDashoffset: 0, duration: 0.65, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 2.2)
-      .fromTo('#pkt-1-2', { cx: 335, cy: 280, opacity: 1 }, { cx: 385, cy: 280, opacity: 0, duration: 0.65, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 2.2)
+      .fromTo('#vector-1-2', { strokeDashoffset: 80 }, { strokeDashoffset: 0, duration: 0.65, ease: 'power1.inOut' }, 2.2)
+      .fromTo('#pkt-1-2', { cx: 335, cy: 280, opacity: 1 }, { cx: 385, cy: 280, opacity: 0, duration: 0.65, ease: 'power1.inOut' }, 2.2)
 
-      // 2. Stage 2 (Interés) -> Stage 3 (Decisión)
+      // 2. Stage 2 -> Stage 3 (Straight horizontal line)
       .call(() => {
         document.getElementById('card-1').classList.remove('active-focus');
         document.getElementById('card-2').classList.add('active-focus');
       }, null, 3.2)
       .to('#card-2', { x: -2, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 3.25)
       .to('#card-2', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 3.35)
-      .fromTo('#vector-2-3', { strokeDashoffset: 80 }, { strokeDashoffset: 0, duration: 0.65, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 3.4)
-      .fromTo('#pkt-2-3', { cx: 725, cy: 280, opacity: 1 }, { cx: 775, cy: 280, opacity: 0, duration: 0.65, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 3.4)
+      .fromTo('#vector-2-3', { strokeDashoffset: 80 }, { strokeDashoffset: 0, duration: 0.65, ease: 'power1.inOut' }, 3.4)
+      .fromTo('#pkt-2-3', { cx: 725, cy: 280, opacity: 1 }, { cx: 775, cy: 280, opacity: 0, duration: 0.65, ease: 'power1.inOut' }, 3.4)
 
-      // 3. Stage 3 (Decisión) -> Hero Stage 4 (Conversión)
+      // 3. Stage 3 -> Hero Stage 4 (Straight horizontal line)
       .call(() => {
         document.getElementById('card-2').classList.remove('active-focus');
         document.getElementById('card-3').classList.add('active-focus');
       }, null, 4.4)
       .to('#card-3', { x: -2, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 4.45)
       .to('#card-3', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 4.55)
-      .fromTo('#vector-3-4', { strokeDashoffset: 80 }, { strokeDashoffset: 0, duration: 0.65, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 4.6)
-      .fromTo('#pkt-3-4', { cx: 1115, cy: 280, opacity: 1 }, { cx: 1165, cy: 280, opacity: 0, duration: 0.65, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 4.6)
+      .fromTo('#vector-3-4', { strokeDashoffset: 80 }, { strokeDashoffset: 0, duration: 0.65, ease: 'power1.inOut' }, 4.6)
+      .fromTo('#pkt-3-4', { cx: 1115, cy: 280, opacity: 1 }, { cx: 1165, cy: 280, opacity: 0, duration: 0.65, ease: 'power1.inOut' }, 4.6)
 
-      // 4. Hero Stage 4 Climax (Skills 15, 17, 18)
+      // 4. Hero Stage 4 Climax (Elastic bounce without circle shockwave)
       .call(() => {
         document.getElementById('card-3').classList.remove('active-focus');
         document.getElementById('card-4').classList.add('active-focus');
       }, null, 5.5)
       .to('#card-4', { scaleX: 1.035, scaleY: 0.965, duration: 0.12, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 5.5)
-      .fromTo('#hero-shockwave', 
-        { opacity: 0.9, scale: 0.7 }, 
-        { opacity: 0, scale: 2.3, duration: 0.8, ease: 'power2.out' }, 5.5
-      )
       .to('#svg-4', { rotation: -12, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 5.55)
 
-      // 5. Overall Appeal Stabilization (Skill 20)
+      // 5. Overall Appeal Stabilization
       .call(() => {
         funnelWrap.classList.remove('staged');
         document.querySelectorAll('.funnel-card').forEach(c => c.classList.remove('active-focus'));
@@ -2236,353 +2115,6 @@ const perk4Html = `<!DOCTYPE html>
 </html>`;
 
 fs.writeFileSync('infografia_perk_4_funnel.html', perk4Html);
-console.log('✔ infografia_perk_4_funnel.html upgraded');
+console.log('✔ infografia_perk_4_funnel.html: straight lines restored, shockwave removed');
 
-// =========================================================================
-// 5. VISTA UNIFICADA: 4-EN-1 DASHBOARD UX-MOTION (vista_4_infografias_ux_motion.html)
-// =========================================================================
-const multiViewHtml = `<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard 4 Infografías Perk // UX-Motion Master View</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --color-primary-purple: #A78BFA;
-      --color-accent-coral: #FF5A36;
-      --bg-dark: #0D111A;
-      --card-bg: #151C2C;
-      --border-color: #243048;
-      --font-sans: 'Inter', system-ui, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg-dark);
-      color: #F8FAFC;
-      font-family: var(--font-sans);
-      min-height: 100vh;
-      padding: 24px 28px 48px;
-    }
-    /* Grid Pattern */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background-image: radial-gradient(circle, rgba(167, 139, 250, 0.08) 1.5px, transparent 1.5px);
-      background-size: 32px 32px;
-      z-index: -1;
-      pointer-events: none;
-    }
-    header {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 20px 28px;
-      margin-bottom: 24px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    }
-    .header-title h1 {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .badge-purple {
-      background: var(--color-primary-purple);
-      color: #14140F;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 800;
-      padding: 4px 10px;
-      border-radius: 999px;
-      text-transform: uppercase;
-    }
-    .header-title p {
-      font-size: 13.5px;
-      color: #94A3B8;
-      margin-top: 4px;
-    }
-    .header-actions {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .btn {
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 12.5px;
-      font-weight: 700;
-      font-family: var(--font-mono);
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s;
-    }
-    .btn-sync {
-      background: #1E293B;
-      color: #F8FAFC;
-      border: 1px solid #334155;
-    }
-    .btn-sync:hover {
-      background: #2D3D58;
-      border-color: #64748B;
-    }
-    .btn-purple {
-      background: var(--color-primary-purple);
-      color: #14140F;
-      border: 1px solid var(--color-primary-purple);
-    }
-    .btn-purple:hover {
-      background: #C4B5FD;
-    }
-    .btn-coral {
-      background: rgba(255, 90, 54, 0.15);
-      color: #FF7B50;
-      border: 1px solid var(--color-accent-coral);
-    }
-    .btn-coral:hover {
-      background: var(--color-accent-coral);
-      color: #FFF;
-    }
-
-    /* 4-QUADRANT GRID (2x2) */
-    .quadrant-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-      width: 100%;
-    }
-    @media (max-width: 1200px) {
-      .quadrant-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    .quadrant-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-    .quadrant-card:hover {
-      border-color: var(--color-primary-purple);
-    }
-    .card-topbar {
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #1E273D;
-      background: #111724;
-    }
-    .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .meta-tag {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--color-primary-purple);
-      background: rgba(167, 139, 250, 0.12);
-      border: 1px solid rgba(167, 139, 250, 0.3);
-      padding: 2px 8px;
-      border-radius: 4px;
-    }
-    .meta-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: #FFFFFF;
-    }
-    .card-links {
-      display: flex;
-      gap: 8px;
-    }
-    .icon-link {
-      color: #94A3B8;
-      font-size: 11.5px;
-      font-family: var(--font-mono);
-      text-decoration: none;
-      padding: 4px 8px;
-      border-radius: 6px;
-      border: 1px solid #283752;
-      background: #162032;
-      transition: all 0.15s;
-    }
-    .icon-link:hover {
-      color: #FFF;
-      border-color: var(--color-primary-purple);
-    }
-
-    /* 16:9 IFRAME THEATER */
-    .iframe-stage-wrap {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      background: #F5F5EB;
-      overflow: hidden;
-    }
-    .iframe-stage-wrap iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
-
-    /* CARD BOTTOM SPECS */
-    .card-footer {
-      padding: 12px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: #64748B;
-      background: #0F1420;
-    }
-    .skills-applied-badge {
-      color: #A78BFA;
-    }
-  </style>
-</head>
-<body>
-
-  <header>
-    <div class="header-title">
-      <h1>
-        Dashboard 4 Infografías Perk
-        <span class="badge-purple">21 UX-Motion Skills</span>
-      </h1>
-      <p>Visualización unificada 4-en-1: Staging focus, micro-física squash &amp; stretch, arcos vectoriales y 3D en tiempo real.</p>
-    </div>
-    <div class="header-actions">
-      <button class="btn btn-sync" onclick="reloadAll()">🔄 Reiniciar Todas Simultáneamente</button>
-      <a class="btn btn-purple" href="suite_transiciones_perk.html">🎬 Abrir Presentation Suite</a>
-      <a class="btn btn-coral" href="prueba_perk_ux_motion.html">🧪 Lab Telemetría</a>
-    </div>
-  </header>
-
-  <main class="quadrant-grid">
-
-    <!-- 1. PROCESO EDITORIAL -->
-    <div class="quadrant-card">
-      <div class="card-topbar">
-        <div class="card-meta">
-          <span class="meta-tag">01 // STEPPED 2+3</span>
-          <span class="meta-title">El Proceso Editorial</span>
-        </div>
-        <div class="card-links">
-          <a class="icon-link" href="infografia_perk_1_writing.html" target="_blank">Abrir Completa ↗</a>
-          <a class="icon-link" href="renders/infografia_perk_1_writing.mp4" download>📥 MP4</a>
-        </div>
-      </div>
-      <div class="iframe-stage-wrap">
-        <iframe id="frame-1" src="infografia_perk_1_writing.html"></iframe>
-      </div>
-      <div class="card-footer">
-        <span class="skills-applied-badge">⚡ Skills 09, 13, 15, 16, 17, 18, 19, 20</span>
-        <span>1920×1080 &bull; 10s GSAP</span>
-      </div>
-    </div>
-
-    <!-- 2. CICLO AGÉNTICO -->
-    <div class="quadrant-card">
-      <div class="card-topbar">
-        <div class="card-meta">
-          <span class="meta-tag">02 // 3 LINEAR COLUMNS</span>
-          <span class="meta-title">Ciclo de Desarrollo Agéntico</span>
-        </div>
-        <div class="card-links">
-          <a class="icon-link" href="infografia_perk_2_agentic.html" target="_blank">Abrir Completa ↗</a>
-          <a class="icon-link" href="renders/infografia_perk_2_agentic.mp4" download>📥 MP4</a>
-        </div>
-      </div>
-      <div class="iframe-stage-wrap">
-        <iframe id="frame-2" src="infografia_perk_2_agentic.html"></iframe>
-      </div>
-      <div class="card-footer">
-        <span class="skills-applied-badge">⚡ Skills 09, 10, 13, 14, 15, 16, 17, 18, 19</span>
-        <span>1920×1080 &bull; 10s GSAP</span>
-      </div>
-    </div>
-
-    <!-- 3. REFUERZO VS IMITACIÓN -->
-    <div class="quadrant-card">
-      <div class="card-topbar">
-        <div class="card-meta">
-          <span class="meta-tag">03 // CONVERGENT HERO</span>
-          <span class="meta-title">Refuerzo vs. Imitación</span>
-        </div>
-        <div class="card-links">
-          <a class="icon-link" href="infografia_perk_3_rl_vs_imitation.html" target="_blank">Abrir Completa ↗</a>
-          <a class="icon-link" href="renders/infografia_perk_3_rl_vs_imitation.mp4" download>📥 MP4</a>
-        </div>
-      </div>
-      <div class="iframe-stage-wrap">
-        <iframe id="frame-3" src="infografia_perk_3_rl_vs_imitation.html"></iframe>
-      </div>
-      <div class="card-footer">
-        <span class="skills-applied-badge">⚡ Skills 09, 11, 13, 14, 15, 17, 18, 19, 20</span>
-        <span>1920×1080 &bull; 10s GSAP</span>
-      </div>
-    </div>
-
-    <!-- 4. FUNNEL DE CONVERSIÓN -->
-    <div class="quadrant-card">
-      <div class="card-topbar">
-        <div class="card-meta">
-          <span class="meta-tag">04 // SEQUENTIAL 4</span>
-          <span class="meta-title">Funnel de Conversión</span>
-        </div>
-        <div class="card-links">
-          <a class="icon-link" href="infografia_perk_4_funnel.html" target="_blank">Abrir Completa ↗</a>
-          <a class="icon-link" href="renders/infografia_perk_4_funnel.mp4" download>📥 MP4</a>
-        </div>
-      </div>
-      <div class="iframe-stage-wrap">
-        <iframe id="frame-4" src="infografia_perk_4_funnel.html"></iframe>
-      </div>
-      <div class="card-footer">
-        <span class="skills-applied-badge">⚡ Skills 09, 10, 13, 14, 15, 16, 17, 18, 20</span>
-        <span>1920×1080 &bull; 10s GSAP</span>
-      </div>
-    </div>
-
-  </main>
-
-  <script>
-    function reloadAll() {
-      ['frame-1', 'frame-2', 'frame-3', 'frame-4'].forEach(id => {
-        const f = document.getElementById(id);
-        if (f) f.src = f.src;
-      });
-    }
-  </script>
-</body>
-</html>`;
-
-fs.writeFileSync('vista_4_infografias_ux_motion.html', multiViewHtml);
-console.log('✔ vista_4_infografias_ux_motion.html created');
-
-console.log('All 4 Perk UX-Motion infographics & dashboard generated successfully!');
+console.log('Regenerating done.');
