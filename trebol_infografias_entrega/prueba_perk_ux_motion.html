@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="es" data-fps="30" data-duration="10" data-width="1920" data-height="1080">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorio UX &amp; Motion // Sistema Perk (21 Skills Orchestration)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <style>
+    :root {
+      --color-primary-purple: #A78BFA;
+      --color-primary-purple-soft: #EDE9FE;
+      --color-primary-purple-deep: #7C3AED;
+      
+      --color-accent-coral: #FF5A36;
+      --color-accent-coral-soft: #FFEFEB;
+      
+      --color-off-black-ink: #14140f;
+      --color-off-white-canvas: #f5f5eb;
+      --color-pure-white: #ffffff;
+      --color-ash: #d2d2c8;
+      --color-graphite: #383832;
+      --color-deep-charcoal: #252520;
+      
+      --font-otsono: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      /* Snappy UX-Motion Timing Tokens (Skills 10 & 11) */
+      --ease-snappy-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-snappy-in: cubic-bezier(0.4, 0, 1, 1);
+      --ease-elastic-out: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-in-out-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0B0E14;
+      color: #F8FAFC;
+      font-family: var(--font-otsono);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 24px 60px;
+      overflow-x: hidden;
+      user-select: none;
+    }
+
+    /* Ambient background grid */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(167, 139, 250, 0.08) 1.5px, transparent 1.5px);
+      background-size: 32px 32px;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Top Lab Controller Bar */
+    .lab-header {
+      width: 100%;
+      max-width: 1720px;
+      background: #141A28;
+      border: 1px solid #232E44;
+      border-radius: 16px;
+      padding: 18px 26px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+    }
+
+    .lab-brand h1 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #FFFFFF;
+    }
+
+    .tag-motion-skill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: #14140F;
+      background: var(--color-primary-purple);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .lab-brand p {
+      font-size: 13px;
+      color: #94A3B8;
+      margin-top: 4px;
+    }
+
+    /* Controls Panel */
+    .lab-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-lab {
+      padding: 8px 16px;
+      background: #1E293B;
+      border: 1px solid #334155;
+      color: #F8FAFC;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-lab:hover {
+      background: #2D3D58;
+      border-color: #64748B;
+    }
+
+    .btn-lab.btn-purple {
+      background: var(--color-primary-purple);
+      color: #14140F;
+      border-color: var(--color-primary-purple);
+      font-weight: 700;
+    }
+
+    .btn-lab.btn-purple:hover {
+      background: #C4B5FD;
+    }
+
+    .btn-toggle-active {
+      background: #10B981 !important;
+      color: #FFFFFF !important;
+      border-color: #10B981 !important;
+    }
+
+    /* Live Skills Active Badges Telemetry */
+    .skills-telemetry {
+      width: 100%;
+      max-width: 1720px;
+      background: #0F1420;
+      border: 1px solid #1E273D;
+      border-radius: 12px;
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .skills-pills-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .skill-pill {
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: #192235;
+      border: 1px solid #283752;
+      color: #64748B;
+      transition: all 0.25s ease;
+    }
+
+    .skill-pill.active {
+      background: rgba(167, 139, 250, 0.2);
+      border-color: var(--color-primary-purple);
+      color: #A78BFA;
+      box-shadow: 0 0 10px rgba(167, 139, 250, 0.3);
+    }
+
+    /* 16:9 THEATER CANVAS WRAPPER */
+    .viewport-box {
+      position: relative;
+      width: 100%;
+      max-width: 1720px;
+      aspect-ratio: 16 / 9;
+      background: var(--color-off-white-canvas);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65);
+      border: 2px solid #28354D;
+      perspective: 1200px; /* Skill 19: Solid Drawing in 3D */
+    }
+
+    #stage-scaler {
+      position: absolute;
+      width: 1920px;
+      height: 1080px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      transform-origin: center center;
+      background: var(--color-off-white-canvas);
+      overflow: hidden;
+    }
+
+    /* TOP EDITORIAL NAV */
+    .perk-nav {
+      position: absolute;
+      top: 48px;
+      left: 154px;
+      right: 154px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--color-ash);
+      padding-bottom: 18px;
+      z-index: 30;
+    }
+
+    .perk-logo {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--color-off-black-ink);
+    }
+
+    .perk-nav-context {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-graphite);
+      letter-spacing: 0.01em;
+    }
+
+    /* HEADER BAR */
+    .header-bar {
+      position: absolute;
+      top: 122px;
+      left: 154px;
+      right: 154px;
+      height: 52px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      z-index: 20;
+    }
+
+    .header-bar h1 {
+      font-size: 46px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--color-off-black-ink);
+      text-wrap: balance;
+    }
+
+    /* 3 LINEAR COLUMNS WITH 3D DEPTH & STAGING FOCUS */
+    .columns-container {
+      position: absolute;
+      top: 236px;
+      left: 154px;
+      width: 1612px;
+      height: 500px;
+      display: grid;
+      grid-template-columns: 440px 660px 440px;
+      gap: 36px;
+      z-index: 10;
+      perspective: 1200px; /* Skill 19 */
+    }
+
+    /* ARCED CONNECTING VECTOR (Skill 14: Moving in Arcs) */
+    #connecting-svg {
+      position: absolute;
+      top: 236px;
+      left: 154px;
+      width: 1612px;
+      height: 500px;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .vector-track {
+      stroke: var(--color-ash);
+      stroke-width: 2.5px;
+      stroke-dasharray: 6 6;
+      fill: none;
+    }
+
+    .vector-active {
+      stroke: var(--color-primary-purple-deep);
+      stroke-width: 3px;
+      stroke-dasharray: 120;
+      stroke-dashoffset: 120;
+      fill: none;
+    }
+
+    .vector-active-coral {
+      stroke: var(--color-accent-coral);
+      stroke-width: 3px;
+      stroke-dasharray: 120;
+      stroke-dashoffset: 120;
+      fill: none;
+    }
+
+    .vector-packet {
+      fill: var(--color-primary-purple-deep);
+      opacity: 0;
+      filter: drop-shadow(0 0 6px rgba(124, 58, 237, 0.6));
+    }
+
+    .vector-packet-coral {
+      fill: var(--color-accent-coral);
+      opacity: 0;
+      filter: drop-shadow(0 0 6px rgba(255, 90, 54, 0.7));
+    }
+
+    /* CARD BASE: Concentric 26px radius, Solid Drawing 3D (Skill 19) */
+    .col-card {
+      background: var(--color-pure-white);
+      border-radius: 26px;
+      border: 1px solid var(--color-ash);
+      box-shadow: 0 4px 16px rgba(20, 20, 15, 0.04);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      padding: 36px 32px;
+      height: 500px;
+      opacity: 0;
+      transform-style: preserve-3d;
+      transition: box-shadow 0.25s var(--ease-snappy-out), border-color 0.25s ease, opacity 0.3s ease;
+      cursor: pointer;
+    }
+
+    /* Skill 09: Staging the Focus — Non-focused cards dim gracefully */
+    .columns-container.staged .col-card:not(.active-focus) {
+      opacity: 0.55 !important;
+      transform: scale(0.985) !important;
+      filter: grayscale(15%);
+    }
+
+    .columns-container.staged .col-card.active-focus {
+      opacity: 1 !important;
+      transform: scale(1.02) !important;
+      box-shadow: 0 20px 48px -12px rgba(124, 58, 237, 0.25), 0 0 0 2px var(--color-primary-purple);
+      border-color: var(--color-primary-purple);
+      z-index: 25;
+    }
+
+    /* ENLARGED HERO CENTER FEATURE */
+    .card-hero-purple {
+      background: var(--color-primary-purple);
+      border: 1px solid var(--color-primary-purple);
+      color: var(--color-off-black-ink);
+      gap: 24px;
+      padding: 40px 42px;
+      z-index: 12;
+      box-shadow: 0 12px 32px -8px rgba(124, 58, 237, 0.2);
+    }
+
+    /* ICON CONTAINER with Secondary Action & Elastic Feedback (Skills 15, 17) */
+    .icon-container {
+      width: 88px;
+      height: 88px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-primary-purple-soft);
+      border: 1px solid rgba(124, 58, 237, 0.2);
+      transition: transform 0.25s var(--ease-elastic-out);
+      transform-origin: center center;
+    }
+
+    .card-hero-purple .icon-container {
+      width: 104px;
+      height: 104px;
+      border-radius: 22px;
+      background: var(--color-off-black-ink);
+      border: 1px solid var(--color-off-black-ink);
+    }
+
+    .icon-container svg {
+      width: 44px;
+      height: 44px;
+      stroke-width: 2px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      stroke: var(--color-primary-purple-deep);
+      transition: transform 0.25s var(--ease-elastic-out);
+    }
+
+    .card-hero-purple .icon-container svg {
+      width: 50px;
+      height: 50px;
+      stroke: var(--color-accent-coral);
+    }
+
+    /* Micro-Interactions on Card Hover / Active (Skills 08, 15, 17) */
+    .col-card:hover .icon-container {
+      transform: scale(1.05);
+    }
+    .col-card:hover .icon-container svg {
+      transform: translateY(-2px) rotate(4deg); /* Secondary action */
+    }
+    .col-card:active {
+      transform: scale(0.98) !important; /* Skill 15: Squash */
+    }
+
+    /* HEADLINE WRAP with Staggered Follow-Through (Skill 16) */
+    .headline-wrap {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      color: var(--color-off-black-ink);
+      text-wrap: balance;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+
+    .card-hero-purple .card-title {
+      font-size: 38px;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      max-width: 540px;
+    }
+
+    .card-desc {
+      font-size: 16.5px;
+      font-weight: 500;
+      color: var(--color-graphite);
+      line-height: 1.45;
+      text-wrap: balance;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+
+    .card-hero-purple .card-desc {
+      color: rgba(20, 20, 15, 0.88);
+      font-size: 18px;
+      max-width: 500px;
+    }
+
+    /* Exaggerated Climax Shockwave (Skill 18) */
+    #hero-shockwave {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100px;
+      height: 100px;
+      border-radius: 9999px;
+      border: 3px solid var(--color-accent-coral);
+      transform: translate(-50%, -50%) scale(0.6);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Bottom Technical Ticker */
+    .perk-footer-ticker {
+      position: absolute;
+      bottom: 40px;
+      left: 154px;
+      right: 154px;
+      height: 38px;
+      border-top: 1px solid var(--color-ash);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-graphite);
+      z-index: 20;
+    }
+
+    .editorial-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--color-ash);
+    }
+
+    .editorial-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--color-primary-purple-deep);
+    }
+
+    /* Principles Showcase Drawer */
+    .principles-footer {
+      width: 100%;
+      max-width: 1720px;
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .principle-card {
+      background: #141A28;
+      border: 1px solid #232E44;
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .principle-card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-primary-purple);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .principle-card p {
+      font-size: 12.5px;
+      color: #94A3B8;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 900px) {
+      .principles-footer {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .lab-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .principles-footer {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Lab Controller Bar -->
+  <header class="lab-header">
+    <div class="lab-brand">
+      <h1>
+        Laboratorio UX &amp; Motion Design
+        <span class="tag-motion-skill">21 Skills Activas</span>
+      </h1>
+      <p>Prueba comparativa de micro-física, anticipación, arcos, elasticidad squash &amp; stretch y staging visual sobre el sistema Perk.</p>
+    </div>
+
+    <div class="lab-controls">
+      <button class="btn-lab btn-purple" id="btn-play" onclick="playUXMotionTimeline()">
+        ▶ Reproducir con UX-Motion
+      </button>
+      <button class="btn-lab" id="btn-toggle-mode" onclick="toggleMotionMode()">
+        ⚡ Modo: <span id="mode-label" style="font-weight: 700; color: #A78BFA;">UX-Motion Full (Física &amp; Staging)</span>
+      </button>
+      <button class="btn-lab" onclick="triggerInteractiveSquash()">
+        🔘 Probar Squash &amp; Stretch
+      </button>
+      <a class="btn-lab" href="suite_transiciones_perk.html">
+        🎬 Ver Suite Completa
+      </a>
+    </div>
+  </header>
+
+  <!-- Live Active Skills Telemetry Radar -->
+  <div class="skills-telemetry">
+    <span style="color: #94A3B8; font-weight: 700;">HITS EN TIEMPO REAL:</span>
+    <div class="skills-pills-wrap">
+      <span class="skill-pill" id="pill-staging">09: Staging Focus</span>
+      <span class="skill-pill" id="pill-timing">10: Snappy Timing</span>
+      <span class="skill-pill" id="pill-slow">11: Slow In/Out</span>
+      <span class="skill-pill" id="pill-anticipation">13: Anticipation</span>
+      <span class="skill-pill" id="pill-arcs">14: Arcs</span>
+      <span class="skill-pill" id="pill-squash">15: Squash &amp; Stretch</span>
+      <span class="skill-pill" id="pill-follow">16: Follow Through</span>
+      <span class="skill-pill" id="pill-secondary">17: Secondary Action</span>
+      <span class="skill-pill" id="pill-feedback">18: Exaggerated Feedback</span>
+      <span class="skill-pill" id="pill-3d">19: Solid Drawing 3D</span>
+    </div>
+    <span style="color: #A78BFA;" id="live-phase">FASE: Reposo Interactivo</span>
+  </div>
+
+  <!-- 16:9 VIEWPORT STAGE THEATER -->
+  <main class="viewport-box">
+    <div id="stage-scaler" class="clip" data-composition-id="perk_ux_motion_demo" data-width="1920" data-height="1080" data-duration="10" data-start="0">
+
+      <!-- Top Editorial Nav -->
+      <header class="perk-nav">
+        <span class="perk-logo">Perk</span>
+        <span class="perk-nav-context">Pipeline de Ejecución Agéntica &bull; UX-Motion Enhancements</span>
+      </header>
+
+      <!-- Subheader Title -->
+      <div class="header-bar" id="header-bar">
+        <h1>Ciclo de Desarrollo Agéntico Autónomo</h1>
+      </div>
+
+      <!-- Arced Vector Conduits (Skill 14: Moving in Arcs) -->
+      <svg id="connecting-svg" viewBox="0 0 1612 500">
+        <!-- Conduit 1 -> 2: Gentle Arc (X: 440 to 476, with subtle curvature) -->
+        <path class="vector-track" d="M 440 250 Q 458 240 476 250" />
+        <path id="vector-1-2" class="vector-active" d="M 440 250 Q 458 240 476 250" />
+        <circle id="pkt-1-2" class="vector-packet" r="5" />
+
+        <!-- Conduit 2 -> 3: Gentle Arc (X: 1136 to 1172, with subtle curvature) -->
+        <path class="vector-track" d="M 1136 250 Q 1154 240 1172 250" />
+        <path id="vector-2-3" class="vector-active-coral" d="M 1136 250 Q 1154 240 1172 250" />
+        <circle id="pkt-2-3" class="vector-packet-coral" r="5.5" />
+      </svg>
+
+      <!-- 3 Columns with 3D Depth & Staging Focus -->
+      <main class="columns-container" id="columns-wrap">
+
+        <!-- COLUMN 1: ESPECIFICACIÓN -->
+        <div class="col-card" id="card-1" onclick="focusCard(1)">
+          <div class="icon-container" id="icon-box-1">
+            <svg viewBox="0 0 24 24" id="svg-1">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <div class="headline-wrap" id="head-wrap-1">
+            <h2 class="card-title">Captura de Intención &amp; Esquema Formal</h2>
+            <p class="card-desc">Normalización de directivas libres hacia especificaciones técnicas estrictas.</p>
+          </div>
+        </div>
+
+        <!-- COLUMN 2: ORQUESTACIÓN (ENLARGED HERO FEATURE) -->
+        <div class="col-card card-hero-purple" id="card-2" onclick="focusCard(2)">
+          <div id="hero-shockwave"></div>
+          <div class="icon-container" id="icon-box-2">
+            <svg viewBox="0 0 24 24" id="svg-2">
+              <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+              <rect x="9" y="9" width="6" height="6"></rect>
+              <line x1="9" y1="1" x2="9" y2="4"></line>
+              <line x1="15" y1="1" x2="15" y2="4"></line>
+              <line x1="9" y1="20" x2="9" y2="23"></line>
+              <line x1="15" y1="20" x2="15" y2="23"></line>
+              <line x1="20" y1="9" x2="23" y2="9"></line>
+              <line x1="20" y1="14" x2="23" y2="14"></line>
+              <line x1="1" y1="9" x2="4" y2="9"></line>
+              <line x1="1" y1="14" x2="4" y2="14"></line>
+            </svg>
+          </div>
+          <div class="headline-wrap" id="head-wrap-2">
+            <h2 class="card-title">Orquestación Multi-Modelo &amp; Razonamiento</h2>
+            <p class="card-desc">Búsqueda en árboles de decisión, llamadas MCP y autocorrección estructurada de código.</p>
+          </div>
+        </div>
+
+        <!-- COLUMN 3: DESPLIEGUE -->
+        <div class="col-card" id="card-3" onclick="focusCard(3)">
+          <div class="icon-container" id="icon-box-3">
+            <svg viewBox="0 0 24 24" id="svg-3">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <polyline points="9 12 11 14 15 10"></polyline>
+            </svg>
+          </div>
+          <div class="headline-wrap" id="head-wrap-3">
+            <h2 class="card-title">Verificación Aislada en Sandbox Seguro</h2>
+            <p class="card-desc">Compilación de artefactos, testing estático y despliegue determinista.</p>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- Bottom Technical Ticker -->
+      <footer class="perk-footer-ticker">
+        <div>
+          <span>PALETTE: #A78BFA PURPLE // #FF5A36 SIGNAL CORAL // #F5F5EB CANVAS</span>
+        </div>
+        <div>
+          <span>UX-MOTION ENHANCED DETERMINISTIC 10.0s @ 30FPS</span>
+        </div>
+      </footer>
+
+      <!-- Editorial Bottom Progress Bar -->
+      <div class="editorial-progress">
+        <div class="editorial-fill" id="progress-fill"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Principles Breakdown Grid -->
+  <section class="principles-footer">
+    <div class="principle-card">
+      <h3>
+        <span>🎯</span> Skill 09: Staging the Focus
+      </h3>
+      <p>Atenúa gradualmente al 55% las tarjetas secundarias cuando el flujo de ejecución o foco se concentra en la etapa activa.</p>
+    </div>
+
+    <div class="principle-card">
+      <h3>
+        <span>⚡</span> Skill 13 &amp; 15: Anticipation &amp; Squash
+      </h3>
+      <p>Micro-retroceso de 40ms antes de emitir datos, seguido de compresión física elástica sin romper el volumen geométrico.</p>
+    </div>
+
+    <div class="principle-card">
+      <h3>
+        <span>🌊</span> Skill 16 &amp; 17: Follow-Through &amp; Secondary
+      </h3>
+      <p>Entrada escalonada (Contenedor &rarr; Icono &rarr; Título &rarr; Detalle a 25ms) y micro-giros reactivos del icono vectorial.</p>
+    </div>
+
+    <div class="principle-card">
+      <h3>
+        <span>📦</span> Skill 19: Solid Drawing in 3D
+      </h3>
+      <p>Perspectiva espacial a 1200px con rotación sutil en eje X y elevación dinámica de sombras que proyectan profundidad real.</p>
+    </div>
+  </section>
+
+  <script>
+    function fitStage() {
+      const stage = document.getElementById('stage-scaler');
+      const container = document.querySelector('.viewport-box');
+      if (!stage || !container) return;
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      const scale = Math.min(w / 1920, h / 1080);
+      stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    }
+    window.addEventListener('resize', fitStage);
+    fitStage();
+
+    let motionMode = 'ux-motion'; // 'ux-motion' | 'standard'
+    const columnsWrap = document.getElementById('columns-wrap');
+    const livePhase = document.getElementById('live-phase');
+
+    function setPill(id, active) {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('active', active);
+    }
+
+    function resetPills() {
+      document.querySelectorAll('.skill-pill').forEach(p => p.classList.remove('active'));
+    }
+
+    // Interactive Focus (Skill 09 Demonstration)
+    function focusCard(id) {
+      columnsWrap.classList.add('staged');
+      document.querySelectorAll('.col-card').forEach(c => c.classList.remove('active-focus'));
+      const target = document.getElementById(`card-${id}`);
+      if (target) target.classList.add('active-focus');
+      
+      setPill('pill-staging', true);
+      setPill('pill-squash', true);
+      livePhase.innerText = `FASE: Foco Staged en Tarjeta ${id}`;
+
+      // Squash and stretch tactile feedback (Skill 15)
+      gsap.fromTo(target, 
+        { scaleX: 1.035, scaleY: 0.965 }, 
+        { scaleX: 1.02, scaleY: 1.02, duration: 0.35, ease: 'back.out(2)' }
+      );
+
+      setTimeout(() => {
+        columnsWrap.classList.remove('staged');
+        if (target) target.classList.remove('active-focus');
+        setPill('pill-staging', false);
+        setPill('pill-squash', false);
+        livePhase.innerText = 'FASE: Reposo Interactivo';
+      }, 1800);
+    }
+
+    function triggerInteractiveSquash() {
+      setPill('pill-squash', true);
+      setPill('pill-secondary', true);
+      livePhase.innerText = 'FASE: Micro-Física Squash & Secondary Action';
+
+      const cards = ['card-1', 'card-2', 'card-3'];
+      cards.forEach((cId, i) => {
+        const card = document.getElementById(cId);
+        const icon = card.querySelector('.icon-container');
+        gsap.to(card, {
+          scaleX: 1.03, scaleY: 0.96, duration: 0.1, delay: i * 0.08,
+          yoyo: true, repeat: 1, ease: 'power1.inOut'
+        });
+        gsap.to(icon, {
+          rotation: i % 2 === 0 ? 6 : -6, duration: 0.2, delay: i * 0.08,
+          yoyo: true, repeat: 1, ease: 'back.out(2)'
+        });
+      });
+
+      setTimeout(() => {
+        setPill('pill-squash', false);
+        setPill('pill-secondary', false);
+        livePhase.innerText = 'FASE: Reposo Interactivo';
+      }, 1200);
+    }
+
+    function toggleMotionMode() {
+      const label = document.getElementById('mode-label');
+      if (motionMode === 'ux-motion') {
+        motionMode = 'standard';
+        label.innerText = 'Estándar Clásico (Lineal)';
+        label.style.color = '#94A3B8';
+      } else {
+        motionMode = 'ux-motion';
+        label.innerText = 'UX-Motion Full (Física & Staging)';
+        label.style.color = '#A78BFA';
+      }
+      playUXMotionTimeline();
+    }
+
+    // Master Hyperframes Timeline Registration
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    if (Array.isArray(window.__timelines)) {
+      window.__timelines.push(tl);
+    } else {
+      window.__timelines["perk_ux_motion_demo"] = tl;
+    }
+
+    function buildUXMotionTimeline() {
+      tl.clear();
+      resetPills();
+
+      // Initial visual sets (Skill 19: 3D Perspective placement)
+      gsap.set('.perk-nav', { opacity: 0, y: -16 });
+      gsap.set('#header-bar', { opacity: 0, y: -12 });
+      gsap.set('.perk-footer-ticker', { opacity: 0 });
+      gsap.set(['#card-1', '#card-3'], { opacity: 0, y: 32, rotateX: motionMode === 'ux-motion' ? 6 : 0, scale: 0.96 });
+      gsap.set('#card-2', { opacity: 0, scale: 0.92, y: 36, rotateX: motionMode === 'ux-motion' ? 8 : 0 });
+      gsap.set('#connecting-svg', { opacity: 0 });
+      gsap.set('#hero-shockwave', { opacity: 0, scale: 0.6 });
+      columnsWrap.classList.remove('staged');
+      document.querySelectorAll('.col-card').forEach(c => c.classList.remove('active-focus'));
+
+      if (motionMode === 'ux-motion') {
+        // === FULL UX-MOTION PIPELINE (SKILLS 09 - 20) ===
+        tl
+          // Nav & Header Reveal with Snappy Timing (Skill 10, 11)
+          .to('.perk-nav', { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0.2)
+          .to('#header-bar', { opacity: 1, y: 0, duration: 0.5, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.35)
+          .to('.perk-footer-ticker', { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.5)
+
+          // 1. Card 1 Entry with Staggered Follow-Through (Skill 16) & 3D Solid Drawing (Skill 19)
+          .call(() => {
+            setPill('pill-timing', true);
+            setPill('pill-slow', true);
+            setPill('pill-3d', true);
+            setPill('pill-follow', true);
+            livePhase.innerText = 'FASE: Entrada Card 1 con Follow-Through 3D';
+          }, null, 0.55)
+          .to('#card-1', { 
+            opacity: 1, y: 0, rotateX: 0, scale: 1, 
+            duration: 0.7, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' 
+          }, 0.6)
+          // Micro-stagger inside card 1 (Icon -> Title -> Desc)
+          .fromTo('#icon-box-1', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 0.7)
+          .fromTo('#head-wrap-1', { y: 8, opacity: 0.7 }, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.78)
+
+          // 2. Card 2 (Dominant Hero) Entry with Anticipation & Elastic Landing (Skill 13, 15)
+          .call(() => {
+            setPill('pill-anticipation', true);
+            setPill('pill-squash', true);
+            livePhase.innerText = 'FASE: Entrada Hero Card 2 con Squash & Elasticidad';
+          }, null, 0.8)
+          .to('#card-2', { 
+            opacity: 1, y: 0, rotateX: 0, scale: 1, 
+            duration: 0.85, ease: 'back.out(1.4)' 
+          }, 0.85)
+          .fromTo('#icon-box-2', { scale: 0.8, opacity: 0.5 }, { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(2.5)' }, 0.95)
+
+          // 3. Card 3 Entry
+          .to('#card-3', { 
+            opacity: 1, y: 0, rotateX: 0, scale: 1, 
+            duration: 0.7, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' 
+          }, 1.1)
+          .fromTo('#icon-box-3', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 1.2)
+          .to('#connecting-svg', { opacity: 1, duration: 0.4 }, 1.3)
+
+          // 4. Staging the Focus on Card 1 (Skill 09) & Wind-up Anticipation (Skill 13)
+          .call(() => {
+            columnsWrap.classList.add('staged');
+            document.getElementById('card-1').classList.add('active-focus');
+            setPill('pill-staging', true);
+            setPill('pill-anticipation', true);
+            livePhase.innerText = 'FASE: Foco en Card 1 + Anticipación antes del disparo';
+          }, null, 2.0)
+          // Wind-up: Card 1 pulls back 3px before packet release
+          .to('#card-1', { x: -3, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 2.05)
+          .to('#card-1', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 2.15)
+
+          // 5. Arced Vector Trajectory (Skill 14) & Photon Pulse
+          .call(() => {
+            setPill('pill-arcs', true);
+            livePhase.innerText = 'FASE: Transmisión Vectorial en Arco Orgánico';
+          }, null, 2.2)
+          .fromTo('#vector-1-2', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 2.2)
+          .fromTo('#pkt-1-2', { cx: 440, cy: 250, opacity: 1 }, { cx: 476, cy: 250, opacity: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 2.2)
+
+          // 6. Impact on Hero Card 2: Exaggerated Feedback (Skill 18) & Secondary Icon Spin (Skill 17)
+          .call(() => {
+            document.getElementById('card-1').classList.remove('active-focus');
+            document.getElementById('card-2').classList.add('active-focus');
+            setPill('pill-staging', true);
+            setPill('pill-feedback', true);
+            setPill('pill-secondary', true);
+            livePhase.innerText = 'FASE: Impacto en Hero Central + Shockwave Coral Exagerado';
+          }, null, 3.0)
+          // Elastic impact squash on Hero
+          .to('#card-2', { scaleX: 1.03, scaleY: 0.97, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 3.0)
+          // Coral shockwave burst (Skill 18)
+          .fromTo('#hero-shockwave', 
+            { opacity: 0.9, scale: 0.7 }, 
+            { opacity: 0, scale: 2.2, duration: 0.7, ease: 'power2.out' }, 3.0
+          )
+          // Secondary Icon Reaction (Skill 17)
+          .to('#svg-2', { rotation: 8, duration: 0.15, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 3.05)
+
+          // 7. Hero Launches Coral Conduit towards Card 3
+          .call(() => {
+            livePhase.innerText = 'FASE: Emisión hacia Card 3';
+          }, null, 4.6)
+          .to('#card-2', { x: 2, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 4.6)
+          .to('#card-2', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 4.7)
+          .fromTo('#vector-2-3', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 4.75)
+          .fromTo('#pkt-2-3', { cx: 1136, cy: 250, opacity: 1 }, { cx: 1172, cy: 250, opacity: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 4.75)
+
+          // 8. Card 3 Impact & Final Resolution
+          .call(() => {
+            document.getElementById('card-2').classList.remove('active-focus');
+            document.getElementById('card-3').classList.add('active-focus');
+            livePhase.innerText = 'FASE: Llegada a Sandbox Seguro';
+          }, null, 5.5)
+          .to('#card-3', { scaleX: 1.025, scaleY: 0.975, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 5.5)
+          .to('#svg-3', { scale: 1.15, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 5.55)
+
+          // 9. Harmony Restoration (Skill 20: Overall Appeal)
+          .call(() => {
+            columnsWrap.classList.remove('staged');
+            document.querySelectorAll('.col-card').forEach(c => c.classList.remove('active-focus'));
+            resetPills();
+            livePhase.innerText = 'FASE: Sistema Armónico Estable (Overall Appeal)';
+          }, null, 6.8)
+
+          .to('#progress-fill', { width: '100%', duration: 10, ease: 'none' }, 0);
+
+      } else {
+        // === STANDARD MODE (Sin micro-física, solo interpolación lineal simple) ===
+        tl
+          .to('.perk-nav', { opacity: 1, y: 0, duration: 0.5 }, 0.2)
+          .to('#header-bar', { opacity: 1, y: 0, duration: 0.5 }, 0.4)
+          .to('.perk-footer-ticker', { opacity: 1, duration: 0.5 }, 0.5)
+
+          .to('#card-1', { opacity: 1, y: 0, scale: 1, duration: 0.6 }, 0.6)
+          .to('#card-2', { opacity: 1, scale: 1, y: 0, duration: 0.8 }, 0.8)
+          .to('#card-3', { opacity: 1, y: 0, scale: 1, duration: 0.6 }, 1.0)
+          .to('#connecting-svg', { opacity: 1, duration: 0.4 }, 1.3)
+
+          .fromTo('#vector-1-2', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power1.inOut' }, 2.0)
+          .fromTo('#pkt-1-2', { cx: 440, cy: 250, opacity: 1 }, { cx: 476, cy: 250, opacity: 0, duration: 0.8 }, 2.0)
+
+          .fromTo('#vector-2-3', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power1.inOut' }, 4.5)
+          .fromTo('#pkt-2-3', { cx: 1136, cy: 250, opacity: 1 }, { cx: 1172, cy: 250, opacity: 0, duration: 0.8 }, 4.5)
+
+          .to('#progress-fill', { width: '100%', duration: 10, ease: 'none' }, 0);
+      }
+    }
+
+    function playUXMotionTimeline() {
+      buildUXMotionTimeline();
+      tl.restart();
+    }
+
+    // Initialize and play on load
+    buildUXMotionTimeline();
+    tl.play();
+  </script>
+</body>
+</html>
