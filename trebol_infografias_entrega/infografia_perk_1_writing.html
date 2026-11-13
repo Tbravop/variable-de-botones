@@ -3,19 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
-  <title>El Proceso Editorial // Perk Editorial</title>
+  <title>El Proceso Editorial // Perk UX-Motion (Stepped 2+3)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <style>
-    /* Perk Refactored Design Tokens — Generous Spacing & Tailored Cards */
     :root {
       --color-primary-purple: #A78BFA;
       --color-primary-purple-soft: #EDE9FE;
       --color-primary-purple-deep: #7C3AED;
       
-      /* Intentional Focal Accent: Signal Coral */
       --color-accent-coral: #FF5A36;
       --color-accent-coral-soft: #FFEFEB;
       
@@ -23,9 +21,16 @@
       --color-off-white-canvas: #f5f5eb;
       --color-pure-white: #ffffff;
       --color-ash: #d2d2c8;
-      --color-graphite: #383832; /* Contrast >8:1 */
+      --color-graphite: #383832;
       
       --font-otsono: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      /* Snappy UX-Motion Timing Tokens (Skills 10 & 11) */
+      --ease-snappy-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-snappy-in: cubic-bezier(0.4, 0, 1, 1);
+      --ease-elastic-out: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-in-out-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -55,7 +60,7 @@
       overflow: hidden;
     }
 
-    /* Top Editorial Header — Generous Margins */
+    /* Top Editorial Header */
     .perk-nav {
       position: absolute;
       top: 48px;
@@ -84,7 +89,7 @@
       letter-spacing: 0.01em;
     }
 
-    /* Subheader Title — Punchy Headline Scale */
+    /* Subheader Title */
     .header-bar {
       position: absolute;
       top: 122px;
@@ -106,7 +111,7 @@
       text-wrap: balance;
     }
 
-    /* STEPPED 2+3 CONTAINER: Tailored to Content, Generous Breathing Space */
+    /* STEPPED 2+3 CONTAINER: 3D Perspective (Skill 19) */
     .stepped-container {
       position: absolute;
       top: 212px;
@@ -117,6 +122,7 @@
       flex-direction: column;
       gap: 24px;
       z-index: 10;
+      perspective: 1200px;
     }
 
     /* ROW 1: 2 WIDE CARDS */
@@ -124,7 +130,7 @@
       width: 100%;
       height: 276px;
       display: grid;
-      grid-template-columns: 1fr 1.35fr; /* ENLARGED HERO FEATURE (REDACCIÓN) */
+      grid-template-columns: 1fr 1.35fr;
       gap: 24px;
     }
 
@@ -137,12 +143,11 @@
       gap: 24px;
     }
 
-    /* CARD BASE: 26px radius, ZERO SHADOWS, Concentric Inner Radii */
+    /* CARD BASE: Concentric Inner Radii & Tactile Cursor */
     .card-item {
       background: var(--color-pure-white);
       border-radius: 26px;
       border: 1px solid var(--color-ash);
-      box-shadow: none;
       position: relative;
       overflow: hidden;
       display: flex;
@@ -153,9 +158,27 @@
       padding: 24px 30px;
       opacity: 0;
       transform: translateY(24px);
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: opacity 0.35s ease, transform 0.35s var(--ease-snappy-out), border-color 0.3s ease, box-shadow 0.35s ease;
     }
 
-    /* ENLARGED HERO FEATURE (REDACCIÓN): Dominant Visual Presence */
+    /* Staging the Focus (Skill 09) */
+    .stepped-container.staged .card-item:not(.active-focus) {
+      opacity: 0.52 !important;
+      transform: scale(0.985);
+      filter: grayscale(12%);
+    }
+
+    .card-item.active-focus {
+      opacity: 1 !important;
+      transform: scale(1.025) !important;
+      z-index: 25;
+      border-color: var(--color-primary-purple);
+      box-shadow: 0 16px 36px rgba(167, 139, 250, 0.22);
+    }
+
+    /* ENLARGED HERO FEATURE (REDACCIÓN) */
     .card-hero-purple {
       background: var(--color-primary-purple);
       border: 1px solid var(--color-primary-purple);
@@ -164,7 +187,27 @@
       padding: 26px 36px;
     }
 
-    /* Icon Container with Inner Radius = Outer - Padding */
+    .card-hero-purple.active-focus {
+      box-shadow: 0 20px 48px rgba(124, 58, 237, 0.32);
+    }
+
+    /* Shockwave for Exaggerated Feedback (Skill 18) */
+    #hero-shockwave {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 120px;
+      height: 120px;
+      margin-top: -60px;
+      margin-left: -60px;
+      border-radius: 50%;
+      border: 3.5px solid var(--color-accent-coral);
+      pointer-events: none;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    /* Icon Container */
     .icon-container {
       width: 80px;
       height: 80px;
@@ -174,6 +217,7 @@
       justify-content: center;
       background: var(--color-primary-purple-soft);
       border: 1px solid rgba(124, 58, 237, 0.2);
+      transition: transform 0.2s var(--ease-snappy-out);
     }
 
     .card-hero-purple .icon-container {
@@ -184,7 +228,6 @@
       border: 1px solid var(--color-off-black-ink);
     }
 
-    /* Consistent 2px geometric Lucide icons */
     .icon-container svg {
       width: 42px;
       height: 42px;
@@ -198,7 +241,7 @@
     .card-hero-purple .icon-container svg {
       width: 48px;
       height: 48px;
-      stroke: var(--color-accent-coral); /* Coral Accent Spark */
+      stroke: var(--color-accent-coral);
     }
 
     .headline-wrap {
@@ -208,7 +251,6 @@
       gap: 8px;
     }
 
-    /* Specific Headlines — Enriched Scale for Wide Phones & Large Screens */
     .card-title {
       font-size: 27px;
       font-weight: 800;
@@ -221,7 +263,7 @@
     }
 
     .card-hero-purple .card-title {
-      font-size: 38px; /* Prominently enlarged */
+      font-size: 38px;
       letter-spacing: -0.03em;
       line-height: 1.1;
       max-width: 540px;
@@ -280,46 +322,44 @@
 
   <div id="stage-scaler" class="clip" data-composition-id="infografia_perk_1_writing" data-width="1920" data-height="1080" data-duration="10" data-start="0">
 
-    <!-- Top Editorial Nav -->
     <header class="perk-nav">
       <span class="perk-logo">Perk</span>
-      <span class="perk-nav-context">Estructura Editorial &amp; Calidad de Contenido</span>
+      <span class="perk-nav-context">Estructura Editorial &bull; UX-Motion Stepped 2+3</span>
     </header>
 
-    <!-- Subheader Title -->
     <div class="header-bar" id="header-bar">
       <h1>Metodología de Producción Editorial</h1>
     </div>
 
-    <!-- STEPPED 2+3 CONTAINER: Tailored to Content, Generous Breathing Space -->
-    <main class="stepped-container">
+    <main class="stepped-container" id="stepped-wrap">
 
       <!-- ROW 1: 2 WIDE CARDS -->
       <div class="row-top">
 
         <!-- CARD 1: INVESTIGACIÓN -->
-        <div class="card-item" id="card-1">
-          <div class="icon-container">
-            <svg viewBox="0 0 24 24">
+        <div class="card-item" id="card-1" onclick="focusCard(1)">
+          <div class="icon-container" id="icon-1">
+            <svg viewBox="0 0 24 24" id="svg-1">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
           </div>
-          <div class="headline-wrap">
+          <div class="headline-wrap" id="hw-1">
             <h2 class="card-title">Investigación &amp; Extracción de Fuentes</h2>
             <p class="card-desc">Curaduría de referencias primarias y estructuración de evidencias.</p>
           </div>
         </div>
 
-        <!-- CARD 2: REDACCIÓN (ENLARGED HERO FEATURE) -->
-        <div class="card-item card-hero-purple" id="card-2">
-          <div class="icon-container">
-            <svg viewBox="0 0 24 24">
+        <!-- CARD 2: REDACCIÓN HERO -->
+        <div class="card-item card-hero-purple" id="card-2" onclick="focusCard(2)">
+          <div id="hero-shockwave"></div>
+          <div class="icon-container" id="icon-2">
+            <svg viewBox="0 0 24 24" id="svg-2">
               <path d="M12 20h9"></path>
               <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
             </svg>
           </div>
-          <div class="headline-wrap">
+          <div class="headline-wrap" id="hw-2">
             <h2 class="card-title">Redacción Estructurada de Alta Densidad</h2>
             <p class="card-desc">Síntesis narrativa rigurosa calibrada para máxima retención de lectura.</p>
           </div>
@@ -331,23 +371,23 @@
       <div class="row-bottom">
 
         <!-- CARD 3: REVISIÓN -->
-        <div class="card-item" id="card-3">
-          <div class="icon-container">
-            <svg viewBox="0 0 24 24">
+        <div class="card-item" id="card-3" onclick="focusCard(3)">
+          <div class="icon-container" id="icon-3">
+            <svg viewBox="0 0 24 24" id="svg-3">
               <polyline points="9 11 12 14 22 4"></polyline>
               <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
             </svg>
           </div>
-          <div class="headline-wrap">
+          <div class="headline-wrap" id="hw-3">
             <h2 class="card-title">Fact-Checking &amp; Coherencia</h2>
             <p class="card-desc">Auditoría cruzada de afirmaciones técnicas y eliminación de sesgos.</p>
           </div>
         </div>
 
         <!-- CARD 4: EDICIÓN -->
-        <div class="card-item" id="card-4">
-          <div class="icon-container">
-            <svg viewBox="0 0 24 24">
+        <div class="card-item" id="card-4" onclick="focusCard(4)">
+          <div class="icon-container" id="icon-4">
+            <svg viewBox="0 0 24 24" id="svg-4">
               <line x1="4" y1="21" x2="4" y2="14"></line>
               <line x1="4" y1="10" x2="4" y2="3"></line>
               <line x1="12" y1="21" x2="12" y2="12"></line>
@@ -359,21 +399,21 @@
               <line x1="17" y1="16" x2="23" y2="16"></line>
             </svg>
           </div>
-          <div class="headline-wrap">
+          <div class="headline-wrap" id="hw-4">
             <h2 class="card-title">Edición de Estilo &amp; Tipografía</h2>
             <p class="card-desc">Pulido de ritmo prosódico, micro-espaciado y jerarquías limpias.</p>
           </div>
         </div>
 
         <!-- CARD 5: PUBLICACIÓN -->
-        <div class="card-item" id="card-5">
-          <div class="icon-container">
-            <svg viewBox="0 0 24 24">
+        <div class="card-item" id="card-5" onclick="focusCard(5)">
+          <div class="icon-container" id="icon-5">
+            <svg viewBox="0 0 24 24" id="svg-5">
               <line x1="22" y1="2" x2="11" y2="13"></line>
               <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
             </svg>
           </div>
-          <div class="headline-wrap">
+          <div class="headline-wrap" id="hw-5">
             <h2 class="card-title">Distribución &amp; Difusión</h2>
             <p class="card-desc">Publicación multicanal y análisis de impacto en la audiencia.</p>
           </div>
@@ -383,13 +423,11 @@
 
     </main>
 
-    <!-- Bottom Technical Rule Ticker -->
     <footer class="perk-footer-ticker">
       <span>PALETTE: #A78BFA PURPLE // #FF5A36 SIGNAL CORAL // #F5F5EB CANVAS</span>
-      <span>HYPERFRAME DETERMINISTIC 10.0s @ 30FPS</span>
+      <span>UX-MOTION DETERMINISTIC 10.0s @ 30FPS</span>
     </footer>
 
-    <!-- Editorial Bottom Progress Bar -->
     <div class="editorial-progress">
       <div class="editorial-fill" id="progress-fill"></div>
     </div>
@@ -407,6 +445,25 @@
     window.addEventListener('resize', fitStage);
     fitStage();
 
+    const steppedWrap = document.getElementById('stepped-wrap');
+
+    function focusCard(n) {
+      steppedWrap.classList.add('staged');
+      document.querySelectorAll('.card-item').forEach(c => c.classList.remove('active-focus'));
+      const target = document.getElementById(`card-${n}`);
+      if (target) {
+        target.classList.add('active-focus');
+        gsap.fromTo(target, 
+          { scaleX: 1.035, scaleY: 0.965 }, 
+          { scaleX: 1.025, scaleY: 1.025, duration: 0.35, ease: 'back.out(2)' }
+        );
+      }
+      setTimeout(() => {
+        steppedWrap.classList.remove('staged');
+        if (target) target.classList.remove('active-focus');
+      }, 1600);
+    }
+
     window.__timelines = window.__timelines || {};
     const tl = gsap.timeline({ paused: true });
     if (Array.isArray(window.__timelines)) {
@@ -418,20 +475,80 @@
     gsap.set('.perk-nav', { opacity: 0, y: -16 });
     gsap.set('#header-bar', { opacity: 0, y: -12 });
     gsap.set('.perk-footer-ticker', { opacity: 0 });
-    gsap.set(['#card-1', '#card-3', '#card-4', '#card-5'], { opacity: 0, y: 24 });
-    gsap.set('#card-2', { opacity: 0, scale: 0.96, y: 24 });
+    gsap.set(['#card-1', '#card-3', '#card-4', '#card-5'], { opacity: 0, y: 32, rotateX: 6, scale: 0.96 });
+    gsap.set('#card-2', { opacity: 0, scale: 0.92, y: 36, rotateX: 8 });
+    gsap.set('#hero-shockwave', { opacity: 0, scale: 0.6 });
 
     tl
-      .to('.perk-nav', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.2)
-      .to('#header-bar', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.4)
-      .to('.perk-footer-ticker', { opacity: 1, duration: 0.5, ease: 'power2.out' }, 0.5)
+      // Nav & Header Entrance with Snappy Timing (Skills 10 & 11)
+      .to('.perk-nav', { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0.2)
+      .to('#header-bar', { opacity: 1, y: 0, duration: 0.5, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.35)
+      .to('.perk-footer-ticker', { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.5)
 
-      // Stepped Cards Entry
-      .to('#card-1', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.6)
-      .to('#card-2', { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: 'back.out(1.2)' }, 0.8)
-      .to('#card-3', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 1.1)
-      .to('#card-4', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 1.3)
-      .to('#card-5', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 1.5)
+      // Staggered Entry with 3D Solid Drawing (Skill 19) & Follow-Through (Skill 16)
+      .to('#card-1', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.7, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.55)
+      .fromTo('#icon-1', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 0.65)
+      
+      // Hero Card 2 Elastic Landing with Squash & Stretch (Skill 15)
+      .to('#card-2', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.85, ease: 'back.out(1.4)' }, 0.75)
+      .fromTo('#icon-2', { scale: 0.8, opacity: 0.5 }, { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(2.5)' }, 0.85)
+
+      // Bottom Row Sequential Entrance
+      .to('#card-3', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.65, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.95)
+      .to('#card-4', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.65, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 1.1)
+      .to('#card-5', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.65, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 1.25)
+
+      // --- EDITORIAL EXECUTION PULSES (SKILLS 09, 13, 17, 18) ---
+      // 1. Staging Focus on Card 1 (Investigación) + Anticipation Recoil (Skill 13)
+      .call(() => {
+        steppedWrap.classList.add('staged');
+        document.getElementById('card-1').classList.add('active-focus');
+      }, null, 2.0)
+      .to('#card-1', { y: -4, scale: 1.025, duration: 0.1, ease: 'power1.in' }, 2.05)
+      .to('#card-1', { y: 0, scale: 1.02, duration: 0.2, ease: 'back.out(2)' }, 2.15)
+      .to('#svg-1', { rotation: 10, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 2.2)
+
+      // 2. Cascade into Hero Card 2 (Redacción) + Exaggerated Shockwave (Skill 18)
+      .call(() => {
+        document.getElementById('card-1').classList.remove('active-focus');
+        document.getElementById('card-2').classList.add('active-focus');
+      }, null, 3.2)
+      .to('#card-2', { scaleX: 1.03, scaleY: 0.97, duration: 0.12, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 3.2)
+      .fromTo('#hero-shockwave', 
+        { opacity: 0.9, scale: 0.7 }, 
+        { opacity: 0, scale: 2.2, duration: 0.75, ease: 'power2.out' }, 3.2
+      )
+      .to('#svg-2', { rotation: -8, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 3.25)
+
+      // 3. Step Down to Card 3 (Revisión)
+      .call(() => {
+        document.getElementById('card-2').classList.remove('active-focus');
+        document.getElementById('card-3').classList.add('active-focus');
+      }, null, 4.8)
+      .to('#card-3', { scaleX: 1.03, scaleY: 0.97, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 4.8)
+      .to('#svg-3', { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 4.85)
+
+      // 4. Step to Card 4 (Edición)
+      .call(() => {
+        document.getElementById('card-3').classList.remove('active-focus');
+        document.getElementById('card-4').classList.add('active-focus');
+      }, null, 6.2)
+      .to('#card-4', { scaleX: 1.03, scaleY: 0.97, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 6.2)
+      .to('#svg-4', { rotation: 8, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 6.25)
+
+      // 5. Step to Card 5 (Publicación / Entrega)
+      .call(() => {
+        document.getElementById('card-4').classList.remove('active-focus');
+        document.getElementById('card-5').classList.add('active-focus');
+      }, null, 7.5)
+      .to('#card-5', { scaleX: 1.035, scaleY: 0.965, duration: 0.12, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 7.5)
+      .to('#svg-5', { x: 4, y: -4, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 7.55)
+
+      // 6. Overall Appeal Restoration (Skill 20)
+      .call(() => {
+        steppedWrap.classList.remove('staged');
+        document.querySelectorAll('.card-item').forEach(c => c.classList.remove('active-focus'));
+      }, null, 8.8)
 
       .to('#progress-fill', { width: '100%', duration: 10, ease: 'none' }, 0);
 

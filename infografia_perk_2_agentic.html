@@ -3,19 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
-  <title>Infografía 2: Ciclo Agéntico // Perk Refactorizado (3 Linear Columns)</title>
+  <title>Ciclo de Desarrollo Agéntico // Perk UX-Motion (3 Columnas)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <style>
-    /* Perk Refactored Design Tokens — Generous Spacing & Tailored Columns */
     :root {
       --color-primary-purple: #A78BFA;
       --color-primary-purple-soft: #EDE9FE;
       --color-primary-purple-deep: #7C3AED;
       
-      /* Intentional Accent Color: Signal Coral */
       --color-accent-coral: #FF5A36;
       --color-accent-coral-soft: #FFEFEB;
       
@@ -23,11 +21,15 @@
       --color-off-white-canvas: #f5f5eb;
       --color-pure-white: #ffffff;
       --color-ash: #d2d2c8;
-      --color-graphite: #383832; /* High-contrast graphite (>8:1) */
-      --color-deep-charcoal: #252520;
+      --color-graphite: #383832;
       
       --font-otsono: 'Inter', system-ui, -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
+
+      --ease-snappy-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-snappy-in: cubic-bezier(0.4, 0, 1, 1);
+      --ease-elastic-out: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-in-out-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -57,12 +59,11 @@
       overflow: hidden;
     }
 
-    /* Top Editorial Header — Generous Margins */
     .perk-nav {
       position: absolute;
       top: 48px;
-      left: 154px;
-      right: 154px;
+      left: 140px;
+      right: 140px;
       height: 52px;
       display: flex;
       align-items: center;
@@ -86,12 +87,11 @@
       letter-spacing: 0.01em;
     }
 
-    /* Subheader Title — Punchy Scale */
     .header-bar {
       position: absolute;
       top: 122px;
-      left: 154px;
-      right: 154px;
+      left: 140px;
+      right: 140px;
       height: 52px;
       display: flex;
       align-items: flex-end;
@@ -108,69 +108,24 @@
       text-wrap: balance;
     }
 
-    /* 3 LINEAR COLUMNS: Tailored Card Height & Generous Air */
+    /* 3 COLUMNS CONTAINER: 3D Perspective (Skill 19) */
     .columns-container {
       position: absolute;
-      top: 236px;
-      left: 154px;
-      width: 1612px;
-      height: 500px;
+      top: 220px;
+      left: 140px;
+      width: 1640px;
+      height: 560px;
       display: grid;
-      grid-template-columns: 440px 660px 440px; /* ENLARGED MAIN FEATURE */
+      grid-template-columns: 1fr 1.55fr 1fr;
       gap: 36px;
       z-index: 10;
+      perspective: 1200px;
     }
 
-    /* SVG Connecting Vector Tracks */
-    #connecting-svg {
-      position: absolute;
-      top: 236px;
-      left: 154px;
-      width: 1612px;
-      height: 500px;
-      z-index: 5;
-      pointer-events: none;
-    }
-
-    .vector-track {
-      stroke: var(--color-ash);
-      stroke-width: 2px;
-      stroke-dasharray: 6 6;
-      fill: none;
-    }
-
-    .vector-active {
-      stroke: var(--color-primary-purple-deep);
-      stroke-width: 2.5px;
-      stroke-dasharray: 100;
-      stroke-dashoffset: 100;
-      fill: none;
-    }
-
-    .vector-active-coral {
-      stroke: var(--color-accent-coral);
-      stroke-width: 2.5px;
-      stroke-dasharray: 100;
-      stroke-dashoffset: 100;
-      fill: none;
-    }
-
-    .vector-packet {
-      fill: var(--color-primary-purple-deep);
-      opacity: 0;
-    }
-
-    .vector-packet-coral {
-      fill: var(--color-accent-coral);
-      opacity: 0;
-    }
-
-    /* CARD BASE: 26px radius, ZERO SHADOWS, Concentric Inner Radii */
     .col-card {
       background: var(--color-pure-white);
-      border-radius: 26px;
+      border-radius: 28px;
       border: 1px solid var(--color-ash);
-      box-shadow: none;
       position: relative;
       overflow: hidden;
       display: flex;
@@ -179,24 +134,57 @@
       justify-content: center;
       gap: 22px;
       padding: 36px 32px;
-      height: 500px;
       opacity: 0;
-      transform: translateY(24px);
+      transform: translateY(28px);
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: opacity 0.35s ease, transform 0.35s var(--ease-snappy-out), border-color 0.3s ease, box-shadow 0.35s ease;
     }
 
-    /* ENLARGED HERO CENTER FEATURE */
+    /* Staging the Focus (Skill 09) */
+    .columns-container.staged .col-card:not(.active-focus) {
+      opacity: 0.52 !important;
+      transform: scale(0.985);
+      filter: grayscale(12%);
+    }
+
+    .col-card.active-focus {
+      opacity: 1 !important;
+      transform: scale(1.025) !important;
+      z-index: 25;
+      border-color: var(--color-primary-purple);
+      box-shadow: 0 16px 36px rgba(167, 139, 250, 0.22);
+    }
+
     .card-hero-purple {
       background: var(--color-primary-purple);
       border: 1px solid var(--color-primary-purple);
       color: var(--color-off-black-ink);
-      gap: 24px;
-      padding: 40px 42px;
-      z-index: 12;
+      padding: 44px 44px;
+    }
+
+    .card-hero-purple.active-focus {
+      box-shadow: 0 20px 50px rgba(124, 58, 237, 0.32);
+    }
+
+    #hero-shockwave {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 120px;
+      height: 120px;
+      margin-top: -60px;
+      margin-left: -60px;
+      border-radius: 50%;
+      border: 3.5px solid var(--color-accent-coral);
+      pointer-events: none;
+      opacity: 0;
+      z-index: 1;
     }
 
     .icon-container {
-      width: 88px;
-      height: 88px;
+      width: 92px;
+      height: 92px;
       border-radius: 20px;
       display: flex;
       align-items: center;
@@ -206,16 +194,16 @@
     }
 
     .card-hero-purple .icon-container {
-      width: 104px;
-      height: 104px;
-      border-radius: 22px;
+      width: 110px;
+      height: 110px;
+      border-radius: 24px;
       background: var(--color-off-black-ink);
       border: 1px solid var(--color-off-black-ink);
     }
 
     .icon-container svg {
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       stroke-width: 2px;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -224,9 +212,9 @@
     }
 
     .card-hero-purple .icon-container svg {
-      width: 50px;
-      height: 50px;
-      stroke: var(--color-accent-coral); /* Coral Accent Spark */
+      width: 58px;
+      height: 58px;
+      stroke: var(--color-accent-coral);
     }
 
     .headline-wrap {
@@ -248,10 +236,10 @@
     }
 
     .card-hero-purple .card-title {
-      font-size: 38px; /* Prominently enlarged */
+      font-size: 40px;
       letter-spacing: -0.03em;
       line-height: 1.1;
-      max-width: 540px;
+      max-width: 520px;
     }
 
     .card-desc {
@@ -260,22 +248,67 @@
       color: var(--color-graphite);
       line-height: 1.45;
       text-wrap: balance;
-      max-width: 380px;
+      max-width: 360px;
       margin: 0 auto;
     }
 
     .card-hero-purple .card-desc {
-      color: rgba(20, 20, 15, 0.88);
-      font-size: 18px;
-      max-width: 500px;
+      color: rgba(20, 20, 15, 0.9);
+      font-size: 18.5px;
+      max-width: 460px;
     }
 
-    /* Bottom Technical Ticker */
+    /* Arced Vector Conduits (Skill 14: Moving in Arcs) */
+    #connecting-svg {
+      position: absolute;
+      top: 250px;
+      left: 140px;
+      width: 1640px;
+      height: 500px;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .vector-track {
+      stroke: var(--color-ash);
+      stroke-width: 2.5px;
+      fill: none;
+      stroke-dasharray: 6 6;
+    }
+
+    .vector-active {
+      stroke: var(--color-primary-purple-deep);
+      stroke-width: 4px;
+      fill: none;
+      stroke-linecap: round;
+      stroke-dasharray: 120;
+      stroke-dashoffset: 120;
+    }
+
+    .vector-active-coral {
+      stroke: var(--color-accent-coral);
+      stroke-width: 4px;
+      fill: none;
+      stroke-linecap: round;
+      stroke-dasharray: 120;
+      stroke-dashoffset: 120;
+    }
+
+    .vector-packet {
+      fill: var(--color-primary-purple-deep);
+      opacity: 0;
+    }
+
+    .vector-packet-coral {
+      fill: var(--color-accent-coral);
+      opacity: 0;
+    }
+
     .perk-footer-ticker {
       position: absolute;
-      bottom: 40px;
-      left: 154px;
-      right: 154px;
+      bottom: 36px;
+      left: 140px;
+      right: 140px;
       height: 38px;
       border-top: 1px solid var(--color-ash);
       display: flex;
@@ -307,37 +340,35 @@
 
   <div id="stage-scaler" class="clip" data-composition-id="infografia_perk_2_agentic" data-width="1920" data-height="1080" data-duration="10" data-start="0">
 
-    <!-- Top Editorial Nav -->
     <header class="perk-nav">
       <span class="perk-logo">Perk</span>
-      <span class="perk-nav-context">Pipeline de Ejecución Agéntica</span>
+      <span class="perk-nav-context">Pipeline de Ejecución Agéntica &bull; UX-Motion 3 Columnas</span>
     </header>
 
-    <!-- Subheader Title: Clean without artificial metrics -->
     <div class="header-bar" id="header-bar">
       <h1>Ciclo de Desarrollo Agéntico Autónomo</h1>
     </div>
 
-    <!-- SVG Vector Flow Connectors (1 -> 2 -> 3) -->
-    <svg id="connecting-svg" viewBox="0 0 1612 500">
-      <!-- Track 1 to 2 (X: 440 to 476, Y: 250) -->
-      <path class="vector-track" d="M 440 250 L 476 250" />
-      <path id="vector-1-2" class="vector-active" d="M 440 250 L 476 250" />
-      <circle id="pkt-1-2" class="vector-packet" r="4.5" />
+    <!-- Arced Vector Conduits (Skill 14) -->
+    <svg id="connecting-svg" viewBox="0 0 1640 500">
+      <!-- Arc 1 -> 2: X ~435 to 495 -->
+      <path class="vector-track" d="M 430 250 Q 460 236 490 250" />
+      <path id="vector-1-2" class="vector-active" d="M 430 250 Q 460 236 490 250" />
+      <circle id="pkt-1-2" class="vector-packet" r="5.5" />
 
-      <!-- Track 2 to 3 (X: 1136 to 1172, Y: 250) -->
-      <path class="vector-track" d="M 1136 250 L 1172 250" />
-      <path id="vector-2-3" class="vector-active-coral" d="M 1136 250 L 1172 250" />
-      <circle id="pkt-2-3" class="vector-packet-coral" r="4.5" />
+      <!-- Arc 2 -> 3: X ~1150 to 1210 -->
+      <path class="vector-track" d="M 1150 250 Q 1180 236 1210 250" />
+      <path id="vector-2-3" class="vector-active-coral" d="M 1150 250 Q 1180 236 1210 250" />
+      <circle id="pkt-2-3" class="vector-packet-coral" r="6" />
     </svg>
 
-    <!-- 3 LINEAR COLUMNS: 440px + 660px (Hero) + 440px (Tailored Cards, Generous Air) -->
-    <main class="columns-container">
+    <!-- 3 COLUMNS -->
+    <main class="columns-container" id="columns-wrap">
 
       <!-- COLUMN 1: ESPECIFICACIÓN -->
-      <div class="col-card" id="card-1">
-        <div class="icon-container">
-          <svg viewBox="0 0 24 24">
+      <div class="col-card" id="card-1" onclick="focusCard(1)">
+        <div class="icon-container" id="icon-1">
+          <svg viewBox="0 0 24 24" id="svg-1">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
             <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -345,16 +376,17 @@
             <polyline points="10 9 9 9 8 9"></polyline>
           </svg>
         </div>
-        <div class="headline-wrap">
+        <div class="headline-wrap" id="hw-1">
           <h2 class="card-title">Captura de Intención &amp; Esquema Formal</h2>
           <p class="card-desc">Normalización de directivas libres hacia especificaciones técnicas estrictas.</p>
         </div>
       </div>
 
-      <!-- COLUMN 2: ORQUESTACIÓN (ENLARGED HERO FEATURE) -->
-      <div class="col-card card-hero-purple" id="card-2">
-        <div class="icon-container">
-          <svg viewBox="0 0 24 24">
+      <!-- COLUMN 2: ORQUESTACIÓN (HERO FEATURE) -->
+      <div class="col-card card-hero-purple" id="card-2" onclick="focusCard(2)">
+        <div id="hero-shockwave"></div>
+        <div class="icon-container" id="icon-2">
+          <svg viewBox="0 0 24 24" id="svg-2">
             <rect x="4" y="4" width="16" height="16" rx="2"></rect>
             <rect x="9" y="9" width="6" height="6"></rect>
             <line x1="9" y1="1" x2="9" y2="4"></line>
@@ -367,21 +399,21 @@
             <line x1="1" y1="14" x2="4" y2="14"></line>
           </svg>
         </div>
-        <div class="headline-wrap">
+        <div class="headline-wrap" id="hw-2">
           <h2 class="card-title">Orquestación Multi-Modelo &amp; Razonamiento</h2>
           <p class="card-desc">Búsqueda en árboles de decisión, llamadas MCP y autocorrección estructurada de código.</p>
         </div>
       </div>
 
       <!-- COLUMN 3: DESPLIEGUE -->
-      <div class="col-card" id="card-3">
-        <div class="icon-container">
-          <svg viewBox="0 0 24 24">
+      <div class="col-card" id="card-3" onclick="focusCard(3)">
+        <div class="icon-container" id="icon-3">
+          <svg viewBox="0 0 24 24" id="svg-3">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
             <polyline points="9 12 11 14 15 10"></polyline>
           </svg>
         </div>
-        <div class="headline-wrap">
+        <div class="headline-wrap" id="hw-3">
           <h2 class="card-title">Verificación Aislada en Sandbox Seguro</h2>
           <p class="card-desc">Compilación de artefactos, testing estático y despliegue determinista.</p>
         </div>
@@ -389,17 +421,11 @@
 
     </main>
 
-    <!-- Bottom Technical Ticker -->
     <footer class="perk-footer-ticker">
-      <div>
-        <span>PALETTE: #A78BFA PURPLE // #FF5A36 SIGNAL CORAL // #F5F5EB CANVAS</span>
-      </div>
-      <div>
-        <span>HYPERFRAME DETERMINISTIC 10.0s @ 30FPS</span>
-      </div>
+      <span>PALETTE: #A78BFA PURPLE // #FF5A36 SIGNAL CORAL // #F5F5EB CANVAS</span>
+      <span>UX-MOTION DETERMINISTIC 10.0s @ 30FPS</span>
     </footer>
 
-    <!-- Editorial Bottom Progress Bar -->
     <div class="editorial-progress">
       <div class="editorial-fill" id="progress-fill"></div>
     </div>
@@ -417,6 +443,25 @@
     window.addEventListener('resize', fitStage);
     fitStage();
 
+    const columnsWrap = document.getElementById('columns-wrap');
+
+    function focusCard(n) {
+      columnsWrap.classList.add('staged');
+      document.querySelectorAll('.col-card').forEach(c => c.classList.remove('active-focus'));
+      const target = document.getElementById(`card-${n}`);
+      if (target) {
+        target.classList.add('active-focus');
+        gsap.fromTo(target, 
+          { scaleX: 1.035, scaleY: 0.965 }, 
+          { scaleX: 1.025, scaleY: 1.025, duration: 0.35, ease: 'back.out(2)' }
+        );
+      }
+      setTimeout(() => {
+        columnsWrap.classList.remove('staged');
+        if (target) target.classList.remove('active-focus');
+      }, 1600);
+    }
+
     window.__timelines = window.__timelines || {};
     const tl = gsap.timeline({ paused: true });
     if (Array.isArray(window.__timelines)) {
@@ -428,27 +473,72 @@
     gsap.set('.perk-nav', { opacity: 0, y: -16 });
     gsap.set('#header-bar', { opacity: 0, y: -12 });
     gsap.set('.perk-footer-ticker', { opacity: 0 });
-    gsap.set(['#card-1', '#card-3'], { opacity: 0, y: 24 });
-    gsap.set('#card-2', { opacity: 0, scale: 0.96, y: 24 });
+    gsap.set(['#card-1', '#card-3'], { opacity: 0, y: 32, rotateX: 6, scale: 0.96 });
+    gsap.set('#card-2', { opacity: 0, scale: 0.92, y: 36, rotateX: 8 });
     gsap.set('#connecting-svg', { opacity: 0 });
+    gsap.set('#hero-shockwave', { opacity: 0, scale: 0.6 });
 
     tl
-      .to('.perk-nav', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.2)
-      .to('#header-bar', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.4)
-      .to('.perk-footer-ticker', { opacity: 1, duration: 0.5, ease: 'power2.out' }, 0.5)
+      .to('.perk-nav', { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0.2)
+      .to('#header-bar', { opacity: 1, y: 0, duration: 0.5, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.35)
+      .to('.perk-footer-ticker', { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.5)
 
-      // Column Entry with enlarged hero prominence
-      .to('#card-1', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.6)
-      .to('#card-2', { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: 'back.out(1.2)' }, 0.8)
-      .to('#card-3', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 1.0)
+      // Card 1 Entrance with Follow-Through (Skill 16)
+      .to('#card-1', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.7, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.6)
+      .fromTo('#icon-1', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 0.7)
+
+      // Hero Card 2 Entrance with Elastic Landing (Skill 15)
+      .to('#card-2', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.85, ease: 'back.out(1.4)' }, 0.85)
+      .fromTo('#icon-2', { scale: 0.8, opacity: 0.5 }, { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(2.5)' }, 0.95)
+
+      // Card 3 Entrance
+      .to('#card-3', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.7, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 1.1)
+      .fromTo('#icon-3', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 1.2)
       .to('#connecting-svg', { opacity: 1, duration: 0.4 }, 1.3)
 
-      // Conduits
-      .fromTo('#vector-1-2', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power1.inOut' }, 2.0)
-      .fromTo('#pkt-1-2', { cx: 440, cy: 250, opacity: 1 }, { cx: 476, cy: 250, opacity: 0, duration: 0.8, ease: 'power1.inOut' }, 2.0)
+      // Staging on Card 1 + Anticipation Wind-up (Skills 09, 13)
+      .call(() => {
+        columnsWrap.classList.add('staged');
+        document.getElementById('card-1').classList.add('active-focus');
+      }, null, 2.0)
+      .to('#card-1', { x: -3, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 2.05)
+      .to('#card-1', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 2.15)
 
-      .fromTo('#vector-2-3', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power1.inOut' }, 4.5)
-      .fromTo('#pkt-2-3', { cx: 1136, cy: 250, opacity: 1 }, { cx: 1172, cy: 250, opacity: 0, duration: 0.8, ease: 'power1.inOut' }, 4.5)
+      // Arced Vector 1->2 (Skill 14)
+      .fromTo('#vector-1-2', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 2.2)
+      .fromTo('#pkt-1-2', { cx: 430, cy: 250, opacity: 1 }, { cx: 490, cy: 250, opacity: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 2.2)
+
+      // Impact on Hero Card 2: Exaggerated Feedback (Skill 18) & Secondary Spin (Skill 17)
+      .call(() => {
+        document.getElementById('card-1').classList.remove('active-focus');
+        document.getElementById('card-2').classList.add('active-focus');
+      }, null, 3.0)
+      .to('#card-2', { scaleX: 1.03, scaleY: 0.97, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 3.0)
+      .fromTo('#hero-shockwave', 
+        { opacity: 0.9, scale: 0.7 }, 
+        { opacity: 0, scale: 2.2, duration: 0.7, ease: 'power2.out' }, 3.0
+      )
+      .to('#svg-2', { rotation: 8, duration: 0.15, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 3.05)
+
+      // Hero Card 2 Anticipation & Emits Coral Conduit to Card 3
+      .to('#card-2', { x: 2, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 4.6)
+      .to('#card-2', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 4.7)
+      .fromTo('#vector-2-3', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 4.75)
+      .fromTo('#pkt-2-3', { cx: 1150, cy: 250, opacity: 1 }, { cx: 1210, cy: 250, opacity: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 4.75)
+
+      // Impact on Card 3
+      .call(() => {
+        document.getElementById('card-2').classList.remove('active-focus');
+        document.getElementById('card-3').classList.add('active-focus');
+      }, null, 5.5)
+      .to('#card-3', { scaleX: 1.025, scaleY: 0.975, duration: 0.1, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 5.5)
+      .to('#svg-3', { scale: 1.15, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 5.55)
+
+      // Overall Appeal Restoration (Skill 20)
+      .call(() => {
+        columnsWrap.classList.remove('staged');
+        document.querySelectorAll('.col-card').forEach(c => c.classList.remove('active-focus'));
+      }, null, 6.8)
 
       .to('#progress-fill', { width: '100%', duration: 10, ease: 'none' }, 0);
 

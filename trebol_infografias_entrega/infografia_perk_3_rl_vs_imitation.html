@@ -3,19 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
-  <title>Infografía 3: Refuerzo vs Imitación // Perk Refactorizado (Convergent Center Hero)</title>
+  <title>Refuerzo vs. Imitación // Perk UX-Motion (Center Hero)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <style>
-    /* Perk Refactored Design Tokens — Generous Spacing & Tailored Convergence */
     :root {
       --color-primary-purple: #A78BFA;
       --color-primary-purple-soft: #EDE9FE;
       --color-primary-purple-deep: #7C3AED;
       
-      /* Intentional Accent Color: Signal Coral */
       --color-accent-coral: #FF5A36;
       --color-accent-coral-soft: #FFEFEB;
       
@@ -23,11 +21,15 @@
       --color-off-white-canvas: #f5f5eb;
       --color-pure-white: #ffffff;
       --color-ash: #d2d2c8;
-      --color-graphite: #383832; /* High-contrast graphite (>8:1) */
-      --color-deep-charcoal: #252520;
+      --color-graphite: #383832;
       
       --font-otsono: 'Inter', system-ui, -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
+
+      --ease-snappy-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-snappy-in: cubic-bezier(0.4, 0, 1, 1);
+      --ease-elastic-out: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-in-out-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -57,12 +59,11 @@
       overflow: hidden;
     }
 
-    /* Top Editorial Header — Generous Margins */
     .perk-nav {
       position: absolute;
       top: 48px;
-      left: 167px;
-      right: 167px;
+      left: 140px;
+      right: 140px;
       height: 52px;
       display: flex;
       align-items: center;
@@ -86,12 +87,11 @@
       letter-spacing: 0.01em;
     }
 
-    /* Subheader Title — Punchy Scale */
     .header-bar {
       position: absolute;
       top: 122px;
-      left: 167px;
-      right: 167px;
+      left: 140px;
+      right: 140px;
       height: 52px;
       display: flex;
       align-items: flex-end;
@@ -108,69 +108,25 @@
       text-wrap: balance;
     }
 
-    /* CONVERGENT ROW: Tailored Cards with Generous Breathing Room Around */
-    .bento-row {
+    /* CONVERGENT HERO CONTAINER: 3D Perspective (Skill 19) */
+    .convergent-container {
       position: absolute;
-      top: 232px;
-      left: 167px;
-      width: 1586px;
-      height: 510px;
-      display: flex;
+      top: 220px;
+      left: 140px;
+      width: 1640px;
+      height: 560px;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr 1fr;
       align-items: center;
-      justify-content: space-between;
+      gap: 36px;
       z-index: 10;
+      perspective: 1200px;
     }
 
-    /* SVG Converging Vector Conduits */
-    #connecting-svg {
-      position: absolute;
-      top: 232px;
-      left: 167px;
-      width: 1586px;
-      height: 510px;
-      z-index: 5;
-      pointer-events: none;
-    }
-
-    .vector-track {
-      stroke: var(--color-ash);
-      stroke-width: 2px;
-      stroke-dasharray: 6 6;
-      fill: none;
-    }
-
-    .vector-active-purple {
-      stroke: var(--color-primary-purple-deep);
-      stroke-width: 2.5px;
-      stroke-dasharray: 100;
-      stroke-dashoffset: 100;
-      fill: none;
-    }
-
-    .vector-active-coral {
-      stroke: var(--color-accent-coral);
-      stroke-width: 2.5px;
-      stroke-dasharray: 100;
-      stroke-dashoffset: 100;
-      fill: none;
-    }
-
-    .vector-packet-purple {
-      fill: var(--color-primary-purple-deep);
-      opacity: 0;
-    }
-
-    .vector-packet-coral {
-      fill: var(--color-accent-coral);
-      opacity: 0;
-    }
-
-    /* CARD BASE: 26px radius, ZERO SHADOWS, Concentric Inner Radii */
     .bento-card {
       background: var(--color-pure-white);
-      border-radius: 26px;
+      border-radius: 28px;
       border: 1px solid var(--color-ash);
-      box-shadow: none;
       position: relative;
       overflow: hidden;
       display: flex;
@@ -178,34 +134,65 @@
       align-items: center;
       justify-content: center;
       gap: 20px;
-      text-align: center;
-      padding: 32px 30px;
+      padding: 34px 30px;
       opacity: 0;
       transform: translateY(24px);
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: opacity 0.35s ease, transform 0.35s var(--ease-snappy-out), border-color 0.3s ease, box-shadow 0.35s ease;
     }
 
-    /* SATELLITES (430px x 440px): Compact & snug around content */
     .card-satellite {
-      width: 430px;
-      height: 440px;
+      height: 480px;
     }
 
-    /* ENLARGED DOMINANT CENTER HERO (630px x 510px) */
+    /* Staging Focus (Skill 09) */
+    .convergent-container.staged .bento-card:not(.active-focus) {
+      opacity: 0.52 !important;
+      transform: scale(0.985);
+      filter: grayscale(12%);
+    }
+
+    .bento-card.active-focus {
+      opacity: 1 !important;
+      transform: scale(1.025) !important;
+      z-index: 25;
+      border-color: var(--color-primary-purple);
+      box-shadow: 0 16px 36px rgba(167, 139, 250, 0.22);
+    }
+
+    /* CENTER DOMINANT HERO */
     .card-hero-purple {
-      width: 630px;
-      height: 510px;
       background: var(--color-primary-purple);
       border: 1px solid var(--color-primary-purple);
       color: var(--color-off-black-ink);
-      z-index: 15;
-      gap: 24px;
-      padding: 38px 40px;
+      height: 540px;
+      padding: 44px 40px;
+    }
+
+    .card-hero-purple.active-focus {
+      box-shadow: 0 20px 50px rgba(124, 58, 237, 0.32);
+    }
+
+    #hero-shockwave {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 140px;
+      height: 140px;
+      margin-top: -70px;
+      margin-left: -70px;
+      border-radius: 50%;
+      border: 4px solid var(--color-accent-coral);
+      pointer-events: none;
+      opacity: 0;
+      z-index: 1;
     }
 
     .icon-container {
-      width: 84px;
-      height: 84px;
-      border-radius: 18px;
+      width: 92px;
+      height: 92px;
+      border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -214,16 +201,16 @@
     }
 
     .card-hero-purple .icon-container {
-      width: 100px;
-      height: 100px;
-      border-radius: 22px;
+      width: 115px;
+      height: 115px;
+      border-radius: 26px;
       background: var(--color-off-black-ink);
       border: 1px solid var(--color-off-black-ink);
     }
 
     .icon-container svg {
-      width: 42px;
-      height: 42px;
+      width: 48px;
+      height: 48px;
       stroke-width: 2px;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -232,32 +219,33 @@
     }
 
     .card-hero-purple .icon-container svg {
-      width: 48px;
-      height: 48px;
-      stroke: var(--color-accent-coral); /* Coral Accent Spark */
+      width: 62px;
+      height: 62px;
+      stroke: var(--color-accent-coral);
     }
 
     .headline-wrap {
+      text-align: center;
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
 
     .card-title {
-      font-size: 28px;
+      font-size: 27px;
       font-weight: 800;
       letter-spacing: -0.025em;
       line-height: 1.15;
       color: var(--color-off-black-ink);
       text-wrap: balance;
-      max-width: 380px;
+      max-width: 360px;
       margin: 0 auto;
     }
 
     .card-hero-purple .card-title {
-      font-size: 38px; /* Prominently enlarged */
-      letter-spacing: -0.035em;
-      line-height: 1.08;
+      font-size: 38px;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
       max-width: 520px;
     }
 
@@ -267,22 +255,67 @@
       color: var(--color-graphite);
       line-height: 1.45;
       text-wrap: balance;
-      max-width: 380px;
+      max-width: 360px;
       margin: 0 auto;
     }
 
     .card-hero-purple .card-desc {
-      color: rgba(20, 20, 15, 0.88);
-      font-size: 18px;
-      max-width: 500px;
+      color: rgba(20, 20, 15, 0.9);
+      font-size: 18.5px;
+      max-width: 460px;
     }
 
-    /* Bottom Technical Ticker */
+    /* Converging Vector Arcs (Skill 14) */
+    #connecting-svg {
+      position: absolute;
+      top: 220px;
+      left: 140px;
+      width: 1640px;
+      height: 560px;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .vector-track {
+      stroke: var(--color-ash);
+      stroke-width: 2.5px;
+      fill: none;
+      stroke-dasharray: 6 6;
+    }
+
+    .vector-active-left {
+      stroke: var(--color-primary-purple-deep);
+      stroke-width: 4px;
+      fill: none;
+      stroke-linecap: round;
+      stroke-dasharray: 120;
+      stroke-dashoffset: 120;
+    }
+
+    .vector-active-right {
+      stroke: var(--color-accent-coral);
+      stroke-width: 4px;
+      fill: none;
+      stroke-linecap: round;
+      stroke-dasharray: 120;
+      stroke-dashoffset: 120;
+    }
+
+    .vector-packet {
+      fill: var(--color-primary-purple-deep);
+      opacity: 0;
+    }
+
+    .vector-packet-coral {
+      fill: var(--color-accent-coral);
+      opacity: 0;
+    }
+
     .perk-footer-ticker {
       position: absolute;
-      bottom: 40px;
-      left: 167px;
-      right: 167px;
+      bottom: 36px;
+      left: 140px;
+      right: 140px;
       height: 38px;
       border-top: 1px solid var(--color-ash);
       display: flex;
@@ -314,78 +347,67 @@
 
   <div id="stage-scaler" class="clip" data-composition-id="infografia_perk_3_rl_vs_imitation" data-width="1920" data-height="1080" data-duration="10" data-start="0">
 
-    <!-- Top Editorial Nav -->
     <header class="perk-nav">
       <span class="perk-logo">Perk</span>
-      <span class="perk-nav-context">Matriz de Convergencia Neuronal</span>
+      <span class="perk-nav-context">Estrategia de Entrenamiento &bull; UX-Motion Convergent Hero</span>
     </header>
 
-    <!-- Subheader Title: Clean without artificial metrics -->
     <div class="header-bar" id="header-bar">
-      <h1>Aprendizaje por Refuerzo vs. Imitación</h1>
+      <h1>Refuerzo Autónomo vs. Imitación Guiada</h1>
     </div>
 
-    <!-- SVG Convergent Vectors (Left -> Center & Right -> Center) -->
-    <svg id="connecting-svg" viewBox="0 0 1586 510">
-      <!-- Left to Center Hero (X: 430 to 478, Y: 255) -->
-      <path class="vector-track" d="M 430 255 L 478 255" />
-      <path id="vector-left" class="vector-active-purple" d="M 430 255 L 478 255" />
-      <circle id="pkt-left" class="vector-packet-purple" r="4.5" />
+    <!-- Converging Vector Arcs (Skill 14) -->
+    <svg id="connecting-svg" viewBox="0 0 1640 560">
+      <!-- Left to Center Arc: 440,280 -> 500,280 -->
+      <path class="vector-track" d="M 430 280 Q 465 260 500 280" />
+      <path id="vector-left" class="vector-active-left" d="M 430 280 Q 465 260 500 280" />
+      <circle id="pkt-left" class="vector-packet" r="6" />
 
-      <!-- Right to Center Hero (X: 1156 to 1108, Y: 255) -> Inwards Coral Accent -->
-      <path class="vector-track" d="M 1156 255 L 1108 255" />
-      <path id="vector-right" class="vector-active-coral" d="M 1156 255 L 1108 255" />
-      <circle id="pkt-right" class="vector-packet-coral" r="5" />
+      <!-- Right to Center Arc: 1210,280 -> 1140,280 -->
+      <path class="vector-track" d="M 1210 280 Q 1175 260 1140 280" />
+      <path id="vector-right" class="vector-active-right" d="M 1210 280 Q 1175 260 1140 280" />
+      <circle id="pkt-right" class="vector-packet-coral" r="6" />
     </svg>
 
-    <!-- CONVERGENT ROW: Left Satellite + Center Hero + Right Satellite -->
-    <main class="bento-row">
+    <main class="convergent-container" id="convergent-wrap">
 
-      <!-- SATELLITE 1: RL AUTÓNOMO -->
-      <div class="bento-card card-satellite" id="card-left">
-        <div class="icon-container">
-          <svg viewBox="0 0 24 24">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+      <!-- LEFT SATELLITE: APRENDIZAJE POR REFUERZO -->
+      <div class="bento-card card-satellite" id="card-left" onclick="focusCard('left')">
+        <div class="icon-container" id="icon-left">
+          <svg viewBox="0 0 24 24" id="svg-left">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
           </svg>
         </div>
-        <div class="headline-wrap">
-          <h2 class="card-title">Exploración Autónoma por Refuerzo</h2>
-          <p class="card-desc">Descubrimiento de estrategias óptimas mediante ensayo, error y función de recompensa.</p>
+        <div class="headline-wrap" id="hw-left">
+          <h2 class="card-title">Exploración Autónoma por Refuerzo (RL)</h2>
+          <p class="card-desc">Búsqueda estocástica en entornos de simulación acelerada y optimización de recompensas.</p>
         </div>
       </div>
 
-      <!-- DOMINANT CENTER HERO: NÚCLEO NEURONAL (ENLARGED MAIN FEATURE) -->
-      <div class="bento-card card-hero-purple" id="card-center">
-        <div class="icon-container">
-          <svg viewBox="0 0 24 24">
-            <rect x="4" y="4" width="16" height="16" rx="2"></rect>
-            <rect x="9" y="9" width="6" height="6"></rect>
-            <line x1="9" y1="1" x2="9" y2="4"></line>
-            <line x1="15" y1="1" x2="15" y2="4"></line>
-            <line x1="9" y1="20" x2="9" y2="23"></line>
-            <line x1="15" y1="20" x2="15" y2="23"></line>
-            <line x1="20" y1="9" x2="23" y2="9"></line>
-            <line x1="20" y1="14" x2="23" y2="14"></line>
-            <line x1="1" y1="9" x2="4" y2="9"></line>
-            <line x1="1" y1="14" x2="4" y2="14"></line>
+      <!-- CENTER HERO: NÚCLEO DE APRENDIZAJE HÍBRIDO -->
+      <div class="bento-card card-hero-purple" id="card-center" onclick="focusCard('center')">
+        <div id="hero-shockwave"></div>
+        <div class="icon-container" id="icon-center">
+          <svg viewBox="0 0 24 24" id="svg-center">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
           </svg>
         </div>
-        <div class="headline-wrap">
-          <h2 class="card-title">Convergencia de Política Neuronal Óptima</h2>
-          <p class="card-desc">Suma ponderada de heurística exploratoria y calibración con demostraciones expertas.</p>
+        <div class="headline-wrap" id="hw-center">
+          <h2 class="card-title">Núcleo Central de Síntesis de Políticas</h2>
+          <p class="card-desc">Convergencia en tiempo real: el rigor demostrativo humano modula la velocidad de exploración autónoma.</p>
         </div>
       </div>
 
-      <!-- SATELLITE 2: EXPERTO HUMANO -->
-      <div class="bento-card card-satellite" id="card-right">
-        <div class="icon-container">
-          <svg viewBox="0 0 24 24">
+      <!-- RIGHT SATELLITE: IMITACIÓN HUMANA -->
+      <div class="bento-card card-satellite" id="card-right" onclick="focusCard('right')">
+        <div class="icon-container" id="icon-right">
+          <svg viewBox="0 0 24 24" id="svg-right">
             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
             <circle cx="8.5" cy="7" r="4"></circle>
             <polyline points="17 11 19 13 23 9"></polyline>
           </svg>
         </div>
-        <div class="headline-wrap">
+        <div class="headline-wrap" id="hw-right">
           <h2 class="card-title">Alineación con Demostraciones Humanas</h2>
           <p class="card-desc">Clonación de conducta experta y delimitación de guardrails de seguridad operativa.</p>
         </div>
@@ -393,17 +415,11 @@
 
     </main>
 
-    <!-- Bottom Technical Ticker -->
     <footer class="perk-footer-ticker">
-      <div>
-        <span>PALETTE: #A78BFA PURPLE // #FF5A36 SIGNAL CORAL // #F5F5EB CANVAS</span>
-      </div>
-      <div>
-        <span>HYPERFRAME DETERMINISTIC 10.0s @ 30FPS</span>
-      </div>
+      <span>PALETTE: #A78BFA PURPLE // #FF5A36 SIGNAL CORAL // #F5F5EB CANVAS</span>
+      <span>UX-MOTION DETERMINISTIC 10.0s @ 30FPS</span>
     </footer>
 
-    <!-- Editorial Bottom Progress Bar -->
     <div class="editorial-progress">
       <div class="editorial-fill" id="progress-fill"></div>
     </div>
@@ -421,6 +437,25 @@
     window.addEventListener('resize', fitStage);
     fitStage();
 
+    const convergentWrap = document.getElementById('convergent-wrap');
+
+    function focusCard(which) {
+      convergentWrap.classList.add('staged');
+      document.querySelectorAll('.bento-card').forEach(c => c.classList.remove('active-focus'));
+      const target = document.getElementById(`card-${which}`);
+      if (target) {
+        target.classList.add('active-focus');
+        gsap.fromTo(target, 
+          { scaleX: 1.035, scaleY: 0.965 }, 
+          { scaleX: 1.025, scaleY: 1.025, duration: 0.35, ease: 'back.out(2)' }
+        );
+      }
+      setTimeout(() => {
+        convergentWrap.classList.remove('staged');
+        if (target) target.classList.remove('active-focus');
+      }, 1600);
+    }
+
     window.__timelines = window.__timelines || {};
     const tl = gsap.timeline({ paused: true });
     if (Array.isArray(window.__timelines)) {
@@ -432,30 +467,66 @@
     gsap.set('.perk-nav', { opacity: 0, y: -16 });
     gsap.set('#header-bar', { opacity: 0, y: -12 });
     gsap.set('.perk-footer-ticker', { opacity: 0 });
-    gsap.set(['#card-left', '#card-right'], { opacity: 0, y: 24 });
-    gsap.set('#card-center', { opacity: 0, scale: 0.95, y: 20 });
+    gsap.set(['#card-left', '#card-right'], { opacity: 0, y: 32, rotateX: 6, scale: 0.96 });
+    gsap.set('#card-center', { opacity: 0, scale: 0.92, y: 36, rotateX: 8 });
     gsap.set('#connecting-svg', { opacity: 0 });
+    gsap.set('#hero-shockwave', { opacity: 0, scale: 0.6 });
 
     tl
-      .to('.perk-nav', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.2)
-      .to('#header-bar', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.4)
-      .to('.perk-footer-ticker', { opacity: 1, duration: 0.5, ease: 'power2.out' }, 0.5)
+      .to('.perk-nav', { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0.2)
+      .to('#header-bar', { opacity: 1, y: 0, duration: 0.5, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.35)
+      .to('.perk-footer-ticker', { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.5)
 
-      // Satellites entry
-      .to('#card-left', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0.6)
-      .to('#card-right', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0.8)
+      // Satellites Entrance with Follow-Through (Skill 16)
+      .to('#card-left', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.7, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.55)
+      .fromTo('#icon-left', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 0.65)
+      
+      .to('#card-right', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.7, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' }, 0.7)
+      .fromTo('#icon-right', { scale: 0.85, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 0.8)
 
-      // Dominant Center Hero Entry
-      .to('#card-center', { opacity: 1, scale: 1, y: 0, duration: 0.9, ease: 'back.out(1.25)' }, 1.0)
+      // Dominant Center Hero Elastic Landing (Skill 15 & 19)
+      .to('#card-center', { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 0.85, ease: 'back.out(1.4)' }, 0.85)
+      .fromTo('#icon-center', { scale: 0.8, opacity: 0.5 }, { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(2.5)' }, 0.95)
       .to('#connecting-svg', { opacity: 1, duration: 0.4 }, 1.3)
 
-      // Left Conduit towards Center
-      .fromTo('#vector-left', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power1.inOut' }, 2.0)
-      .fromTo('#pkt-left', { cx: 430, cy: 255, opacity: 1 }, { cx: 478, cy: 255, opacity: 0, duration: 0.8, ease: 'power1.inOut' }, 2.0)
+      // 1. Stage Left Exploration Activation (RL) + Anticipation Recoil (Skill 13)
+      .call(() => {
+        convergentWrap.classList.add('staged');
+        document.getElementById('card-left').classList.add('active-focus');
+      }, null, 2.0)
+      .to('#card-left', { x: -3, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 2.05)
+      .to('#card-left', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 2.15)
+      .fromTo('#vector-left', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 2.2)
+      .fromTo('#pkt-left', { cx: 430, cy: 280, opacity: 1 }, { cx: 500, cy: 280, opacity: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 2.2)
 
-      // Right Coral Conduit towards Center
-      .fromTo('#vector-right', { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power1.inOut' }, 4.0)
-      .fromTo('#pkt-right', { cx: 1156, cy: 255, opacity: 1 }, { cx: 1108, cy: 255, opacity: 0, duration: 0.8, ease: 'power1.inOut' }, 4.0)
+      // 2. Stage Right Human Demonstrations Activation (Imitation) + Anticipation Recoil (Skill 13)
+      .call(() => {
+        document.getElementById('card-left').classList.remove('active-focus');
+        document.getElementById('card-right').classList.add('active-focus');
+      }, null, 3.4)
+      .to('#card-right', { x: 3, scale: 0.99, duration: 0.08, ease: 'power1.in' }, 3.45)
+      .to('#card-right', { x: 0, scale: 1.02, duration: 0.15, ease: 'back.out(2)' }, 3.55)
+      .fromTo('#vector-right', { strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 3.6)
+      .fromTo('#pkt-right', { cx: 1210, cy: 280, opacity: 1 }, { cx: 1140, cy: 280, opacity: 0, duration: 0.75, ease: 'cubic-bezier(0.4, 0, 0.2, 1)' }, 3.6)
+
+      // 3. Convergent Collision into Center Hero (Skills 15, 17, 18)
+      .call(() => {
+        document.getElementById('card-right').classList.remove('active-focus');
+        document.getElementById('card-center').classList.add('active-focus');
+      }, null, 4.8)
+      .to('#card-center', { scaleX: 1.035, scaleY: 0.965, duration: 0.12, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 4.8)
+      .fromTo('#hero-shockwave', 
+        { opacity: 1, scale: 0.7 }, 
+        { opacity: 0, scale: 2.3, duration: 0.85, ease: 'power2.out' }, 4.8
+      )
+      .to('#svg-center', { rotation: 18, duration: 0.2, yoyo: true, repeat: 1, ease: 'back.out(2)' }, 4.85)
+
+      // 4. Synergistic Harmonic Pulse (Skill 20)
+      .to('#card-center', { scale: 1.02, duration: 0.8, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 6.2)
+      .call(() => {
+        convergentWrap.classList.remove('staged');
+        document.querySelectorAll('.bento-card').forEach(c => c.classList.remove('active-focus'));
+      }, null, 7.8)
 
       .to('#progress-fill', { width: '100%', duration: 10, ease: 'none' }, 0);
 
