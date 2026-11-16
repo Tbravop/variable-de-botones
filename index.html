@@ -2,429 +2,1530 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Podcast OBS Broadcast Suite &amp; Trebol Infographics Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SYNAPSE // LAB ARCHIVE — Avant-Garde Architectural Editorial System</title>
+  
+  <!-- Tipografías Oficiales SYNAPSE: Archivo Black, Instrument Serif, Geist Mono, Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Open+Sans:wght@400;600&family=Roboto:wght@700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --trebol-green: #1AA83F;
-      --trebol-navy: #1A5084;
-      --trebol-coral: #FF7B50;
-      --surface: #FCF9F8;
-      --primary: #9A9CE4;
-      --dark: #0F172A;
-      --cyan: #06B6D4;
+      --canvas: #F8F8F6;
+      --canvas-pure: #FFFFFF;
+      --ink: #080808;
+      --ink-secondary: #444444;
+      --ink-muted: #7A7A7A;
+      --accent-lime: #D4FF00;
+      --accent-lime-hover: #BEE600;
+      --accent-violet: #4A00E0;
+      --surface-dark: #050505;
+      --surface-dark-card: #0C0C0E;
+      --border: #080808;
+      --border-subtle: #D6D6D2;
+      --border-dark: #222222;
+      
+      --font-display: 'Archivo Black', sans-serif;
+      --font-serif: 'Instrument Serif', serif;
+      --font-mono: 'Geist Mono', monospace;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* REGLA INVIOLABLE: rounded-none (0px) EN TODOS LOS ELEMENTOS */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0px !important;
+    }
+
     body {
-      background: #0B1120;
-      color: #F8FAFC;
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 40px 24px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background-color: var(--canvas);
+      color: var(--ink);
+      font-family: var(--font-body);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
-    header {
-      text-align: center;
-      margin-bottom: 36px;
+
+    /* Enlaces y botones base */
+    a {
+      color: inherit;
+      text-decoration: none;
     }
-    h1 {
-      font-size: 32px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 8px;
-    }
-    p.subtitle {
-      color: #94A3B8;
-      font-size: 15px;
-    }
-    .section-title-wrap {
-      width: 100%;
-      max-width: 1200px;
+
+    /* 1. TICKER FORENSE SUPERIOR */
+    .top-ticker {
+      background: var(--surface-dark);
+      color: #FFFFFF;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 28px 0 16px;
-      border-bottom: 1.5px solid #1E293B;
-      padding-bottom: 12px;
+      padding: 0 32px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-    .section-title {
-      font-size: 20px;
-      font-weight: 800;
-      letter-spacing: -0.01em;
+    .ticker-left {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-      gap: 24px;
-      width: 100%;
-      max-width: 1200px;
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-lime);
+      border-radius: 9999px !important; /* Única excepción autorizada para micro-indicador */
+      display: inline-block;
+      animation: pulse-dot 1.8s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.85); }
+    }
+    .ticker-right {
+      display: flex;
+      gap: 20px;
+      color: #A3A3A3;
+    }
+
+    /* 2. BARRA CURATORIAL & NAVEGACIÓN */
+    .nav-bar {
+      background: var(--canvas-pure);
+      border-bottom: 2px solid var(--border);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .nav-brand-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .nav-brand-badge {
+      background: var(--surface-dark);
+      color: var(--accent-lime);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 8px;
+      letter-spacing: 0.08em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      flex-wrap: wrap;
+    }
+    .nav-link {
+      padding: 6px 10px;
+      border: 1px solid transparent;
+      transition: all 0.1s;
+    }
+    .nav-link:hover {
+      border-color: var(--border);
+      background: var(--canvas);
+    }
+    .btn-cta-lime {
+      background: var(--accent-lime);
+      color: var(--ink);
+      border: 1.5px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 10px 18px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.1s;
+      box-shadow: 3px 3px 0px var(--border);
+    }
+    .btn-cta-lime:hover {
+      background: var(--accent-lime-hover);
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0px var(--border);
+    }
+
+    /* CONTENEDOR GENERAL */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 48px 32px;
+    }
+
+    /* 3. HERO: APARATO TEÓRICO */
+    .hero-section {
+      border: 2px solid var(--border);
+      background: var(--canvas-pure);
+      padding: 64px 56px;
+      margin-bottom: 48px;
+      box-shadow: 6px 6px 0px var(--border);
+      position: relative;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--ink-muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .badge-tag-violet {
+      background: var(--accent-violet);
+      color: #FFFFFF;
+      font-size: 10px;
+      padding: 3px 8px;
+      letter-spacing: 0.08em;
+    }
+    .hero-monumental-title {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 92px);
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
       margin-bottom: 32px;
+      color: var(--ink);
     }
-    .card {
-      background: #0F172A;
-      border-radius: 8px;
-      border: 1.5px solid #334155;
+    .hero-monumental-title .stroke-text {
+      -webkit-text-stroke: 2px var(--ink);
+      color: transparent;
+    }
+    .hero-quote-box {
+      border-left: 4px solid var(--border);
+      padding-left: 28px;
+      margin-bottom: 36px;
+      max-width: 1100px;
+    }
+    .hero-quote-text {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(26px, 3.2vw, 40px);
+      line-height: 1.25;
+      color: var(--ink);
+    }
+    .lime-marker {
+      background: var(--accent-lime);
+      color: var(--ink);
+      padding: 0 8px;
+      font-style: normal;
+      font-weight: 700;
+      display: inline-block;
+    }
+    .hero-actions-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 28px;
+    }
+    .btn-mono-bracket {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 10px 16px;
+      border: 1px solid var(--border);
+      background: var(--canvas);
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+    .btn-mono-bracket:hover {
+      background: var(--ink);
+      color: #FFFFFF;
+    }
+
+    /* 4. REPRODUCTOR MONOLÍTICO ESCULTÓRICO (DARK BLOCK) */
+    .player-monolith {
+      background: var(--surface-dark);
+      color: #FFFFFF;
+      border: 2px solid var(--border);
+      padding: 40px;
+      margin-bottom: 48px;
+      box-shadow: 6px 6px 0px var(--border);
+      position: relative;
+    }
+    .player-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-dark);
+      padding-bottom: 24px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .player-roman-title {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+    }
+    .roman-number {
+      font-family: var(--font-display);
+      font-size: 64px;
+      line-height: 0.85;
+      color: var(--accent-lime);
+      letter-spacing: -0.04em;
+    }
+    .player-track-info h3 {
+      font-family: var(--font-display);
+      font-size: 24px;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .player-track-info p {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #A3A3A3;
+      letter-spacing: 0.08em;
+    }
+    .player-telemetry-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--accent-lime);
+      border: 1px solid #333333;
+      padding: 6px 12px;
+      background: #0F0F12;
+    }
+
+    /* Espectrograma Canvas & Barras */
+    .spectrogram-container {
+      background: var(--surface-dark-card);
+      border: 1px solid var(--border-dark);
+      height: 96px;
+      margin-bottom: 24px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 8px 12px;
+      gap: 3px;
+      overflow: hidden;
+    }
+    .spectrogram-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Scrubber Interactivo */
+    .scrubber-track {
+      width: 100%;
+      height: 8px;
+      background: #1C1C22;
+      border: 1px solid #333333;
+      position: relative;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    .scrubber-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 34%;
+      background: var(--accent-lime);
+      pointer-events: none;
+    }
+
+    /* Botonera Brutalista del Reproductor */
+    .player-controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .controls-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .btn-player-action {
+      background: var(--accent-lime);
+      color: var(--ink);
+      border: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 12px 24px;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+    .btn-player-action:hover {
+      background: var(--accent-lime-hover);
+    }
+    .btn-speed {
+      background: #1C1C22;
+      color: #FFFFFF;
+      border: 1px solid #333333;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 10px 16px;
+      cursor: pointer;
+    }
+    .btn-speed.active {
+      border-color: var(--accent-lime);
+      color: var(--accent-lime);
+    }
+    .time-readout {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: #CCCCCC;
+      letter-spacing: 0.08em;
+    }
+
+    /* 5. GRILLA DE MÉTRICAS CURATORIALES (4 COLUMNAS) */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 2px solid var(--border);
+      background: var(--canvas-pure);
+      margin-bottom: 48px;
+      box-shadow: 6px 6px 0px var(--border);
+    }
+    .metric-cell {
+      border-right: 1px solid var(--border);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .metric-cell:last-child {
+      border-right: none;
+    }
+    .metric-folio {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      letter-spacing: 0.12em;
+      margin-bottom: 12px;
+    }
+    .metric-val {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3.2vw, 42px);
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .metric-desc {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--ink-secondary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* 6. PLIEGO MONOGRÁFICO EDITORIAL (DOS COLUMNAS) */
+    .monograph-spread {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 2px solid var(--border);
+      margin-bottom: 48px;
+      box-shadow: 6px 6px 0px var(--border);
+    }
+    .monograph-left {
+      background: var(--canvas-pure);
+      border-right: 1px solid var(--border);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .plate-caption {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+    }
+    .silicon-wafer-art {
+      width: 100%;
+      height: 280px;
+      background: #080808;
+      border: 1px solid var(--border);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .monograph-right {
+      background: var(--surface-dark-card);
+      color: #FFFFFF;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .monograph-right-tags {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .tag-mono {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 4px 8px;
+    }
+    .tag-violet { background: var(--accent-violet); color: #FFF; }
+    .tag-lime { background: var(--accent-lime); color: var(--ink); }
+    .monograph-title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(32px, 3.5vw, 46px);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .monograph-dossier {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #AAAAAA;
+      border-top: 1px solid #222222;
+      padding-top: 16px;
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+
+    /* 7. CATÁLOGO / ÍNDICE DE TRATADOS */
+    .catalog-section {
+      border: 2px solid var(--border);
+      background: var(--canvas-pure);
+      padding: 48px 40px;
+      margin-bottom: 48px;
+      box-shadow: 6px 6px 0px var(--border);
+    }
+    .catalog-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .catalog-title {
+      font-family: var(--font-display);
+      font-size: 36px;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .catalog-filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn-filter {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      background: var(--canvas);
+      cursor: pointer;
+    }
+    .btn-filter.active {
+      background: var(--ink);
+      color: #FFFFFF;
+    }
+
+    .episodes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 24px;
+    }
+    .episode-card {
+      border: 1.5px solid var(--border);
+      background: var(--canvas);
       padding: 24px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      transition: transform 0.2s, border-color 0.2s;
+      justify-content: space-between;
+      transition: transform 0.1s, box-shadow 0.1s;
     }
-    .card:hover {
-      border-color: #64748B;
-      transform: translateY(-2px);
+    .episode-card:hover {
+      box-shadow: 4px 4px 0px var(--border);
+      transform: translate(-2px, -2px);
     }
-    .card.trebol-card {
-      background: #FFFFFF;
-      color: #111827;
-      border: 2px solid #E5E7EB;
-      border-radius: 0;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    .card-top-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
     }
-    .card.trebol-card:hover {
-      border-color: var(--trebol-green);
-      box-shadow: 0 12px 28px rgba(26, 168, 63, 0.15);
+    .card-roman {
+      font-family: var(--font-display);
+      font-size: 24px;
+      color: var(--ink);
     }
-    .card.memphis {
-      background: #FCF9F8;
-      color: #000000;
-      border: 4px solid #000000;
-      border-radius: 0;
-      box-shadow: 6px 6px 0px 0px #000000;
+    .badge-dur {
+      background: var(--accent-lime);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
     }
-    .badge {
-      display: inline-block;
-      font-family: monospace;
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 19px;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .card-desc {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--ink-secondary);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .btn-listen-card {
+      font-family: var(--font-mono);
       font-size: 11px;
       font-weight: 700;
-      padding: 4px 10px;
-      text-transform: uppercase;
-      border-radius: 2px;
-      width: fit-content;
+      letter-spacing: 0.08em;
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      background: var(--ink);
+      color: #FFFFFF;
+      cursor: pointer;
+      display: inline-block;
+      text-align: center;
     }
-    .badge-trebol { background: #E8F7EC; color: #1AA83F; border: 1px solid rgba(26, 168, 63, 0.3); }
-    .badge-slate { background: rgba(6, 182, 212, 0.15); color: #06B6D4; border: 1px solid rgba(6, 182, 212, 0.3); }
-    .badge-memphis { background: #9A9CE4; color: #000000; border: 2px solid #000000; border-radius: 0; box-shadow: 2px 2px 0 #000; }
+    .btn-listen-card:hover {
+      background: var(--accent-lime);
+      color: var(--ink);
+    }
 
-    .title { font-size: 20px; font-weight: 800; line-height: 1.25; }
-    .desc { font-size: 13.5px; line-height: 1.5; color: #94A3B8; }
-    .card.trebol-card .desc { color: #4B5563; }
-    .card.memphis .desc { color: #464650; }
-
-    .links {
+    /* 8. EL TRIBUNAL / CURADORES */
+    .tribunal-section {
+      border: 2px solid var(--border);
+      background: var(--canvas-pure);
+      padding: 48px 40px;
+      margin-bottom: 48px;
+      box-shadow: 6px 6px 0px var(--border);
+    }
+    .tribunal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 28px;
+    }
+    .curator-card {
+      border: 1.5px solid var(--border);
+      background: var(--canvas);
+      padding: 24px;
+      box-shadow: 4px 4px 0px var(--border);
+    }
+    .curator-avatar-box {
+      width: 100%;
+      height: 160px;
+      background: #080808;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: auto;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
     }
-    .btn {
-      padding: 8px 16px;
-      font-family: monospace;
-      font-size: 12px;
+    .curator-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .curator-role {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--accent-violet);
       font-weight: 700;
-      text-decoration: none;
-      border-radius: 3px;
-      transition: all 0.15s;
+      margin-bottom: 12px;
+      letter-spacing: 0.06em;
+    }
+    .curator-pgp {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--ink-muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 8px;
+    }
+
+    /* 9. SUITE HYPERFRAMES INTERACTIVA */
+    .hyperframes-section {
+      border: 2px solid var(--border);
+      background: var(--surface-dark);
+      color: #FFFFFF;
+      padding: 48px 40px;
+      margin-bottom: 48px;
+      box-shadow: 6px 6px 0px var(--border);
+    }
+    .hf-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-dark);
+      padding-bottom: 20px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .hf-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      color: var(--accent-lime);
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+    .hf-tab-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .btn-hf-tab {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 10px 18px;
+      border: 1px solid #333333;
+      background: #111115;
+      color: #FFFFFF;
       cursor: pointer;
     }
-    .btn-trebol {
-      background: var(--trebol-green);
+    .btn-hf-tab.active {
+      border-color: var(--accent-lime);
+      background: var(--accent-lime);
+      color: var(--ink);
+    }
+
+    /* Visor de Composición 16:9 */
+    .hf-stage-preview-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 2px solid #333333;
+      background: #000000;
+      position: relative;
+      margin-bottom: 20px;
+      overflow: hidden;
+      box-shadow: 4px 4px 0px #000000;
+    }
+    .hf-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    .hf-controls-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #0C0C0E;
+      border: 1px solid #222222;
+      padding: 12px 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    /* 10. ARCHIVO LEGACY & SWITCHER */
+    .legacy-banner {
+      border: 1.5px solid var(--border);
+      background: var(--canvas-pure);
+      padding: 24px 32px;
+      margin-bottom: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: 4px 4px 0px var(--border);
+    }
+    .legacy-info h4 {
+      font-family: var(--font-display);
+      font-size: 16px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .legacy-info p {
+      font-size: 13px;
+      color: var(--ink-secondary);
+    }
+    .legacy-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* 11. PRESS KIT & ESPECIFICACIÓN DE TOKENS */
+    .press-kit-section {
+      border: 2px solid var(--border);
+      background: var(--canvas-pure);
+      padding: 40px;
+      margin-bottom: 48px;
+      box-shadow: 6px 6px 0px var(--border);
+    }
+    .token-swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .swatch-card {
+      border: 1px solid var(--border);
+      padding: 12px;
+      background: var(--canvas);
+    }
+    .swatch-color {
+      height: 48px;
+      border: 1px solid var(--border);
+      margin-bottom: 8px;
+    }
+    .swatch-meta {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--surface-dark);
       color: #FFFFFF;
-      border: 1px solid var(--trebol-green);
+      border-top: 2px solid var(--border);
+      padding: 48px 32px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      line-height: 1.7;
     }
-    .btn-trebol:hover {
-      background: #148632;
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
     }
-    .btn-trebol-outline {
-      background: #FFFFFF;
-      color: var(--trebol-navy);
-      border: 1.5px solid #CBD5E1;
+
+    /* Responsive Queries */
+    @media (max-width: 900px) {
+      .monograph-spread { grid-template-columns: 1fr; }
+      .metrics-grid { grid-template-columns: 1fr 1fr; }
+      .hero-section { padding: 36px 24px; }
+      .player-monolith { padding: 24px 20px; }
     }
-    .btn-trebol-outline:hover {
-      background: #EEF4F9;
-      border-color: var(--trebol-navy);
-    }
-    .btn-slate {
-      background: #1E293B;
-      color: #38BDF8;
-      border: 1px solid #475569;
-    }
-    .btn-slate:hover {
-      background: #06B6D4;
-      color: #0F172A;
-    }
-    .btn-memphis {
-      background: #9A9CE4;
-      color: #000000;
-      border: 3px solid #000000;
-      border-radius: 0;
-      box-shadow: 3px 3px 0px 0px #000000;
-    }
-    .btn-memphis:hover {
-      background: #C0C1FF;
-      transform: translate(-1px, -1px);
-      box-shadow: 4px 4px 0px 0px #000000;
+    @media (max-width: 600px) {
+      .metrics-grid { grid-template-columns: 1fr; }
+      .top-ticker { font-size: 9px; padding: 0 16px; }
+      .nav-bar { padding: 12px 16px; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Podcast Broadcast &amp; Design Suite</h1>
-    <p class="subtitle">Infografías animadas Trebol de 10s, fuentes OBS y herramientas de streaming en vivo.</p>
+  <!-- 1. TICKER FORENSE SUPERIOR -->
+  <header class="top-ticker">
+    <div class="ticker-left">
+      <span class="status-dot"></span>
+      <span>VOL. 04 // FASCÍCULO 42 // ARCHITECTURAL SOUND SYSTEM &amp; PHILOSOPHIC APPARATUS</span>
+    </div>
+    <div class="ticker-right">
+      <span id="utc-clock">UTC 14:32:00</span>
+      <span>LAT 47.3769° N &bull; LON 8.5417° E</span>
+      <span style="color: var(--accent-lime);">BÚFER: NOMINAL 99.8%</span>
+    </div>
   </header>
 
-  <!-- NEW HERO SECTION: PERK SUBTLE PURPLE SUITE -->
-  <div class="section-title-wrap" style="border-bottom: 2px solid #A78BFA;">
-    <div class="section-title">
-      <span style="color: #A78BFA;">💜 Sistema Perk (Morado Sutil) // 4 Infografías, Suite &amp; Laboratorio UX-Motion</span>
+  <!-- 2. BARRA CURATORIAL & NAVEGACIÓN -->
+  <nav class="nav-bar">
+    <div class="nav-brand">
+      <span class="nav-brand-badge">[ ED. XLII ]</span>
+      <div class="nav-brand-title">SYNAPSE // LAB ARCHIVE</div>
     </div>
-    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-      <a href="vista_4_infografias_ux_motion.html" class="btn" style="background: #10B981; color: #FFFFFF; font-weight: 800; text-decoration: none; border: 1px solid #10B981;">⊞ Dashboard 4-en-1 UX-Motion</a>
-      <a href="prueba_perk_ux_motion.html" class="btn" style="background: #FF5A36; color: #FFFFFF; font-weight: 800; text-decoration: none; border: 1px solid #FF5A36;">🧪 Laboratorio UX-Motion (21 Skills)</a>
-      <a href="suite_transiciones_perk.html" class="btn" style="background: #A78BFA; color: #14140F; font-weight: 800; text-decoration: none; border: 1px solid #A78BFA;">🎬 Abrir Suite con Transiciones</a>
-      <a href="showcase_estilos.html" class="btn" style="background: #1E293B; color: #A78BFA; border: 1px solid #A78BFA; text-decoration: none;">⊞ Benchmark 4 Estilos</a>
-      <span class="badge" style="background: rgba(167,139,250,0.15); color: #A78BFA; border: 1px solid #A78BFA;">PERK ON PARCHMENT &bull; SUBTLE PURPLE #A78BFA &bull; 10s GSAP</span>
+    <div class="nav-links">
+      <a href="#hero" class="nav-link">[ S.01 APARATO ]</a>
+      <a href="#player" class="nav-link">[ S.02 REPRODUCTOR ]</a>
+      <a href="#tratados" class="nav-link">[ S.03 TRATADOS ]</a>
+      <a href="#monografia" class="nav-link">[ S.04 MONOGRAFÍA ]</a>
+      <a href="#tribunal" class="nav-link">[ S.05 TRIBUNAL ]</a>
+      <a href="#hyperframes" class="nav-link">[ S.06 HIPERFRAMES ]</a>
+      <a href="#presskit" class="nav-link">[ S.07 PRESS KIT ]</a>
     </div>
-  </div>
+    <div>
+      <button class="btn-cta-lime" onclick="togglePlayMaster()">
+        <span id="nav-cta-text">[ ESCUCHAR SESIÓN XLII ]</span>
+      </button>
+    </div>
+  </nav>
 
-  <div class="grid" style="margin-bottom: 36px;">
-    <!-- Featured Hero: Laboratorio Perk con 21 UX-Motion Skills -->
-    <div class="card" style="border-top: 4px solid #FF5A36; background: linear-gradient(135deg, #161529 0%, #131A2B 100%); grid-column: 1 / -1; box-shadow: 0 10px 30px rgba(255, 90, 54, 0.12);">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-        <div style="display: flex; gap: 10px; align-items: center;">
-          <span class="badge" style="background: rgba(255, 90, 54, 0.18); color: #FF7B50; border: 1px solid #FF5A36;">NUEVA VISTA // 21 UX-MOTION SKILLS</span>
-          <span class="badge" style="background: rgba(167, 139, 250, 0.18); color: #A78BFA; border: 1px solid #A78BFA;">LABORATORIO COMPARATIVO EN VIVO</span>
+  <main class="container">
+
+    <!-- 3. HERO: APARATO TEÓRICO -->
+    <section class="hero-section" id="hero">
+      <div class="hero-eyebrow">
+        <span class="badge-tag-violet">VARIANTE 3</span>
+        <span>AVANT-GARDE ARCHITECTURAL EDITORIAL SYSTEM // 032c &bull; VOLUME &bull; ARCH+</span>
+        <span>&bull; FASCÍCULO XLII</span>
+      </div>
+
+      <h1 class="hero-monumental-title">
+        SYNAPSE<span class="stroke-text"> // LAB</span><br>ARCHIVE
+      </h1>
+
+      <div class="hero-quote-box">
+        <p class="hero-quote-text">
+          "La arquitectura del silicio no es un contenedor, es una 
+          <span class="lime-marker">RECONFIGURACIÓN TERMODINÁMICA</span> 
+          del pensamiento contemporáneo."
+        </p>
+      </div>
+
+      <div class="hero-actions-bar">
+        <span style="font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--ink-muted); margin-right: 8px;">
+          MATRIZ DE AUDIO DIRECTO:
+        </span>
+        <button class="btn-mono-bracket" onclick="switchTrack('XLII')">[ SPOTIFY DIRECT AUDIO ]</button>
+        <button class="btn-mono-bracket" onclick="switchTrack('XLII')">[ APPLE ARCHIVE ]</button>
+        <button class="btn-mono-bracket" onclick="switchTrack('XLII')">[ YOUTUBE MASTER ]</button>
+        <button class="btn-mono-bracket" onclick="switchTrack('XLII')">[ RAW RSS STREAM ]</button>
+      </div>
+    </section>
+
+    <!-- 4. REPRODUCTOR MONOLÍTICO ESCULTÓRICO (DARK BLOCK) -->
+    <section class="player-monolith" id="player">
+      <div class="player-header">
+        <div class="player-roman-title">
+          <div class="roman-number" id="player-roman">XLII</div>
+          <div class="player-track-info">
+            <h3 id="player-title">TECTÓNICA DEL SILICIO // RECONFIGURACIÓN TERMODINÁMICA</h3>
+            <p id="player-meta">INTERLOCUTORES: DRA. ELENA VANCE &bull; DR. HELMUT VOIGT // MASTER RECORDING</p>
+          </div>
         </div>
-        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">STAGING &bull; SNAPPY &bull; SQUASH &bull; 3D &bull; TELEMETRÍA</span>
+        <div class="player-telemetry-badge">
+          ESPECTROGRAFÍA 2-TONE &bull; CH1: -3.2 dB / CH2: -3.1 dB &bull; 96 kHz 24-BIT
+        </div>
       </div>
-      <div class="title" style="color: #FFFFFF; font-size: 22px;">Laboratorio UX &amp; Motion: Animaciones Perk con Micro-Física Disney &amp; UX Laws</div>
-      <p class="desc" style="color: #CBD5E1; font-size: 14.5px; line-height: 1.6;">
-        Demostración interactiva en una nueva vista de cómo se potencian las infografías del sistema Perk aplicando el set completo de 21 habilidades UX-Motion sin romper el estilo editorial Perk: Staging the Focus (atenuación al 55% de tarjetas secundarias), Anticipación previa al pulso, Squash &amp; Stretch físico elástico, Follow-Through a 25ms, Trayectorias en Arco orgánicas, Exaggerated Feedback con shockwave coral e inspección espacial en perspectiva 3D (1200px).
-      </p>
-      <div class="links" style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-        <a class="btn" style="background: #FF5A36; color: #FFFFFF; font-weight: 800; font-size: 13px; padding: 10px 20px; text-decoration: none;" href="prueba_perk_ux_motion.html" target="_blank">🧪 Abrir Laboratorio Interactivo ↗</a>
-        <a class="btn" style="background: rgba(255, 90, 54, 0.15); color: #FF7B50; border: 1px solid #FF5A36; text-decoration: none;" href="renders/prueba_perk_ux_motion.mp4" download="prueba_perk_ux_motion.mp4">📥 Descargar MP4 Renderizado</a>
-        <span style="font-family: monospace; font-size: 11px; color: #94A3B8;">Incluye conmutador interactivo "Estándar vs UX-Motion" + radar de skills en tiempo real</span>
-      </div>
-    </div>
-    <!-- Perk Card 1: Proceso Editorial (Stepped 2+3) -->
-    <div class="card" style="border-top: 4px solid #A78BFA; background: #131A2B;">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span class="badge" style="background: rgba(167,139,250,0.18); color: #A78BFA; border: 1px solid #A78BFA;">PERK // STEPPED 2+3</span>
-        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">5 ETAPAS ESCALONADAS</span>
-      </div>
-      <div class="title" style="color: #FFFFFF;">El Proceso Editorial (Stepped 2+3)</div>
-      <p class="desc" style="color: #94A3B8;">
-        Estructura escalonada de 5 etapas: 2 tarjetas superiores anchas (Investigación &amp; Redacción en hero morado) y 3 inferiores (Revisión, Edición, Publicación) sobre pergamino (#F5F5EB).
-      </p>
-      <div class="links">
-        <a class="btn" style="background: #A78BFA; color: #14140F; font-weight: 800; text-decoration: none;" href="infografia_perk_1_writing.html" target="_blank">Ver Infografía 1 ↗</a>
-        <a class="btn" style="background: rgba(167,139,250,0.15); color: #A78BFA; border: 1px solid #A78BFA; text-decoration: none;" href="renders/infografia_perk_1_writing.mp4" download="infografia_perk_1_writing.mp4">📥 Descargar MP4</a>
-      </div>
-    </div>
 
-    <!-- Perk Card 2: Ciclo Agéntico (3 Linear Columns) -->
-    <div class="card" style="border-top: 4px solid #A78BFA; background: #131A2B;">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span class="badge" style="background: rgba(167,139,250,0.18); color: #A78BFA; border: 1px solid #A78BFA;">PERK // 3 LINEAR COLUMNS</span>
-        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">FLUJO VECTORIAL CONTINUO</span>
+      <!-- Espectrograma Bicolor Interactivo -->
+      <div class="spectrogram-container" id="spec-container">
+        <!-- 64 barras de espectro -->
       </div>
-      <div class="title" style="color: #FFFFFF;">Ciclo de Desarrollo Agéntico (3 Columnas)</div>
-      <p class="desc" style="color: #94A3B8;">
-        Disposición de 3 columnas lineales (Especificación &rarr; Orquestación en hero morado &rarr; Despliegue) interconectadas por haces vectoriales continuos y paquetes de datos animados.
-      </p>
-      <div class="links">
-        <a class="btn" style="background: #A78BFA; color: #14140F; font-weight: 800; text-decoration: none;" href="infografia_perk_2_agentic.html" target="_blank">Ver Infografía 2 ↗</a>
-        <a class="btn" style="background: rgba(167,139,250,0.15); color: #A78BFA; border: 1px solid #A78BFA; text-decoration: none;" href="renders/infografia_perk_2_agentic.mp4" download="infografia_perk_2_agentic.mp4">📥 Descargar MP4</a>
+
+      <!-- Scrubber -->
+      <div class="scrubber-track" id="scrubber-track" onclick="seekAudio(event)">
+        <div class="scrubber-fill" id="scrubber-fill"></div>
+      </div>
+
+      <!-- Botonera Brutalista -->
+      <div class="player-controls-row">
+        <div class="controls-left">
+          <button class="btn-player-action" id="btn-master-play" onclick="togglePlayMaster()">
+            [ REANUDAR TRANSMISIÓN ]
+          </button>
+          <button class="btn-speed active" id="spd-1" onclick="setSpeed(1.0)">1.0x</button>
+          <button class="btn-speed" id="spd-15" onclick="setSpeed(1.5)">1.50x</button>
+          <button class="btn-speed" id="spd-2" onclick="setSpeed(2.0)">2.0x</button>
+          <div class="time-readout" id="time-display">00:00:00 / 01:14:28</div>
+        </div>
+
+        <div style="font-family: var(--font-mono); font-size: 11px; color: #A3A3A3; display: flex; align-items: center; gap: 16px;">
+          <span>VOLUMEN:</span>
+          <input type="range" min="0" max="100" value="85" id="vol-slider" oninput="setVolume(this.value)" style="accent-color: var(--accent-lime); cursor: pointer;">
+          <span style="color: var(--accent-lime);">CANAL MASTER NOMINAL</span>
+        </div>
+      </div>
+
+      <!-- Audio Element nativo -->
+      <audio id="native-audio" preload="metadata" src="assets/music_lofi.mp3"></audio>
+    </section>
+
+    <!-- 5. GRILLA DE MÉTRICAS CURATORIALES (4 COLUMNAS) -->
+    <section class="metrics-grid">
+      <div class="metric-cell">
+        <div class="metric-folio">[ 01 // AUDITORÍA ]</div>
+        <div class="metric-val">+120,000</div>
+        <div class="metric-desc">AUDITORÍAS DE SISTEMAS REGISTRADAS</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-folio">[ 02 // POSICIONAMIENTO ]</div>
+        <div class="metric-val">RANG Nº 01</div>
+        <div class="metric-desc">EPISTEMOLOGÍA COMPUTACIONAL CULTA</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-folio">[ 03 // CORPUS DISPONIBLE ]</div>
+        <div class="metric-val">XLVIII DISCOS</div>
+        <div class="metric-desc">TRATADOS MONOGRÁFICOS EN ARCHIVO</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-folio">[ 04 // EVALUACIÓN CRÍTICA ]</div>
+        <div class="metric-val">4.99 / 5.0</div>
+        <div class="metric-desc">ÍNDICE DE RIGOR ANALÍTICO DE SILICIO</div>
+      </div>
+    </section>
+
+    <!-- 6. PLIEGO MONOGRÁFICO EDITORIAL (DOS COLUMNAS) -->
+    <section class="monograph-spread" id="monografia">
+      <div class="monograph-left">
+        <div>
+          <div class="plate-caption">PLATE Nº 41 — PLACA FOTOGRÁFICA SILICIO // MICROSCOPÍA CUÁNTICA</div>
+          
+          <div class="silicon-wafer-art">
+            <svg width="340" height="240" viewBox="0 0 340 240" fill="none">
+              <rect x="20" y="20" width="300" height="200" stroke="#333333" stroke-width="1.5" />
+              <!-- Matriz reticular -->
+              <line x1="20" y1="70" x2="320" y2="70" stroke="#222222" stroke-width="1"/>
+              <line x1="20" y1="120" x2="320" y2="120" stroke="#222222" stroke-width="1"/>
+              <line x1="20" y1="170" x2="320" y2="170" stroke="#222222" stroke-width="1"/>
+              <line x1="100" y1="20" x2="100" y2="220" stroke="#222222" stroke-width="1"/>
+              <line x1="180" y1="20" x2="180" y2="220" stroke="#222222" stroke-width="1"/>
+              <line x1="260" y1="20" x2="260" y2="220" stroke="#222222" stroke-width="1"/>
+              
+              <!-- Core Monolith -->
+              <rect x="130" y="70" width="100" height="100" fill="#0C0C0E" stroke="#D4FF00" stroke-width="2"/>
+              <circle cx="180" cy="120" r="28" stroke="#4A00E0" stroke-width="2" stroke-dasharray="3 3"/>
+              <text x="180" y="124" font-family="'Geist Mono'" font-size="9" fill="#D4FF00" text-anchor="middle" font-weight="700">WAFER-2NM</text>
+            </svg>
+          </div>
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 10px; color: var(--ink-muted); margin-top: 16px;">
+          REGISTRO LITOGRÁFICO EUV &bull; 0.55 NA HIGH-NA ZEISS &bull; RESOLUCIÓN ATÓMICA
+        </div>
+      </div>
+
+      <div class="monograph-right">
+        <div>
+          <div class="monograph-right-tags">
+            <span class="tag-mono tag-violet">#NEUROMÓRFICA</span>
+            <span class="tag-mono tag-lime">#LÍMITE_LANDAUER</span>
+          </div>
+
+          <h2 class="monograph-title">
+            Disipación de Entropía y la Topología del Pensamiento de Silicio
+          </h2>
+
+          <div class="monograph-dossier">
+            FASCÍCULO XLII &bull; MONOGRAFÍA COMPLETA<br>
+            INTERLOCUTORES: DRA. ELENA VANCE (INST. EPISTEMOLOGÍA) &bull; PROF. KAZUO ISHIGURO<br>
+            TÓPICOS: CÓMPUTO TERMODINÁMICO &bull; MEMRISTORES EN PELÍCULA DELGADA
+          </div>
+        </div>
+
+        <div>
+          <button class="btn-cta-lime" onclick="switchTrack('XLII')">
+            [ ACCEDER A LA SESIÓN (1H 14M) ]
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. CATÁLOGO / ÍNDICE DE TRATADOS -->
+    <section class="catalog-section" id="tratados">
+      <div class="catalog-header">
+        <div>
+          <div style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 6px;">
+            EXPEDIENTE GENERAL // ARCHIVO HISTÓRICO
+          </div>
+          <h2 class="catalog-title">ÍNDICE DE TRATADOS MONOGRÁFICOS</h2>
+        </div>
+        <div class="catalog-filters">
+          <button class="btn-filter active" onclick="filterEpisodes('all')">[ TODOS LOS TRATADOS ]</button>
+          <button class="btn-filter" onclick="filterEpisodes('ia')">[ TEORÍA DE IA ]</button>
+          <button class="btn-filter" onclick="filterEpisodes('cuantica')">[ MECÁNICA CUÁNTICA ]</button>
+          <button class="btn-filter" onclick="filterEpisodes('distribuida')">[ TOPOLOGÍA DISTRIBUIDA ]</button>
+        </div>
+      </div>
+
+      <div class="episodes-grid" id="episodes-container">
+        
+        <!-- Fascículo XLII -->
+        <article class="episode-card" data-cat="ia">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-roman">XLII</span>
+              <span class="badge-dur">52 MINUTOS</span>
+            </div>
+            <h3 class="card-title">TECTÓNICA DEL SILICIO Y RECONFIGURACIÓN TERMODINÁMICA</h3>
+            <p class="card-desc">
+              Indagación sobre el límite de disipación de Landauer y la arquitectura física de aceleradores tensoriales para modelos fundacionales.
+            </p>
+          </div>
+          <button class="btn-listen-card" onclick="switchTrack('XLII')">[ ESCUCHAR SESIÓN ]</button>
+        </article>
+
+        <!-- Fascículo XLI -->
+        <article class="episode-card" data-cat="ia">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-roman">XLI</span>
+              <span class="badge-dur">64 MINUTOS</span>
+            </div>
+            <h3 class="card-title">ARQUITECTURAS NEUROMÓRFICAS Y MEMRISTORES SINÁPTICOS</h3>
+            <p class="card-desc">
+              Superación del cuello de botella de von Neumann mediante conmutación de fase analógica y sinapsis electroquímicas de estado sólido.
+            </p>
+          </div>
+          <button class="btn-listen-card" onclick="switchTrack('XLI')">[ ESCUCHAR SESIÓN ]</button>
+        </article>
+
+        <!-- Fascículo XL -->
+        <article class="episode-card" data-cat="cuantica">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-roman">XL</span>
+              <span class="badge-dur">48 MINUTOS</span>
+            </div>
+            <h3 class="card-title">DECOHERENCIA Y TOPOLOGÍA CUÁNTICA EN SISTEMAS CRIOGÉNICOS</h3>
+            <p class="card-desc">
+              Análisis forense de qubits de flujo superconductor a 15 milikelvin. Preservación del entrelazamiento en mallas superficiales.
+            </p>
+          </div>
+          <button class="btn-listen-card" onclick="switchTrack('XL')">[ ESCUCHAR SESIÓN ]</button>
+        </article>
+
+        <!-- Fascículo XXXIX -->
+        <article class="episode-card" data-cat="distribuida">
+          <div>
+            <div class="card-top-meta">
+              <span class="card-roman">XXXIX</span>
+              <span class="badge-dur">71 MINUTOS</span>
+            </div>
+            <h3 class="card-title">CONSENSO ASÍNCRONO Y TOPOLOGÍAS DISTRIBUIDAS CRIPTOGRÁFICAS</h3>
+            <p class="card-desc">
+              Formalización matemática de grafos acíclicos dirigidos y tolerancias a fallos bizantinos bajo latencia física transoceánica.
+            </p>
+          </div>
+          <button class="btn-listen-card" onclick="switchTrack('XXXIX')">[ ESCUCHAR SESIÓN ]</button>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- 8. SUITE HIPERFRAMES: TRANSMISIONES & ANIMACIONES DE 10S -->
+    <section class="hyperframes-section" id="hyperframes">
+      <div class="hf-header">
+        <div>
+          <div style="font-family: var(--font-mono); font-size: 10px; color: #A3A3A3; letter-spacing: 0.1em; margin-bottom: 6px;">
+            MOTOR DETERMINISTA HYPERFRAMES // 1920×1080 @ 30 FPS
+          </div>
+          <h2 class="hf-title">SUITE DE ANIMACIÓN &amp; BROADCAST DE SILICIO</h2>
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 11px; color: var(--accent-lime);">
+          ESTADO: CONTRATO VERIFICADO &bull; TIMELINE PAUSADO &bull; STAGE SCALER 16:9
+        </div>
+      </div>
+
+      <!-- Selector de Composición -->
+      <div class="hf-tab-row">
+        <button class="btn-hf-tab active" onclick="loadHyperframe('synapse_hyperframe_intro.html', this)">
+          01. INTRO MONUMENTAL (XLII)
+        </button>
+        <button class="btn-hf-tab" onclick="loadHyperframe('synapse_hyperframe_treatise.html', this)">
+          02. TRATADO TECTÓNICO (3 COLS)
+        </button>
+        <button class="btn-hf-tab" onclick="loadHyperframe('synapse_hyperframe_obs_cam.html', this)">
+          03. OBS OVERLAY (CÁMARA 16:9)
+        </button>
+      </div>
+
+      <!-- Visor de Escenario 16:9 -->
+      <div class="hf-stage-preview-wrap">
+        <iframe id="hf-viewport" class="hf-iframe" src="synapse_hyperframe_intro.html"></iframe>
+      </div>
+
+      <!-- Barra de Control del Visor -->
+      <div class="hf-controls-bar">
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-mono-bracket" style="background: #1C1C22; color: #FFF; border-color: #444;" onclick="reloadHyperframe()">[ REINICIAR (R) ]</button>
+          <button class="btn-mono-bracket" style="background: #1C1C22; color: #FFF; border-color: #444;" onclick="openStandaloneHyperframe()">[ ABRIR PESTAÑA COMPLETA ↗ ]</button>
+        </div>
+        <div style="color: #A3A3A3;">
+          RENDER CLI: <code style="color: var(--accent-lime); font-family: monospace;">npx hyperframes render -c &lt;archivo.html&gt; -o renders/output.mp4</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. EL TRIBUNAL / CURADORES -->
+    <section class="tribunal-section" id="tribunal">
+      <div style="border-bottom: 1px solid var(--border); padding-bottom: 16px;">
+        <div style="font-family: var(--font-mono); font-size: 10px; color: var(--ink-muted); letter-spacing: 0.1em; margin-bottom: 6px;">
+          CONSEJO INVESTIGADOR &bull; RIGOR EPISTEMOLÓGICO
+        </div>
+        <h2 style="font-family: var(--font-display); font-size: 32px; letter-spacing: -0.02em; text-transform: uppercase;">
+          EL TRIBUNAL / LOS CURADORES
+        </h2>
+      </div>
+
+      <div class="tribunal-grid">
+        <!-- Curador 1 -->
+        <div class="curator-card">
+          <div class="curator-avatar-box">
+            [ RETRATO EN ALTO CONTRASTE ]
+          </div>
+          <div class="curator-name">DR. HELMUT VOIGT</div>
+          <div class="curator-role">DIRECTOR EPISTEMOLÓGICO // CÁTEDRA DE SILICIO</div>
+          <p style="font-size: 12px; color: var(--ink-secondary); line-height: 1.5; margin-bottom: 16px;">
+            Investigador principal en termodinámica cuántica y límites físicos de conmutación. Ex-director de Laboratorios Suizos de Silicio.
+          </p>
+          <div class="curator-pgp">PGP: 0x8F94D2A4B8C13E77</div>
+        </div>
+
+        <!-- Curador 2 -->
+        <div class="curator-card">
+          <div class="curator-avatar-box">
+            [ RETRATO EN ALTO CONTRASTE ]
+          </div>
+          <div class="curator-name">DRA. ASTRID LINDHOLM</div>
+          <div class="curator-role">TOPOLOGÍA CUÁNTICA &bull; REDES COMPLEJAS</div>
+          <p style="font-size: 12px; color: var(--ink-secondary); line-height: 1.5; margin-bottom: 16px;">
+            Pionera en formalización matemática de grafos topológicos invariantes y computación no lineal en medios cristalinos.
+          </p>
+          <div class="curator-pgp">PGP: 0x3C90B2E15D7F8A22</div>
+        </div>
+
+        <!-- Curador 3 -->
+        <div class="curator-card">
+          <div class="curator-avatar-box">
+            [ RETRATO EN ALTO CONTRASTE ]
+          </div>
+          <div class="curator-name">PROF. KAZUO ISHIGURO</div>
+          <div class="curator-role">ARQUITECTURA DE MEMRISTORES &bull; NANO-ESCULTURA</div>
+          <p style="font-size: 12px; color: var(--ink-secondary); line-height: 1.5; margin-bottom: 16px;">
+            Diseñador de obleas litográficas experimentales y articulador de la estética tectónica en circuitos integrados a 2nm.
+          </p>
+          <div class="curator-pgp">PGP: 0x7E11A9C04F22BD99</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. ARCHIVO LEGACY & ACCESO A SUITES ANTERIORES -->
+    <section class="legacy-banner">
+      <div class="legacy-info">
+        <h4>Archivo Histórico del Repositorio (Versiones 1.0 - 4.0)</h4>
+        <p>Accede directamente a los módulos anteriores desarrollados en el proyecto para comparación e inspección técnica:</p>
+      </div>
+      <div class="legacy-links">
+        <a class="btn-mono-bracket" href="suite_transiciones_perk.html" target="_blank">🎬 Suite Perk (Transiciones)</a>
+        <a class="btn-mono-bracket" href="prueba_perk_ux_motion.html" target="_blank">🧪 Laboratorio 21 UX-Skills</a>
+        <a class="btn-mono-bracket" href="vista_4_infografias_ux_motion.html" target="_blank">⊞ Dashboard 4-en-1</a>
+        <a class="btn-mono-bracket" href="showcase_estilos.html" target="_blank">🏛 Benchmark 4 Estilos</a>
+        <a class="btn-mono-bracket" href="infografia_perk_1_writing.html" target="_blank">📄 Infografía Perk 1</a>
+      </div>
+    </section>
+
+    <!-- 11. PRESS KIT & TOKENS DE DISEÑO -->
+    <section class="press-kit-section" id="presskit">
+      <div style="border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px;">
+        <div style="font-family: var(--font-mono); font-size: 10px; color: var(--ink-muted); letter-spacing: 0.1em; margin-bottom: 6px;">
+          SISTEMA DE DISEÑO // DESIGN TOKENS
+        </div>
+        <h2 style="font-family: var(--font-display); font-size: 28px; letter-spacing: -0.02em; text-transform: uppercase;">
+          ÁTOMOS CROMÁTICOS &amp; TENSIÓN ÓPTICA
+        </h2>
+      </div>
+
+      <div class="token-swatches">
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #F8F8F6;"></div>
+          <div class="swatch-meta">
+            <strong>canvas</strong><br>#F8F8F6<br>Blanco Perla
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #080808;"></div>
+          <div class="swatch-meta">
+            <strong>ink</strong><br>#080808<br>Negro Carbón
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #D4FF00;"></div>
+          <div class="swatch-meta">
+            <strong>accent-lime</strong><br>#D4FF00<br>Amarillo Ácido
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #4A00E0;"></div>
+          <div class="swatch-meta">
+            <strong>accent-violet</strong><br>#4A00E0<br>Ultra Violet
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #050505;"></div>
+          <div class="swatch-meta">
+            <strong>surface-dark</strong><br>#050505<br>Monolito Negro
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: #444444;"></div>
+          <div class="swatch-meta">
+            <strong>ink-secondary</strong><br>#444444<br>Gris Carbón
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-content">
+      <div>
+        <div style="font-family: var(--font-display); font-size: 16px; margin-bottom: 8px;">
+          SYNAPSE // LAB ARCHIVE &bull; VARIANTE 3
+        </div>
+        <div>SISTEMA EDITORIAL ARQUITECTÓNICO &bull; INVENTARIO DE TRATADOS DE SILICIO</div>
+        <div>RAMA GIT: <strong>feature/synapse-tech-podcast</strong> &bull; VERSIÓN 5.0.0</div>
+      </div>
+
+      <div>
+        <div>DESPLIEGUE OFICIAL: <span style="color: var(--accent-lime);">GITHUB PAGES</span></div>
+        <div>CONTRATO HYPERFRAMES: ESTRICTO &bull; 0px RADIUS &bull; DETERMINISMO TEMPORAL</div>
+        <div>LICENCIAS TIPOGRÁFICAS: SIL OPEN FONT LICENSE 1.1</div>
       </div>
     </div>
+  </footer>
 
-    <!-- Perk Card 3: Refuerzo vs Imitación (Convergent Center Hero) -->
-    <div class="card" style="border-top: 4px solid #A78BFA; background: #131A2B;">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span class="badge" style="background: rgba(167,139,250,0.18); color: #A78BFA; border: 1px solid #A78BFA;">PERK // CONVERGENT HERO</span>
-        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">CONVERGENCIA TRIPARTITA</span>
-      </div>
-      <div class="title" style="color: #FFFFFF;">Refuerzo vs. Imitación (Center Hero)</div>
-      <p class="desc" style="color: #94A3B8;">
-        Composición centrípeta con bloque hero central dominante (Núcleo de Aprendizaje en morado sutil) alimentado convergentemente por el Agente Autónomo y el Experto Humano.
-      </p>
-      <div class="links">
-        <a class="btn" style="background: #A78BFA; color: #14140F; font-weight: 800; text-decoration: none;" href="infografia_perk_3_rl_vs_imitation.html" target="_blank">Ver Infografía 3 ↗</a>
-        <a class="btn" style="background: rgba(167,139,250,0.15); color: #A78BFA; border: 1px solid #A78BFA; text-decoration: none;" href="renders/infografia_perk_3_rl_vs_imitation.mp4" download="infografia_perk_3_rl_vs_imitation.mp4">📥 Descargar MP4</a>
-      </div>
-    </div>
+  <!-- LÓGICA INTERACTIVA DE LA PÁGINA -->
+  <script>
+    // 1. Reloj UTC Forense en Ticker
+    function updateClock() {
+      const now = new Date();
+      const utcStr = now.toUTCString().split(' ')[4];
+      const el = document.getElementById("utc-clock");
+      if (el) el.textContent = `UTC ${utcStr}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
 
-    <!-- Perk Card 4: Funnel de Conversión (Sequential 4 Columns) -->
-    <div class="card" style="border-top: 4px solid #A78BFA; background: #131A2B;">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span class="badge" style="background: rgba(167,139,250,0.18); color: #A78BFA; border: 1px solid #A78BFA;">PERK // SEQUENTIAL 4</span>
-        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">PROGRESIÓN 4 ESTADIOS</span>
-      </div>
-      <div class="title" style="color: #FFFFFF;">Funnel de Conversión (4 Etapas)</div>
-      <p class="desc" style="color: #94A3B8;">
-        Flujo de embudo secuencial de 4 estadios (Atracción &rarr; Interés &rarr; Decisión &rarr; Conversión en hero morado) con pulsos escalonados y líneas vectoriales dinámicas.
-      </p>
-      <div class="links">
-        <a class="btn" style="background: #A78BFA; color: #14140F; font-weight: 800; text-decoration: none;" href="infografia_perk_4_funnel.html" target="_blank">Ver Infografía 4 ↗</a>
-        <a class="btn" style="background: rgba(167,139,250,0.15); color: #A78BFA; border: 1px solid #A78BFA; text-decoration: none;" href="renders/infografia_perk_4_funnel.mp4" download="infografia_perk_4_funnel.mp4">📥 Descargar MP4</a>
-      </div>
-    </div>
-  </div>
+    // 2. Espectrograma de 64 Barras en el Reproductor
+    const specContainer = document.getElementById("spec-container");
+    const numBars = 64;
+    const specBars = [];
+    for (let i = 0; i < numBars; i++) {
+      const bar = document.createElement("div");
+      bar.style.flex = "1";
+      bar.style.height = "18%";
+      bar.style.background = "#222222";
+      bar.style.transition = "height 0.06s ease, background 0.1s";
+      specContainer.appendChild(bar);
+      specBars.push(bar);
+    }
 
-  <!-- TV BROADCAST ANIMATED INFOGRAPHICS SECTION -->
-  <div class="section-title-wrap">
-    <div class="section-title">
-      <span style="color: #38BDF8;">⚡ Infografías Animadas 2026 Bento Grid // Bright Light Mode (10s)</span>
-    </div>
-    <div style="display: flex; gap: 10px; align-items: center;">
-      <a href="trebol_infografias_entrega/index.html" class="btn btn-navy" style="font-size: 11px; padding: 6px 12px; text-decoration: none; color: #38BDF8; border: 1px solid #38BDF8;">📺 Abrir Suite de TV</a>
-      <a href="trebol_infografias_entrega.zip" class="btn btn-navy" style="font-size: 11px; padding: 6px 12px; text-decoration: none;" download>💾 Descargar ZIP TV (4.2 MB)</a>
-      <span class="badge" style="background: rgba(56,189,248,0.15); color: #38BDF8; border: 1px solid #38BDF8;">1920&times;1080 &bull; 30 FPS &bull; LIGHT MODE 2026</span>
-    </div>
-  </div>
+    // 3. Audio & Reproducción Interactiva
+    const audioEl = document.getElementById("native-audio");
+    const playBtn = document.getElementById("btn-master-play");
+    const navCta = document.getElementById("nav-cta-text");
+    const scrubberFill = document.getElementById("scrubber-fill");
+    const timeDisplay = document.getElementById("time-display");
+    let isPlaying = false;
+    let animFrame = null;
+    let playbackRate = 1.0;
 
-  <div class="grid">
-    
-    <!-- Infografía 1: Stepped 2+3 Bento Grid -->
-    <div class="card" style="border-top: 4px solid #0284C7;">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span class="badge" style="background: rgba(2,132,199,0.15); color: #0284C7; border: 1px solid rgba(2,132,199,0.3);">STEPPED 2+3 &bull; 10s</span>
-        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">MP4 FULL HD</span>
-      </div>
-      <div class="title" style="color: #FFFFFF;">01. El Proceso Editorial (Bento Grid 2+3)</div>
-      <p class="desc" style="color: #94A3B8;">
-        Ultra-clean 2026 Bento Grid en Light Mode (#F8FAFC) con tarjetas blancas (#FFFFFF), badges pasteles en Cobalt Blue, Indigo Violet y Emerald, íconos Lucide de 2px y títulos oscuros (#0F172A).
-      </p>
-      <div class="links" style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <a class="btn btn-trebol" style="background: #0284C7; color: #FFF; font-weight: 800;" href="infografia_1_writing_process.html" target="_blank">Ver HTML 16:9</a>
-        <a class="btn btn-navy" href="renders/infografia_01_writing_process.mp4" target="_blank" download>Descargar Video MP4</a>
-      </div>
-    </div>
+    function togglePlayMaster() {
+      if (!audioEl) return;
+      if (isPlaying) {
+        audioEl.pause();
+        isPlaying = false;
+        playBtn.textContent = "[ REANUDAR TRANSMISIÓN ]";
+        navCta.textContent = "[ ESCUCHAR SESIÓN XLII ]";
+        if (animFrame) cancelAnimationFrame(animFrame);
+        resetBars();
+      } else {
+        audioEl.playbackRate = playbackRate;
+        audioEl.play().then(() => {
+          isPlaying = true;
+          playBtn.textContent = "[ SUSPENDER REPRODUCCIÓN ]";
+          navCta.textContent = "[ DETENER TRANSMISIÓN ]";
+          animateSpectrogram();
+        }).catch(err => {
+          // Si el audio directo falla, simulamos la reproducción
+          isPlaying = true;
+          playBtn.textContent = "[ SUSPENDER REPRODUCCIÓN ]";
+          animateSpectrogram();
+        });
+      }
+    }
 
-    <!-- Infografía 2: 3 Linear Columns -->
-    <div class="card" style="border-top: 4px solid #7C3AED;">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span class="badge" style="background: rgba(124,58,237,0.15); color: #A78BFA; border: 1px solid rgba(124,58,237,0.3);">3 COLUMNS &bull; 10s</span>
-        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">MP4 FULL HD</span>
-      </div>
-      <div class="title" style="color: #FFFFFF;">Ciclo de Desarrollo Agéntico (3 Columnas)</div>
-      <p class="desc" style="color: #94A3B8;">
-        Layout adaptado de 3 columnas lineales (Especificación &rarr; Orquestación &rarr; Despliegue) con flujo vectorizado horizontal, estética Notion &amp; Apple Keynote y cero ruido visual.
-      </p>
-      <div class="links" style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <a class="btn btn-trebol" style="background: #7C3AED; color: #FFF; font-weight: 800;" href="infografia_2_agentic_flow.html" target="_blank">Ver HTML 16:9</a>
-        <a class="btn btn-navy" href="renders/infografia_02_agentic_flow.mp4" target="_blank" download>Descargar Video MP4</a>
-      </div>
-    </div>
+    function setSpeed(rate) {
+      playbackRate = rate;
+      if (audioEl) audioEl.playbackRate = rate;
+      document.querySelectorAll(".btn-speed").forEach(b => b.classList.remove("active"));
+      if (rate === 1.0) document.getElementById("spd-1").classList.add("active");
+      if (rate === 1.5) document.getElementById("spd-15").classList.add("active");
+      if (rate === 2.0) document.getElementById("spd-2").classList.add("active");
+    }
 
-    <!-- Infografía 3: Convergent Center Hero -->
-    <div class="card" style="border-top: 4px solid #7C3AED;">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span class="badge" style="background: rgba(124,58,237,0.15); color: #A78BFA; border: 1px solid rgba(124,58,237,0.3);">CENTER HERO &bull; 10s</span>
-        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">MP4 FULL HD</span>
-      </div>
-      <div class="title" style="color: #FFFFFF;">03. Refuerzo vs. Imitación (Center Hero)</div>
-      <p class="desc" style="color: #94A3B8;">
-        Composición convergente con tarjeta hero central dominante ("Núcleo de Aprendizaje") alimentada por haces vectoriales desde el Agente Autónomo y el Experto Humano.
-      </p>
-      <div class="links" style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <a class="btn btn-trebol" style="background: #7C3AED; color: #FFF; font-weight: 800;" href="infografia_3_rl_vs_imitation.html" target="_blank">Ver HTML 16:9</a>
-        <a class="btn btn-navy" href="renders/infografia_03_rl_vs_imitation.mp4" target="_blank" download>Descargar Video MP4</a>
-      </div>
-    </div>
+    function setVolume(val) {
+      if (audioEl) audioEl.volume = val / 100;
+    }
 
-    <!-- Infografía 4: 4-Stage Sequential Funnel -->
-    <div class="card" style="border-top: 4px solid #059669;">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span class="badge" style="background: rgba(5,150,105,0.15); color: #34D399; border: 1px solid rgba(5,150,105,0.3);">SEQUENTIAL 4 &bull; 10s</span>
-        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">MP4 FULL HD</span>
-      </div>
-      <div class="title" style="color: #FFFFFF;">04. Funnel de Conversión (4 Etapas)</div>
-      <p class="desc" style="color: #94A3B8;">
-        Flujo secuencial Bento de 4 etapas (Atracción &rarr; Interés &rarr; Decisión &rarr; Conversión) con íconos vectoriales Lucide de 2px en badges pasteles y títulos contundentes.
-      </p>
-      <div class="links" style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <a class="btn btn-trebol" style="background: #059669; color: #FFF; font-weight: 800;" href="infografia_4_funnel_marketing.html" target="_blank">Ver HTML 16:9</a>
-        <a class="btn btn-navy" href="renders/infografia_04_funnel_marketing.mp4" target="_blank" download>Descargar Video MP4</a>
-      </div>
-    </div>
+    function seekAudio(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      if (audioEl && audioEl.duration) {
+        audioEl.currentTime = pos * audioEl.duration;
+      }
+      scrubberFill.style.width = `${pos * 100}%`;
+    }
 
-    <!-- Infografía 5: Bento Grid Workflow 2026 -->
-    <div class="card" style="border-top: 4px solid #A855F7; grid-column: 1 / -1;">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span class="badge" style="background: rgba(168,85,247,0.18); color: #A855F7; border: 1px solid #A855F7;">BENTO-05 &bull; 10s &bull; NEOFUTURISTIC 2026</span>
-        <span style="font-family: monospace; font-size: 11px; color: #94A3B8; font-weight: 700;">1.8 MB MP4 &bull; 16:9 IMAGE</span>
-      </div>
-      <div class="title" style="color: #FFFFFF;">Bento Grid AI Workflow (Linear &amp; Apple Style 2026)</div>
-      <p class="desc" style="color: #94A3B8;">
-        Diseño Bento Grid neofuturista asimétrico en Midnight Navy (#0B0F19): Cabecera superior, 3 bloques conectados (Human Inception en Cyan #38BDF8 &rarr; Chip Isométrico 3D en Purple #A855F7 &rarr; Human Review en Emerald #10B981) y fila inferior de entregables con tags mono.
-      </p>
-      <div class="links" style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <a class="btn btn-trebol" style="background: #A855F7; color: #000; font-weight: 800;" href="infografia_bento_workflow.html" target="_blank">Ver HTML Interactivo</a>
-        <a class="btn btn-trebol" style="background: #38BDF8; color: #000; font-weight: 800;" href="bento_grid_ai_workflow.jpg" target="_blank">Ver Imagen 16:9</a>
-        <a class="btn btn-navy" href="renders/infografia_05_bento_workflow.mp4" target="_blank" download>Descargar Video MP4</a>
-      </div>
-    </div>
+    function formatTime(sec) {
+      const h = Math.floor(sec / 3600).toString().padStart(2, '0');
+      const m = Math.floor((sec % 3600) / 60).toString().padStart(2, '0');
+      const s = Math.floor(sec % 60).toString().padStart(2, '0');
+      return `${h}:${m}:${s}`;
+    }
 
-  </div>
+    let fakeTimer = 0;
+    function animateSpectrogram() {
+      if (!isPlaying) return;
+      fakeTimer += 0.05 * playbackRate;
 
-  <!-- OBS & BROADCAST OVERLAYS SECTION -->
-  <div class="section-title-wrap">
-    <div class="section-title">
-      <span>🎬 Overlays de Transmisión y Transiciones OBS</span>
-    </div>
-  </div>
+      // Actualizar tiempo y scrubber
+      let cur = audioEl && audioEl.currentTime ? audioEl.currentTime : fakeTimer;
+      let dur = audioEl && audioEl.duration ? audioEl.duration : 4468; // 1h 14m 28s
+      let progress = (cur / dur) % 1;
+      scrubberFill.style.width = `${progress * 100}%`;
+      timeDisplay.textContent = `${formatTime(cur)} / ${formatTime(dur)}`;
 
-  <div class="grid">
-    
-    <!-- Camera Transitions Stinger Suite -->
-    <div class="card" style="grid-column: 1 / -1; background: #131E38; border-color: #38BDF8;">
-      <span class="badge" style="background: #2563EB; color: #fff;">🎬 Herramienta en Vivo</span>
-      <div class="title" style="color: #38BDF8;">Transiciones de Cámara (Stinger Transition Suite)</div>
-      <p class="desc" style="color: #CBD5E1;">
-        Simulador interactivo en tiempo real para cambios de cámara (Host, Invitado, Plano General). Incluye 3 variantes de Stingers: <b>Persianas Brutalistas Neo-Memphis</b>, <b>Corte Diagonal 45°</b> y <b>Obturador Neón Cyan</b>.
-      </p>
-      <div class="links">
-        <a class="btn btn-slate" style="background: #0284C7; color: #fff;" href="transitions.html" target="_blank">Abrir Probador de Transiciones</a>
-      </div>
-    </div>
-    
-    <!-- Option 1: Dark Slate & Cyan -->
-    <div class="card">
-      <span class="badge badge-slate">Original Style System</span>
-      <div class="title">Cyber-Dark Slate &amp; Cyan</div>
-      <p class="desc">
-        Modern high-tech broadcast UI with 1px neon cyan inner glow, dark slate #0F172A chassis, cool grey borders, and integrated live VU audio telemetry.
-      </p>
-      <div class="links">
-        <a class="btn btn-slate" href="obs_cam_16x9.html" target="_blank">Open OBS Source</a>
-        <a class="btn btn-slate" href="obs_cam_16x9.html?clean=true" target="_blank">Clean Overlay (No UI)</a>
-      </div>
-    </div>
+      // Ondas armónicas en las barras
+      specBars.forEach((bar, idx) => {
+        const factor = Math.sin(fakeTimer * 6 + idx * 0.4) * Math.cos(fakeTimer * 2 - idx * 0.15);
+        const height = Math.max(10, Math.min(100, 30 + factor * 50 + (idx % 7) * 4));
+        bar.style.height = `${height}%`;
 
-    <!-- Option 2: Ethical Neo-Memphis -->
-    <div class="card memphis">
-      <span class="badge badge-memphis">DESIGN Specification</span>
-      <div class="title">Ethical Neo-Memphis</div>
-      <p class="desc">
-        Ethical Neo-Brutalist fused with Memphis Group geometry. Raw structural 4px black borders, Lavender #9A9CE4 accents, Bone #FCF9F8 background, hard 6px shadows, and 0px sharp corners.
-      </p>
-      <div class="links">
-        <a class="btn btn-memphis" href="obs_cam_memphis.html" target="_blank">Open OBS Source</a>
-        <a class="btn btn-memphis" href="obs_cam_memphis.html?clean=true" target="_blank">Clean Overlay (No UI)</a>
-        <a class="btn btn-memphis" href="matriz_botones.html" target="_blank">Matriz de Botones (Vertical)</a>
-      </div>
-    </div>
+        // Bicolor: lo transcurrido en el scrubber se ilumina en amarillo ácido neón (#D4FF00)
+        if (idx / numBars <= progress) {
+          bar.style.background = "var(--accent-lime)";
+        } else {
+          bar.style.background = "#282828";
+        }
+      });
 
-  </div>
+      animFrame = requestAnimationFrame(animateSpectrogram);
+    }
 
+    function resetBars() {
+      specBars.forEach(bar => {
+        bar.style.height = "15%";
+        bar.style.background = "#222222";
+      });
+    }
+
+    // 4. Conmutar Episodios en el Reproductor
+    const episodesData = {
+      'XLII': {
+        title: "TECTÓNICA DEL SILICIO // RECONFIGURACIÓN TERMODINÁMICA",
+        meta: "INTERLOCUTORES: DRA. ELENA VANCE & DR. HELMUT VOIGT // MASTER RECORDING",
+        dur: "01:14:28"
+      },
+      'XLI': {
+        title: "ARQUITECTURAS NEUROMÓRFICAS Y MEMRISTORES SINÁPTICOS",
+        meta: "INTERLOCUTORES: PROF. KAZUO ISHIGURO // SESIÓN MONOGRÁFICA",
+        dur: "01:04:15"
+      },
+      'XL': {
+        title: "DECOHERENCIA Y TOPOLOGÍA CUÁNTICA EN SISTEMAS CRIOGÉNICOS",
+        meta: "INTERLOCUTORES: DRA. ASTRID LINDHOLM // LABORATORIO CRIOGÉNICO",
+        dur: "00:48:30"
+      },
+      'XXXIX': {
+        title: "CONSENSO ASÍNCRONO Y TOPOLOGÍAS DISTRIBUIDAS CRIPTOGRÁFICAS",
+        meta: "INTERLOCUTORES: TRIBUNAL INVESTIGADOR // ANÁLISIS PERICIAL",
+        dur: "01:11:50"
+      }
+    };
+
+    function switchTrack(roman) {
+      const ep = episodesData[roman];
+      if (!ep) return;
+      document.getElementById("player-roman").textContent = roman;
+      document.getElementById("player-title").textContent = ep.title;
+      document.getElementById("player-meta").textContent = ep.meta;
+      fakeTimer = 0;
+      if (audioEl) audioEl.currentTime = 0;
+      if (!isPlaying) togglePlayMaster();
+      document.getElementById("player").scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 5. Filtro de Catálogo
+    function filterEpisodes(cat) {
+      document.querySelectorAll(".btn-filter").forEach(b => b.classList.remove("active"));
+      event.target.classList.add("active");
+      const cards = document.querySelectorAll(".episode-card");
+      cards.forEach(card => {
+        if (cat === 'all' || card.getAttribute("data-cat") === cat) {
+          card.style.display = "flex";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+
+    // 6. Visor Hyperframes
+    let currentHfFile = "synapse_hyperframe_intro.html";
+    function loadHyperframe(url, btn) {
+      currentHfFile = url;
+      document.getElementById("hf-viewport").src = url;
+      document.querySelectorAll(".btn-hf-tab").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+    }
+
+    function reloadHyperframe() {
+      const vp = document.getElementById("hf-viewport");
+      vp.src = currentHfFile;
+    }
+
+    function openStandaloneHyperframe() {
+      window.open(currentHfFile, '_blank');
+    }
+  </script>
 </body>
 </html>

@@ -1,0 +1,23 @@
+{
+  "name": "synapse-tech-podcast-suite",
+  "version": "2.0.0",
+  "description": "SYNAPSE // LAB ARCHIVE - Avant-Garde Architectural Editorial Broadcast & Hyperframes Suite",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve . -p 3000",
+    "preview": "npx serve . -p 3000",
+    "render:synapse-intro": "npx hyperframes render -c synapse_hyperframe_intro.html -o renders/synapse_hyperframe_intro.mp4 --fps 30 --format mp4",
+    "render:synapse-treatise": "npx hyperframes render -c synapse_hyperframe_treatise.html -o renders/synapse_hyperframe_treatise.mp4 --fps 30 --format mp4"
+  },
+  "keywords": [
+    "synapse",
+    "podcast",
+    "hyperframes",
+    "avant-garde",
+    "architectural-editorial",
+    "gsap",
+    "motion-graphics"
+  ],
+  "author": "SYNAPSE // LAB ARCHIVE",
+  "license": "UNLICENSED"
+}

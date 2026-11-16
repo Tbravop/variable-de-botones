@@ -1,76 +1,81 @@
-# Hyperframe Motion Suite — Arquitectura Guiada por Especificaciones (SDD)
+# SYNAPSE // Avant-Garde Architectural Editorial & Hyperframes Suite
 
-Sistema modular y desacoplado para diseñar, especificar y renderizar animaciones web de alta fidelidad (16:9 editorial UI graphics a 30 FPS) mediante el motor determinista de **Hyperframe**.
-
----
-
-## 🏛️ Filosofía de Arquitectura: Separación de Responsabilidades
-
-Este repositorio desacopla completamente tres dimensiones clave para permitir que cualquier persona o agente de IA genere nuevas piezas sin fricción:
-
-```text
-       ┌────────────────────────┐
-       │   SPEC_TEMPLATE.md     │  ◄── 1. EL QUÉ (Objetivo funcional, datos y guion)
-       └───────────┬────────────┘
-                   │
-         ┌─────────┴─────────┐
-         ▼                   ▼
-┌──────────────────┐ ┌─────────────────────────┐
-│    design.md     │ │   SKILL_HYPERFRAME.md   │  ◄── 2. LAS REGLAS (Estética visual + Técnica)
-└────────┬─────────┘ └───────────┬─────────────┘
-         │                       │
-         └─────────┬─────────────┘
-                   ▼
-       ┌────────────────────────┐
-       │      pieza_*.html      │  ◄── 3. EL CÓDIGO (Animación final determinista)
-       └────────────────────────┘
-```
-
-1. **`SPEC_TEMPLATE.md` (El QUÉ):** Define el propósito, contenido de las tarjetas y flujo cronológico de la escena.
-2. **`design.md` (La ESTÉTICA):** Define los tokens visuales, paleta pastel, tipografía `#0F172A`, sombras y regla de síntesis (Notion / Apple Keynote light UI).
-3. **`SKILL_HYPERFRAME.md` (El CÓMO TÉCNICO):** Define el contrato del motor (estructura `.clip`, determinismo temporal, registro de `window.__timelines` y manejo de SVG con GSAP).
+> **Rama Activa**: `feature/synapse-tech-podcast`  
+> **Sistema de Diseño**: [`design.md_podcast.md`](design.md_podcast.md) & [`design.md`](design.md) (Variante 3: Avant-Garde Architectural Editorial)  
+> **Motor de Animación**: [Hyperframes](https://hyperframes.dev) determinista a 1920×1080 @ 30 FPS  
+> **Despliegue GitHub Pages**: Listo para visualizar en `https://tbravop.github.io/variable-de-botones/`
 
 ---
 
-## ⚡ Flujo de Trabajo en 3 Pasos Rápidos
+## 🏛️ Manifiesto & Identidad de Marca: SYNAPSE // LAB ARCHIVE
 
-Para crear una nueva animación en este repositorio:
+La **Variante 3 (Avant-Garde Architectural Editorial)** replantea la experiencia del podcast tecnológico como un **aparato de investigación epistemológica y publicación arquitectónica de culto** inspirada en revistas europeas (*032c*, *Volume Magazine*, *ARCH+*, *Domus*).
 
-### Paso 1: Definir la Especificación (`SPEC_TEMPLATE.md`)
-Duplica o rellena [`SPEC_TEMPLATE.md`](SPEC_TEMPLATE.md) con los datos de tu nueva pieza:
-- Asigna un `composition_id` único.
-- Elige el layout que mejor exprese la lógica del tema (3 Columnas, Stepped 2+3, Center Hero, etc.).
-- Detalla los títulos de las tarjetas, íconos sugeridos y desglose de tiempos en segundos.
+### Principios Fundamentales:
+1. **Rigor Tectónico Inviolable (`rounded-none: 0px`)**: Cero bordes redondeados en contenedores, tarjetas, scrubbers y botones. Solo los micro-indicadores de estado circulares llevan radio.
+2. **Brutalismo Óptico de Alto Contraste**: Blanco Perla (`#F8F8F6`) y Negro Carbón puro (`#080808`), tensados quirúrgicamente con **Amarillo Ácido / Neon Lime (`#D4FF00`)** y **Ultra Violet (`#4A00E0`)**.
+3. **Jerarquía Couture & Monumental**:
+   - Títulos Colosales: `Archivo Black` / `Syne 900`
+   - Aforismos y Citas Críticas: `Instrument Serif` (itálica)
+   - Telemetría Forense: `Geist Mono` / `Space Mono`
+4. **Sombras de Bloque Brutalista**: Desplazamiento rígido `box-shadow: 4px 4px 0px #080808`. Prohibido el sombreado difuso o neumórfico.
 
-### Paso 2: Consultar las Reglas del Sistema
-Antes de escribir una sola línea de código, verifica:
-- [`design.md`](design.md): Tokens cromáticos (`#F8FAFC`, badges pasteles Cobalt `#0284C7`, Indigo `#7C3AED`, Emerald `#059669`), sombras y regla de no incluir párrafos ni cajas secundarias.
-- [`SKILL_HYPERFRAME.md`](SKILL_HYPERFRAME.md): Reglas estrictas para que el motor no falle (timeline en pausa, registro en `window.__timelines`, cero `Date.now()`, cero transiciones CSS desincronizadas).
+---
 
-### Paso 3: Generar y Previsualizar el HTML Animado
-Genera el archivo HTML (ej. `mi_animacion.html`) aplicando la especificación y ejecuta los comandos de comprobación y renderizado:
+## 🚀 Componentes Principales de la Nueva Versión
+
+### 1. Hub Editorial Web para GitHub Pages (`index.html`)
+- **Ticker Superior Forense**: Coordenadas de transmisión, reloj UTC y estado de búfer criptográfico en vivo.
+- **Barra Curatorial**: Acceso a secciones con prefijos monoespaciados (`[ S.01 APARATO ]`, `[ S.02 REPRODUCTOR ]`, `[ S.03 TRATADOS ]`, `[ S.04 MONOGRAFÍA ]`, `[ S.05 TRIBUNAL ]`, `[ S.06 HIPERFRAMES ]`).
+- **Hero Monumental ("Aparato Teórico")**: Título monumental hueco `SYNAPSE LAB`, cita en serif con resaltador amarillo neón y matriz de audio directo.
+- **Reproductor Monolítico Escultórico (Dark Block `#050505`)**: Espectrograma interactivo bicolor animado de 64 barras con tiempo de reproducción sincronizado, selector de cadencia (`1.0x`, `1.50x`, `2.0x`), y selector interactivo de fascículos (`XLII`, `XLI`, `XL`, `XXXIX`).
+- **Grilla de 4 Métricas Curatoriales**: Auditoría de sistemas, posicionamiento, corpus y rigor analítico.
+- **Pliego Monográfico Editorial (Dos Columnas)**: Oblea litográfica de silicio a 2nm y dossier de interlocutores.
+- **Índice de Tratados & Catálogo**: Filtros temáticos por categoría (Teoría de IA, Mecánica Cuántica, Topología Distribuida) y botones de escucha instantánea.
+- **Suite Hyperframes Integrada**: Visor interactivo en tiempo real con selector de composiciones y controles de reinicio.
+- **El Tribunal / Curadores**: Tarjetas biográficas con sombras duras y firmas PGP de los investigadores.
+- **Press Kit & Inspector de Tokens**: Muestrario de paleta de colores y especificaciones de diseño.
+
+---
+
+## 🎬 Composiciones Hyperframes (1920×1080 @ 30 FPS, 10s)
+
+Todas las composiciones cumplen estrictamente el contrato determinista de Hyperframes (`SKILL_HYPERFRAME.md`):
+
+1. **`synapse_hyperframe_intro.html`**:
+   - Secuencia monumental de cabecera para transmisiones y YouTube Master.
+   - Despliegue de grilla arquitectónica, numeración romana `XLII` en bloque monolítico, conductos vectoriales animados de silicio, y cita monográfica con espectrograma bicolor.
+   - Registrado en `window.__timelines["synapse_intro_10s"]`.
+
+2. **`synapse_hyperframe_treatise.html`**:
+   - Infografía broadcast en 3 columnas rígidas: Epistemología (Límite de Landauer), Hardware Neuromórfico (Memristores sinápticos) y Síntesis Tectónica.
+   - Barra de progreso temporal de 10 segundos y estado de sostenimiento final (*Hold State*).
+   - Registrado en `window.__timelines["synapse_treatise_10s"]`.
+
+3. **`synapse_hyperframe_obs_cam.html`**:
+   - Overlay de emisión en directo para OBS Studio en formato 16:9 con área de recorte de cámara enmarcada con esquinas en corchetes neón.
+   - Telemetría lateral con medidores VU dinámicos de audio multicanal y lower-third editorial inferior.
+   - Registrado en `window.__timelines["synapse_obs_cam_10s"]`.
+
+---
+
+## 💻 Comandos Útiles
 
 ```bash
-# 1. Comprobar cumplimiento del contrato técnico
-npx hyperframes check
-
-# 2. Previsualizar localmente en navegador
+# 1. Previsualizar localmente el Hub o las animaciones
 npx serve . -p 3000
-# Abre: http://localhost:3000/mi_animacion.html
+# Abre: http://localhost:3000/
 
-# 3. Renderizar a video MP4 Full HD (1920x1080 @ 30 FPS)
-npx hyperframes render -c mi_animacion.html -o renders/mi_animacion.mp4 --fps 30 --format mp4
+# 2. Renderizar las piezas de video Full HD con Hyperframes CLI
+npx hyperframes render -c synapse_hyperframe_intro.html -o renders/synapse_intro.mp4 --fps 30 --format mp4
+npx hyperframes render -c synapse_hyperframe_treatise.html -o renders/synapse_treatise.mp4 --fps 30 --format mp4
 ```
 
 ---
 
-## 📂 Directorio del Repositorio
+## 🌐 Publicación en GitHub Pages
 
-- [`SKILL_HYPERFRAME.md`](SKILL_HYPERFRAME.md) — Contrato técnico y patrones de ingeniería de Hyperframe.
-- [`SPEC_TEMPLATE.md`](SPEC_TEMPLATE.md) — Plantilla vacía para especificar nuevas animaciones.
-- [`design.md`](design.md) — Sistema de diseño visual y tokens estéticos.
-- `infografia_1_writing_process.html` — Ejemplo de referencia: Layout Stepped 2+3.
-- `infografia_2_agentic_flow.html` — Ejemplo de referencia: Layout 3 Columnas Lineales.
-- `infografia_3_rl_vs_imitation.html` — Ejemplo de referencia: Layout Convergent Center Hero.
-- `infografia_4_funnel_marketing.html` — Ejemplo de referencia: Layout Secuencial 4 Etapas.
-- `renders/` — Videos MP4 Full HD compilados.
+1. La rama `feature/synapse-tech-podcast` contiene el archivo `.nojekyll` en la raíz para garantizar la entrega íntegra de todos los recursos estáticos.
+2. `index.html` en la raíz sirve como puerta de enlace y visor directo para GitHub Pages.
+3. Al fusionar o publicar esta rama (`gh-pages` o `main`), el sitio queda disponible inmediatamente en:
+   **`https://tbravop.github.io/variable-de-botones/`**
